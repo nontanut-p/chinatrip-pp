@@ -71,6 +71,29 @@
 
         #passwordError { color: #b91c1c; font-size: 0.9rem; min-height: 22px; margin-top: 6px; }
 
+        .cat-sticker {
+            position: fixed;
+            width: clamp(120px, 18vw, 220px);
+            height: auto;
+            z-index: 10000;
+            pointer-events: none;
+            display: none;
+            filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.25));
+        }
+
+        .cat-sticker.corner {
+            right: 14px;
+            bottom: 14px;
+            display: block;
+            transform: rotate(-4deg);
+            animation: cornerPop 0.4s ease;
+        }
+
+        @keyframes cornerPop {
+            from { transform: scale(0.6) rotate(-10deg); opacity: 0; }
+            to { transform: scale(1) rotate(-4deg); opacity: 1; }
+        }
+
         header {
             background: linear-gradient(135deg, #7f1d1d, #dc2626);
             color: #fff;
@@ -162,6 +185,7 @@
 </head>
 
 <body>
+    <img id="catSticker" class="cat-sticker" src="https://png.pngtree.com/png-clipart/20230817/original/pngtree-two-cats-with-transparent-background-vector-picture-image_7994625.png" alt="cute cats">
     <div class="password-overlay" id="passwordOverlay">
         <div class="password-box">
             <h2>🔐 ใส่รหัสก่อนเข้าเว็บ</h2>
@@ -219,7 +243,7 @@
             </ul>
             <div class="ticket-box">
                 <strong>ข้อมูลตั๋ว Shanghai Hongqiao → Zaozhuang</strong><br>
-                หมายเลขรับตั๋ว: ED24987796 | ขบวน: G550 | ประตู: 1A/1B<br>
+                ขบวน: G550 | ประตู: 1A/1B<br>
                 First Class (ตู้ 02): 4F CHOTKLANG PANUCHANART, 4A Treevipanon Krittin, 4C CHITSIRIPARAT NONTANUT, 4D PUENGSATIT KAWINTIP
             </div>
         </section>
@@ -256,7 +280,7 @@
             </ul>
             <div class="ticket-box">
                 <strong>ข้อมูลตั๋ว Zaozhuang → Shanghai Hongqiao</strong><br>
-                หมายเลขการจอง: 1622927073526158 | ขบวน: G1705<br>
+                ขบวน: G1705<br>
                 First Class (ตู้ 15): 8A CHOTKLANG PANUCHANART, 8C Treevipanon Krittin, 8D CHITSIRIPARAT NONTANUT, 8F PUENGSATIT KAWINTIP
             </div>
             <div class="sub" style="margin-top:10px;">
@@ -352,19 +376,69 @@
         const input = document.getElementById('passwordInput');
         const button = document.getElementById('unlockBtn');
         const error = document.getElementById('passwordError');
+        const catSticker = document.getElementById('catSticker');
+        let catAnimationFrame = null;
+        let vx = 4;
+        let vy = 3;
+        let posX = 24;
+        let posY = 24;
+
+        function stopCatRun() {
+            if (catAnimationFrame) cancelAnimationFrame(catAnimationFrame);
+            catAnimationFrame = null;
+        }
+
+        function runCatLoop() {
+            stopCatRun();
+            catSticker.classList.remove('corner');
+            catSticker.style.display = 'block';
+            const move = () => {
+                const maxX = window.innerWidth - catSticker.offsetWidth;
+                const maxY = window.innerHeight - catSticker.offsetHeight;
+                posX += vx;
+                posY += vy;
+                if (posX <= 0 || posX >= maxX) vx *= -1;
+                if (posY <= 0 || posY >= maxY) vy *= -1;
+                posX = Math.max(0, Math.min(posX, maxX));
+                posY = Math.max(0, Math.min(posY, maxY));
+                catSticker.style.left = `${posX}px`;
+                catSticker.style.top = `${posY}px`;
+                catSticker.style.right = 'auto';
+                catSticker.style.bottom = 'auto';
+                catAnimationFrame = requestAnimationFrame(move);
+            };
+            catAnimationFrame = requestAnimationFrame(move);
+        }
+
+        function showCatInCorner() {
+            stopCatRun();
+            catSticker.style.left = 'auto';
+            catSticker.style.top = 'auto';
+            catSticker.classList.add('corner');
+            catSticker.style.display = 'block';
+        }
 
         function unlockSite() {
             if (input.value === PASSCODE) {
                 overlay.style.display = 'none';
                 error.textContent = '';
+                showCatInCorner();
             } else {
                 error.textContent = 'รหัสไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง';
+                runCatLoop();
             }
         }
 
         button.addEventListener('click', unlockSite);
         input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') unlockSite();
+        });
+
+        window.addEventListener('resize', () => {
+            if (!catSticker.classList.contains('corner') && catSticker.style.display === 'block') {
+                posX = Math.min(posX, window.innerWidth - catSticker.offsetWidth);
+                posY = Math.min(posY, window.innerHeight - catSticker.offsetHeight);
+            }
         });
     </script>
 </body>
