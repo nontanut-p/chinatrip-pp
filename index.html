@@ -1,2521 +1,371 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ทริปลุยจีน 2026 | Shanghai & Qingdao</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>แผนเที่ยวจีน 9-16 เม.ย. 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         :root {
-            --primary: #C41E3A;
-            --primary-dark: #8B0000;
-            --gold: #D4AF37;
-            --dark: #1A1A2E;
-            --light: #F8F9FA;
-            --gray: #6B7280;
-            --gradient: linear-gradient(135deg, #C41E3A 0%, #8B0000 100%);
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #0f172a;
+            --muted: #64748b;
+            --accent: #dc2626;
+            --accent-2: #f59e0b;
+            --line: #e2e8f0;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--light);
-            color: var(--dark);
+            font-family: 'Prompt', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('https://upload.wikimedia.org/wikipedia/commons/5/5a/The_Bund_2.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+        .password-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.88);
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            color: white;
+            justify-content: center;
+            z-index: 9999;
             padding: 20px;
         }
 
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 700;
-            margin-bottom: 20px;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
+        .password-box {
+            width: min(420px, 100%);
+            background: #fff;
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
         }
 
-        .hero p {
-            font-size: clamp(1rem, 3vw, 1.5rem);
-            font-weight: 300;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.3s forwards;
+        .password-box h2 { margin-bottom: 8px; color: var(--accent); }
+        .password-box p { color: var(--muted); margin-bottom: 14px; }
+
+        .password-box input {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            font: inherit;
         }
 
-        .hero .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            animation: bounce 2s infinite;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.6s forwards, bounce 2s ease-in-out 1s infinite;
+        .password-box button {
+            width: 100%;
+            border: none;
+            background: linear-gradient(90deg, var(--accent), #b91c1c);
+            color: #fff;
+            border-radius: 12px;
+            padding: 12px;
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
         }
 
-        .hero .scroll-indicator svg {
-            width: 40px;
-            height: 40px;
-            fill: white;
-        }
+        #passwordError { color: #b91c1c; font-size: 0.9rem; min-height: 22px; margin-top: 6px; }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateY(0);
-            }
-
-            40% {
-                transform: translateY(-20px);
-            }
-
-            60% {
-                transform: translateY(-10px);
-            }
-        }
-
-        /* Timeline Container */
-        .timeline-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        .timeline-title {
+        header {
+            background: linear-gradient(135deg, #7f1d1d, #dc2626);
+            color: #fff;
+            padding: 48px 20px;
             text-align: center;
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            color: var(--primary);
-            margin-bottom: 60px;
-            position: relative;
         }
 
-        .timeline-title::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: var(--gold);
+        header h1 { font-size: clamp(1.8rem, 4vw, 3rem); }
+        header p { margin-top: 8px; opacity: 0.95; }
+
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 28px 16px 60px;
         }
 
-        .trip-note {
-            max-width: 900px;
-            margin: 0 auto 30px;
-            padding: 18px 20px;
+        .notice {
             background: #fff7ed;
             border: 1px solid #fed7aa;
-            border-radius: 16px;
-            color: #9A3412;
-            font-size: 0.95rem;
-        }
-
-        .packing-card {
-            max-width: 900px;
-            margin: 0 auto 50px;
-            background: white;
-            border-radius: 20px;
-            padding: 28px;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
-        }
-
-        .packing-card h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary);
-            font-size: 1.7rem;
-            margin-bottom: 10px;
-        }
-
-        .packing-card p {
-            color: var(--gray);
-            margin-bottom: 20px;
-        }
-
-        .packing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
-        }
-
-        .packing-group {
-            background: #f8fafc;
-            border-radius: 16px;
-            padding: 18px;
-            border: 1px solid #e5e7eb;
-        }
-
-        .packing-group h4,
-        .place-checklist h4 {
-            color: var(--dark);
-            margin-bottom: 10px;
-            font-size: 1rem;
-        }
-
-        .checklist {
-            list-style: none;
-            display: grid;
-            gap: 8px;
-        }
-
-        .checklist li {
-            position: relative;
-            padding-left: 28px;
-            color: var(--gray);
-            font-size: 0.92rem;
-        }
-
-        .checklist li::before {
-            content: '☐';
-            position: absolute;
-            left: 0;
-            top: 0;
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        /* Timeline */
-        .timeline {
-            position: relative;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 3px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--primary), var(--gold));
-        }
-
-        /* Timeline Item */
-        .timeline-item {
-            display: flex;
-            justify-content: flex-end;
-            padding-right: 50%;
-            position: relative;
-            margin-bottom: 60px;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-
-        .timeline-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .timeline-item:nth-child(even) {
-            justify-content: flex-start;
-            padding-right: 0;
-            padding-left: 50%;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 20px;
-            background: var(--primary);
-            border: 4px solid white;
-            border-radius: 50%;
-            box-shadow: 0 0 0 4px var(--primary);
-            z-index: 1;
-        }
-
-        .timeline-item:nth-child(even)::before {
-            left: 50%;
-        }
-
-        /* Timeline Content */
-        .timeline-content {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            margin-right: 40px;
-            position: relative;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .timeline-content:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-        }
-
-        .timeline-item:nth-child(even) .timeline-content {
-            margin-right: 0;
-            margin-left: 40px;
-        }
-
-        .timeline-content::before {
-            content: '';
-            position: absolute;
-            right: -10px;
-            top: 30px;
-            width: 0;
-            height: 0;
-            border-left: 10px solid white;
-            border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent;
-        }
-
-        .timeline-item:nth-child(even) .timeline-content::before {
-            right: auto;
-            left: -10px;
-            border-left: none;
-            border-right: 10px solid white;
-        }
-
-        .day-badge {
-            display: inline-block;
-            background: var(--gradient);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
-
-        .timeline-content h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--dark);
-            margin-bottom: 15px;
-        }
-
-        .timeline-content .date {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .timeline-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-
-        .schedule-list {
-            list-style: none;
-            margin-bottom: 20px;
-        }
-
-        .schedule-list li {
-            display: flex;
-            align-items: flex-start;
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            border-radius: 8px;
-        }
-
-        .schedule-list li:hover {
-            background-color: #f0f0f0;
-        }
-
-        .schedule-list li:last-child {
-            border-bottom: none;
-        }
-
-        .schedule-list .time {
-            color: var(--primary);
-            font-weight: 600;
-            min-width: 80px;
-            font-size: 0.9rem;
-        }
-
-        .schedule-list .activity {
-            color: var(--gray);
-            font-size: 0.95rem;
-        }
-
-        .schedule-list .click-hint {
-            margin-left: auto;
-            color: var(--gold);
-            font-size: 0.8rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .schedule-list li:hover .click-hint {
-            opacity: 1;
-        }
-
-        .recommendations {
-            margin-top: 20px;
-        }
-
-        .recommendations h4 {
-            font-size: 1rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .recommendations .do-list,
-        .recommendations .dont-list {
-            list-style: none;
-            margin-bottom: 15px;
-        }
-
-        .recommendations .do-list li {
-            padding: 5px 0;
-            padding-left: 25px;
-            position: relative;
-            font-size: 0.9rem;
-            color: #059669;
-        }
-
-        .recommendations .do-list li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-        }
-
-        .recommendations .dont-list li {
-            padding: 5px 0;
-            padding-left: 25px;
-            position: relative;
-            font-size: 0.9rem;
-            color: #DC2626;
-        }
-
-        .recommendations .dont-list li::before {
-            content: '✗';
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-        }
-
-        .place-checklist {
-            margin-top: 18px;
-            padding: 18px;
+            color: #9a3412;
             border-radius: 14px;
-            background: #f8fafc;
-            border: 1px solid #e5e7eb;
+            padding: 14px;
+            margin-bottom: 20px;
         }
 
-        /* Modal Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 20px;
+        .day-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
         }
 
-        .modal-overlay.active {
+        .day-head {
             display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
         }
 
-        .modal {
-            background: white;
-            border-radius: 20px;
-            max-width: 800px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            animation: modalSlideIn 0.3s ease;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-header {
-            background: var(--gradient);
-            color: white;
-            padding: 25px 30px;
-            border-radius: 20px 20px 0 0;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .modal-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
-
-        .modal-header .time {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            font-size: 2rem;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s ease;
-        }
-
-        .modal-close:hover {
-            background: rgba(255, 255, 255, 255, 0.3);
-        }
-
-        .modal-body {
-            padding: 30px;
-        }
-
-        .location-info {
-            background: #fff5f5;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border-left: 4px solid var(--primary);
-        }
-
-        .location-info h3 {
-            color: var(--primary);
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-
-        .location-info p {
-            font-size: 0.95rem;
-            color: var(--gray);
-            margin-bottom: 8px;
-        }
-
-        .location-info .distance-badge {
+        .badge {
             display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-top: 10px;
-        }
-
-        .travel-info {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-
-        .travel-info h3 {
-            color: var(--primary);
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .travel-options {
-            display: grid;
-            gap: 15px;
-        }
-
-        .travel-option {
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            border-left: 4px solid var(--gold);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .travel-option.train {
-            border-left-color: #059669;
-        }
-
-        .travel-option.metro {
-            border-left-color: #3B82F6;
-        }
-
-        .travel-option.walking {
-            border-left-color: #6B7280;
-        }
-
-        .travel-option-icon {
-            font-size: 2rem;
-            min-width: 50px;
-            text-align: center;
-        }
-
-        .travel-option-details h4 {
-            font-size: 1rem;
-            margin-bottom: 5px;
-            color: var(--dark);
-        }
-
-        .travel-option-details p {
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-
-        .travel-option-details .cost {
-            color: var(--primary);
+            background: #fee2e2;
+            color: #b91c1c;
+            border-radius: 999px;
+            padding: 4px 12px;
+            font-size: 0.85rem;
             font-weight: 600;
         }
 
-        .travel-option-details .time {
-            color: #059669;
-            font-weight: 500;
-        }
+        .day-title { font-size: 1.1rem; font-weight: 600; }
+        .day-date { color: var(--muted); font-size: 0.95rem; }
 
-        .photo-spots {
-            margin-top: 25px;
-        }
-
-        .photo-spots h3 {
-            color: var(--primary);
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
+        ul.timeline {
+            list-style: none;
+            border-left: 3px solid #fecaca;
+            padding-left: 14px;
+            display: grid;
             gap: 10px;
         }
 
-        .photo-spots-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
-        .photo-spot {
-            background: white;
+        .timeline li {
+            background: #fff;
+            border: 1px solid var(--line);
             border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            padding: 10px;
         }
 
-        .photo-spot:hover {
-            transform: translateY(-5px);
-        }
+        .time { color: var(--accent); font-weight: 600; margin-right: 6px; }
+        .sub { color: var(--muted); font-size: 0.92rem; margin-top: 4px; }
 
-        .photo-spot img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-
-        .photo-spot-info {
-            padding: 12px;
-        }
-
-        .photo-spot-info h4 {
-            font-size: 0.95rem;
-            margin-bottom: 5px;
-            color: var(--dark);
-        }
-
-        .photo-spot-info p {
-            font-size: 0.85rem;
-            color: var(--gray);
+        .ticket-box {
+            margin-top: 10px;
+            border: 1px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 10px;
+            background: #f8fafc;
         }
 
         footer {
-            background: var(--dark);
-            color: white;
             text-align: center;
-            padding: 40px 20px;
+            padding: 24px;
+            color: var(--muted);
+            font-size: 0.92rem;
         }
-
-        footer p {
-            font-weight: 300;
-            opacity: 0.8;
-        }
-
-        @media (max-width: 768px) {
-            .timeline::before {
-                left: 20px;
-            }
-
-            .timeline-item {
-                justify-content: flex-start;
-                padding-right: 0;
-                padding-left: 50px;
-            }
-
-            .timeline-item:nth-child(even) {
-                padding-left: 50px;
-            }
-
-            .timeline-item::before {
-                left: 20px;
-            }
-
-            .timeline-item:nth-child(even)::before {
-                left: 20px;
-            }
-
-            .timeline-content {
-                margin-right: 0;
-                margin-left: 0;
-                max-width: 100%;
-            }
-
-            .timeline-item:nth-child(even) .timeline-content {
-                margin-left: 0;
-            }
-
-            .timeline-content::before {
-                left: -10px;
-                right: auto;
-                border-left: none;
-                border-right: 10px solid white;
-            }
-
-            .photo-spots-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .modal-header h2 {
-                font-size: 1.4rem;
-            }
-        }
-    
-        /* Lightbox Styles */
-        .lightbox {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-        .lightbox.active {
-            display: flex;
-        }
-        .lightbox img {
-            max-width: 90%;
-            max-height: 90vh;
-            border-radius: 10px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
-        }
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 40px;
-            color: white;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .lightbox-close:hover {
-            color: #C41E3A;
-        }
-
     </style>
 </head>
 
 <body>
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>ทริปลุยจีน 2026</h1>
-        <p>ผจญภัยเซี่ยงไฮ้และชิงเต่า</p>
-        <p style="margin-top: 10px; color: var(--gold);">9 เมษายน - 15 เมษายน 2026</p>
-        <div class="scroll-indicator">
-            <svg viewBox="0 0 24 24">
-                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
-            </svg>
+    <div class="password-overlay" id="passwordOverlay">
+        <div class="password-box">
+            <h2>🔐 ใส่รหัสก่อนเข้าเว็บ</h2>
+            <p>กรุณาใส่รหัสเพื่อดูแผนการเดินทาง</p>
+            <input id="passwordInput" type="password" placeholder="ใส่รหัสที่นี่" />
+            <button id="unlockBtn">เข้าสู่แผนเที่ยว</button>
+            <div id="passwordError"></div>
         </div>
-    </section>
+    </div>
 
-    <!-- Timeline Section -->
-    <section class="timeline-container">
-        <h2 class="timeline-title">แผนการเดินทาง</h2>
-        <div class="trip-note">
-            ตรวจสอบและอัปเดตสถานที่เรียบร้อยแล้ว (หมายเหตุ: เส้นทางรถไฟใต้ดิน ราคา เวลา และนโยบายของสถานที่อาจเปลี่ยนแปลงได้ โปรดเช็คอีกครั้งก่อนเดินทางจริง)
+    <header>
+        <h1>แผนทริปจีน 2026</h1>
+        <p>เซี่ยงไฮ้ • เจ่าจวง (ซานตง) • ดิสนีย์แลนด์ | 9 - 16 เมษายน 2026</p>
+    </header>
+
+    <main class="container">
+        <div class="notice">
+            ปรับแผนตามข้อมูลล่าสุดที่ให้มาแล้ว โดยยึด “เวลาตั๋วจริง” สำหรับรถไฟวันที่ 10 และ 12 เมษายน 2026
         </div>
-        <section class="packing-card">
-            <h3>รายการของที่ต้องเตรียม</h3>
-            <p>ใช้เช็คของเป็นครั้งสุดท้ายก่อนออกจากบ้านไปสนามบิน</p>
-            <div class="packing-grid">
-                <div class="packing-group">
-                    <h4>เอกสาร & การเงิน</h4>
-                    <ul class="checklist">
-                        <li>พาสปอร์ต วีซ่า และเอกสารการเข้าประเทศ</li>
-                        <li>ใบจองตั๋วเครื่องบิน โรงแรม และรถไฟ</li>
-                        <li>รายละเอียดประกันการเดินทาง</li>
-                        <li>บัตรเครดิต บัตรเดบิต และเงินสดหยวน</li>
-                        <li>รายชื่อคนติดต่อฉุกเฉิน</li>
-                    </ul>
+
+        <section class="day-card">
+            <div class="day-head">
+                <span class="badge">วันที่ 1</span>
+                <div>
+                    <div class="day-title">เดินทางถึงเซี่ยงไฮ้ + เที่ยวกลางคืน</div>
+                    <div class="day-date">9 เมษายน 2026</div>
                 </div>
-                <div class="packing-group">
-                    <h4>อุปกรณ์ไอที & การใช้งาน</h4>
-                    <ul class="checklist">
-                        <li>โทรศัพท์และสายชาร์จ</li>
-                        <li>พาวเวอร์แบงค์</li>
-                        <li>หัวแปลงปลั๊กไฟ (Universal adapter)</li>
-                        <li>E-sim หรือแพ็กเกจโรมมิ่ง</li>
-                        <li>แอปที่จำเป็นสำหรับจีน (Alipay, WeChat, Baidu Maps)</li>
-                    </ul>
+            </div>
+            <ul class="timeline">
+                <li><span class="time">06:30</span>เดินทางไปสนามบิน</li>
+                <li><span class="time">07:20</span>ถึงสนามบิน</li>
+                <li><span class="time">10:45</span>เครื่องบินออกเดินทาง</li>
+                <li><span class="time">16:00</span>ถึงสนามบินเซี่ยงไฮ้</li>
+                <li><span class="time">18:00</span>แวะร้าน Blue Bottle Coffee</li>
+                <li><span class="time">18:30</span>เดินเล่น Nanjing Road + ทานร้าน Xiesanba (บะหมี่ปู)</li>
+                <li><span class="time">20:00</span>ถ่ายรูปสะพาน Waibaidu และ The Bund (วิวกลางคืน หอไข่มุก + ผู่ตง)</li>
+                <li><span class="time">ที่พัก</span>เช็คอิน Hanting Hotel (พัก 1 คืน)</li>
+            </ul>
+        </section>
+
+        <section class="day-card">
+            <div class="day-head">
+                <span class="badge">วันที่ 2</span>
+                <div>
+                    <div class="day-title">เดินทางไปหาเพื่อนที่เจ่าจวง (ซานตง)</div>
+                    <div class="day-date">10 เมษายน 2026</div>
                 </div>
-                <div class="packing-group">
-                    <h4>เสื้อผ้า & ของใช้ส่วนตัว</h4>
-                    <ul class="checklist">
-                        <li>รองเท้าผ้าใบที่เดินสบาย</li>
-                        <li>เสื้อชั้นนอกสำหรับอากาศเปลี่ยนแปลง</li>
-                        <li>ถุงเท้าและชุดนอน</li>
-                        <li>ร่มพับหรือเสื้อกันฝนน้ำหนักเบา</li>
-                        <li>กระเป๋าใบเล็กสำหรับเดินเที่ยว</li>
-                    </ul>
-                </div>
-                <div class="packing-group">
-                    <h4>ยารักษาโรค & ของใช้ในห้องน้ำ</h4>
-                    <ul class="checklist">
-                        <li>ยาประจำตัว</li>
-                        <li>ยาแก้ปวด ยาแก้เมารถ</li>
-                        <li>ครีมกันแดดและลิปมัน</li>
-                        <li>แปรงสีฟันและเซ็ตอาบน้ำพกพา</li>
-                        <li>ทิชชู่และเจลแอลกอฮอล์ล้างมือ</li>
-                    </ul>
-                </div>
+            </div>
+            <ul class="timeline">
+                <li><span class="time">05:10</span>เช็คเอาท์จาก Hanting Hotel</li>
+                <li><span class="time">06:10</span>นั่ง DiDi ถึงสถานี Shanghai Hongqiao</li>
+                <li><span class="time">07:22</span>รถไฟความเร็วสูงออกเดินทาง (อิงตั๋วจริง)</li>
+                <li><span class="time">10:38</span>ถึงสถานีเจ่าจวง (อิงตั๋วจริง)</li>
+                <li>เพื่อนชาวจีนมารับที่สถานี และพักที่เจ่าจวงคืนที่ 1</li>
+            </ul>
+            <div class="ticket-box">
+                <strong>ข้อมูลตั๋ว Shanghai Hongqiao → Zaozhuang</strong><br>
+                หมายเลขรับตั๋ว: ED24987796 | ขบวน: G550 | ประตู: 1A/1B<br>
+                First Class (ตู้ 02): 4F CHOTKLANG PANUCHANART, 4A Treevipanon Krittin, 4C CHITSIRIPARAT NONTANUT, 4D PUENGSATIT KAWINTIP
             </div>
         </section>
-        <p style="text-align: center; color: var(--gray); margin-bottom: 30px;">👆 Click on any activity to see travel
-            details & photo spots</p>
 
-                <div class="timeline">
-            <!-- Day 1 -->
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <span class="day-badge">วันที่ 1</span>
-                    <span class="date">📅 9 เมษายน 2026 - เดินทางถึงเซี่ยงไฮ้</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Huangpu_Park_20124-Shanghai_%2832208802494%29.jpg" alt="Shanghai Skyline" class="timeline-image">
-                    <h3>🌆 ต้อนรับสู่เซี่ยงไฮ้</h3>
-                    <ul class="schedule-list">
-                        <li data-activity="airport" data-duration="1 ชั่วโมง" data-distance="25 กม." data-from="บ้าน / ที่พักในไทย" data-to="สนามบินสุวรรณภูมิ (BKK)" data-taxi-cost="200-600 บาท (แล้วแต่ระยะทาง)" data-train="N/A" data-metro="N/A" data-walking="N/A" data-station="สนามบินสุวรรณภูมิ (BKK)" data-description="เดินทางไปสนามบินสุวรรณภูมิ เช็คอินและผ่านตรวจสัมภาระ ควรถึงสนามบินอย่างน้อย 3 ชั่วโมงก่อนเวลาบิน แนะนำโหลดแอป DiDi และ Alipay ก่อนขึ้นเครื่อง สนามบินสุวรรณภูมิเปิด 24 ชั่วโมง"><span class="time">06:30</span><span class="activity">🛬 ไปสนามบิน</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(🚖 เดินทางไปยังสนามบิน 1-2 ชม.)</small></li>
-                        <li data-activity="arrive-shanghai" data-duration="60-90 นาที" data-distance="30 กม." data-from="สนามบินผู่ตง (PVG)" data-to="ใจกลางเมืองเซี่ยงไฮ้" data-taxi-cost="150-200 RMB" data-train="50 RMB (Maglev + Metro สาย 2)" data-metro="9 RMB (Metro สาย 2 ตรง)" data-walking="N/A" data-station="Longyang Road (สาย 2)" data-description="จาก PVG เข้าเมืองได้ 3 ทาง: 1) Maglev 430 กม./ชม. ไป Longyang Road (50 RMB 8 นาที) แล้วต่อ Metro สาย 2 2) Metro สาย 2 ตรง 9 RMB ~1 ชม. 3) แท็กซี่ 150-200 RMB ~50 นาที ห้ามลืมเปิด VPN ก่อนออกจากสนามบิน"><span class="time">17:00</span><span class="activity">✈️ ถึงเซี่ยงไฮ้ (รับกระเป๋า)</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(🚇 นั่งรถไฟความเร็วสูง/เมโทร เข้าเมือง ~1-1.5 ชม.)</small></li>
-                        <li data-activity="nanjing-road" data-duration="1.5 ชั่วโมง" data-distance="1.5 กม." data-from="โรงแรมในเซี่ยงไฮ้" data-to="ถนนหนานจิง (East Nanjing Road)" data-taxi-cost="20-35 RMB" data-train="N/A" data-metro="4 RMB (สาย 2 หรือ 10)" data-walking="15-20 นาที (ถ้าโรงแรมใกล้)" data-station="East Nanjing Road (สาย 2, 10)" data-description="ถนนคนเดินที่มีชื่อเสียงที่สุดในเซี่ยงไฮ้ ยาว 1.5 กม. เต็มไปด้วยห้างสรรพสินค้า ร้านค้าแบรนด์ดัง และแสงสีสันยามค่ำคืนที่ตระการตา ไม่มีค่าเข้าชม เปิดตลอดคืน ช่วง 19:00-21:00 คึกคักที่สุด"><span class="time">18:30</span><span class="activity">🛍️ ถนนหนานจิง</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(🚶 เดินชมแสงสียาวๆ ~1.5 ชม.)</small></li>
-                        <li data-activity="waibaidu-bund" data-duration="1 ชั่วโมง" data-distance="1 กม." data-from="ถนนหนานจิง" data-to="สะพานไว่ไป๋ตู้ → เดอะบันด์" data-taxi-cost="15-25 RMB" data-train="N/A" data-metro="N/A" data-walking="12-15 นาที" data-station="East Nanjing Road (สาย 2, 10)" data-description="สะพานไว่ไป๋ตู้ (外白渡桥) สะพานเหล็กประวัติศาสตร์สร้างปี 1907 งดงามมากยามค่ำคืน เดินต่อตามริมแม่น้ำหวงผู่ชม Skyline ตึก Pudong ที่ตระการตา เข้าชมฟรีตลอด 24 ชั่วโมง ห้ามพลาดถ่ายรูปสะพานพร้อม Oriental Pearl Tower เป็นฉากหลัง"><span class="time">20:00</span><span class="activity">🌉 สะพานไว่ไป๋ตู้ → เดอะบันด์</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(📸 ถ่ายรูปและรับลมริมแม่น้ำ ~1 ชม.)</small></li>
-                    </ul>
+        <section class="day-card">
+            <div class="day-head">
+                <span class="badge">วันที่ 3</span>
+                <div>
+                    <div class="day-title">อยู่กับเพื่อนที่เจ่าจวง</div>
+                    <div class="day-date">11 เมษายน 2026</div>
                 </div>
             </div>
+            <ul class="timeline">
+                <li>ใช้เวลาเที่ยวและทำกิจกรรมกับเพื่อนที่เจ่าจวง</li>
+                <li>พักที่เจ่าจวงคืนที่ 2</li>
+            </ul>
+        </section>
 
-            <!-- Day 2 -->
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <span class="day-badge">วันที่ 2</span>
-                    <span class="date">📅 10 เมษายน 2026 - ไปชิงเต่า + คนจีนพาเที่ยว</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/The_CRH_sisters_%2820160905094612%29.jpg/1280px-The_CRH_sisters_%2820160905094612%29.jpg" alt="High Speed Train" class="timeline-image">
-                    <h3>🚄 เดินทางมุ่งหน้าสู่ชิงเต่า</h3>
-                    <ul class="schedule-list">
-                        <li data-activity="leave-hotel-q" data-distance="25 กม." data-from="โรงแรมในเซี่ยงไฮ้" data-to="สถานีรถไฟหงเฉียว" data-taxi-cost="80-130 RMB" data-train="N/A" data-metro="6 RMB (สาย 2 ถึง Hongqiao Railway)" data-walking="N/A" data-station="Hongqiao Railway Station (สาย 2, 10, 17)" data-description="ออกจากโรงแรมแต่เช้า เดินทางไปสถานีรถไฟหงเฉียวซึ่งเป็นสถานีที่ใหญ่ที่สุดแห่งหนึ่งในจีน ควรถึงสถานีก่อนเวลาออกรถอย่างน้อย 1 ชั่วโมง เพื่อหาชานชาลาและขึ้นรถได้ทัน"><span class="time">เช้า</span><span class="activity">🏨 ออกจากโรงแรม</span><span class="click-hint">👆 แท็บเพื่อดู</span></li>
-                        <li data-activity="train-station" data-duration="เผื่อเวลา 1 ชั่วโมง" data-distance="N/A" data-from="ทางเข้าสถานีหงเฉียว" data-to="ชานชาลาขาออก" data-taxi-cost="N/A" data-train="N/A" data-metro="N/A" data-walking="10-15 นาที (เดินภายในสถานี)" data-station="Hongqiao Railway Station (สาย 2, 10, 17)" data-description="สถานีรถไฟหงเฉียวมี 30 ชานชาลา เป็นหนึ่งในสถานีที่ใหญ่ที่สุดในจีน หมายเลขชานชาลาจะแสดงบนบอร์ดประมาณ 15-20 นาทีก่อนออกรถ แนะนำซื้อน้ำและอาหารไว้ทานบนรถไฟ"><span class="time">07:30</span><span class="activity">🚉 ถึงสถานีรถไฟหงเฉียว</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(⏳ เผื่อเวลาหาชานชาลา ~1 ชม.)</small></li>
-                        <li data-activity="train-depart" data-duration="4 ชั่วโมง 5 นาที" data-distance="869 กม." data-from="เซี่ยงไฮ้ หงเฉียว (上海虹桥)" data-to="ชิงเต่าเหนือ (青岛北)" data-taxi-cost="N/A" data-train="240-400 RMB (ชั้น 2 / ชั้น 1)" data-metro="N/A" data-walking="N/A" data-station="Qingdaobei Railway Station" data-description="รถไฟ Fuxing (复兴号) ความเร็วสูงสูงสุด 350 กม./ชม. เส้นทางเซี่ยงไฮ้-ชิงเต่า ระยะทาง 869 กม. ใช้เวลา ~4 ชม. ควรจองล่วงหน้าบน 12306.cn หรือ Trip.com ชั้น 2 ราคา 240 RMB นั่งสบาย มีบริการอาหารและเครื่องดื่มบนรถ"><span class="time">08:55</span><span class="activity">🚄 นั่งรถไฟความเร็วสูง Fuxing</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(🚆 ระยะเวลาเดินทาง ~4 ชั่วโมง)</small></li>
-                        <li data-activity="arrive-qingdao" data-distance="12 กม." data-from="สถานีชิงเต่าเหนือ (Qingdaobei)" data-to="โรงแรมในชิงเต่า" data-taxi-cost="30-50 RMB" data-train="N/A" data-metro="4 RMB (Metro สาย 3)" data-walking="N/A" data-station="Qingdaobei (Metro สาย 3)" data-description="สถานีชิงเต่าเหนือเป็นสถานีรถไฟความเร็วสูงหลักของชิงเต่า ต่อ Metro สาย 3 เข้าตัวเมืองหรือนั่งแท็กซี่ โรงแรมส่วนใหญ่อยู่ในย่าน Shinan ห่างออกไป 10-15 กม. อากาศชิงเต่าเดือนเมษาเย็นสบาย ~15-20°C"><span class="time">~13:00</span><span class="activity">🏖️ ถึงชิงเต่า (โดยประมาณ)</span><span class="click-hint">👆 แท็บเพื่อดู</span></li>
-                        <li data-activity="qingdao-tour" data-distance="15 กม." data-from="โรงแรมชิงเต่า" data-to="ย่านเมืองเก่า Zhongshan Road และชายหาด" data-taxi-cost="50-150 RMB (ตลอดบ่าย)" data-train="N/A" data-metro="10-20 RMB (ตลอดบ่าย)" data-walking="มาก" data-station="สาย 2, 3 ของ Qingdao Metro" data-description="เที่ยวชิงเต่าแบบโลคอลกับคนจีน สำรวจย่านเมืองเก่า Zhongshan Road ชิมอาหารทะเลสดจากตลาด เบียร์ Tsingtao สดจากถัง 5-10 RMB/แก้ว ชมบ้านเก่าสไตล์เยอรมัน ถนน Catholic Church สวยมากยามเย็น"><span class="time">บ่าย-เย็น</span><span class="activity">🤝 คนจีนพาเที่ยวโลคอล</span><span class="click-hint">👆 แท็บเพื่อดู</span></li>
-                    </ul>
+        <section class="day-card">
+            <div class="day-head">
+                <span class="badge">วันที่ 4</span>
+                <div>
+                    <div class="day-title">เดินทางกลับเซี่ยงไฮ้</div>
+                    <div class="day-date">12 เมษายน 2026</div>
                 </div>
             </div>
+            <ul class="timeline">
+                <li>เดินทางไปสถานีรถไฟเจ่าจวง</li>
+                <li><span class="time">13:38</span>รถไฟออกจากเจ่าจวง</li>
+                <li><span class="time">17:13</span>ถึงสถานี Shanghai Hongqiao</li>
+                <li>นำสัมภาระไปเก็บที่โรงแรม Shanghai Rezen Estelle Hotel (Nanjing Road Walkway Bund Branch)</li>
+                <li>เดินไปห้าง Mosaic Plaza เลือกอาหารเย็น (Dong sheng / New sukiyaki / Long time ago)</li>
+                <li><span class="time">22:00</span>เดินเล่น Nanjing Road</li>
+            </ul>
+            <div class="ticket-box">
+                <strong>ข้อมูลตั๋ว Zaozhuang → Shanghai Hongqiao</strong><br>
+                หมายเลขการจอง: 1622927073526158 | ขบวน: G1705<br>
+                First Class (ตู้ 15): 8A CHOTKLANG PANUCHANART, 8C Treevipanon Krittin, 8D CHITSIRIPARAT NONTANUT, 8F PUENGSATIT KAWINTIP
+            </div>
+            <div class="sub" style="margin-top:10px;">
+                ข้อมูลโรงแรม: 7th Floor, Yuehui Plaza, No. 337 Shandong Middle Road, Huangpu, Shanghai<br>
+                เข้าพัก 12-16 เม.ย. 2026 (4 คืน) | Check-in หลัง 14:00 | Check-out ก่อน 12:00
+            </div>
+        </section>
 
-            <!-- Day 3 -->
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <span class="day-badge">วันที่ 3</span>
-                    <span class="date">📅 11 เมษายน 2026 - ตะลุยชิงเต่าเต็มวัน</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/%E9%9D%92%E5%B2%9B%E6%A0%88%E6%A1%A5_Ehemalige_Landungsbr%C3%BCcke_Qingdao.jpg/1280px-%E9%9D%92%E5%B2%9B%E6%A0%88%E6%A1%A5_Ehemalige_Landungsbr%C3%BCcke_Qingdao.jpg" alt="Qingdao Beach" class="timeline-image">
-                    <h3>🏝️ เที่ยวชิงเต่า</h3>
-                    <ul class="schedule-list">
-                        <li data-activity="qingdao-full" data-distance="20 กม." data-from="โรงแรมชิงเต่า" data-to="ท่าเรือจ่านเฉียว → Badaguan → โรงเบียร์ Tsingtao → St. Michael's" data-taxi-cost="100-200 RMB (ตลอดวัน)" data-train="N/A" data-metro="15-25 RMB (ตลอดวัน)" data-walking="มาก (~8 กม.)" data-station="สาย 2, 3 ของ Qingdao Metro" data-description="🏖️ ท่าเรือจ่านเฉียว ค่าเข้า 15 RMB ชมทะเล | 🌿 Badaguan (八大关) ฟรี บ้านสไตล์ยุโรปสุดสวย | 🍺 โรงเบียร์ Tsingtao ค่าเข้า 60 RMB ชิมเบียร์สดในโรงงาน | ⛪ St. Michael's Cathedral ฟรี | 🦐 ชิมอาหารทะเลบน Pichai Road ราคาโลคอล 100-200 RMB/คน"><span class="time">ทั้งวัน</span><span class="activity">🌊 คนจีนพาเที่ยว (ทะเล + เมืองชิล + Local Exp)</span><span class="click-hint">👆 แท็บเพื่อดู</span></li>
-                    </ul>
+        <section class="day-card">
+            <div class="day-head">
+                <span class="badge">วันที่ 5</span>
+                <div>
+                    <div class="day-title">ตะลุย Shanghai Disneyland</div>
+                    <div class="day-date">13 เมษายน 2026</div>
                 </div>
             </div>
+            <ul class="timeline">
+                <li><span class="time">06:00</span>ออกจากโรงแรม เรียก DiDi</li>
+                <li><span class="time">06:50</span>ถึง Shanghai Disneyland</li>
+                <li><span class="time">21:00</span>เดินทางกลับจากดิสนีย์แลนด์</li>
+                <li><span class="time">22:00</span>ถึงโรงแรม</li>
+            </ul>
+        </section>
 
-            <!-- Day 4 -->
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <span class="day-badge">วันที่ 4</span>
-                    <span class="date">📅 12 เมษายน 2026 - เดินทางกลับเซี่ยงไฮ้</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/West_fa%C3%A7ade_of_Qingdaobei_Railway_Station_%2820191003160751%29.jpg/1280px-West_fa%C3%A7ade_of_Qingdaobei_Railway_Station_%2820191003160751%29.jpg" alt="Qingdao Return" class="timeline-image">
-                    <h3>🚄 กลับสู่เซี่ยงไฮ้</h3>
-                    <ul class="schedule-list">
-                        <li data-activity="qingdao-station-return" data-distance="12 กม." data-from="โรงแรมชิงเต่า" data-to="สถานีชิงเต่าเหนือ (Qingdaobei)" data-taxi-cost="30-50 RMB" data-train="N/A" data-metro="4 RMB (Metro สาย 3)" data-walking="N/A" data-station="Qingdaobei (Metro สาย 3)" data-description="เดินทางไปสถานีรถไฟชิงเต่าเหนือเพื่อขึ้นรถไฟกลับเซี่ยงไฮ้ ควรออกจากโรงแรมก่อน 15:00 เพื่อเผื่อเวลาหาชานชาลา แนะนำซื้อของฝากจากชิงเต่าก่อนออกเดินทาง: ผงเบียร์ Tsingtao, อาหารทะเลแห้ง"><span class="time">16:00</span><span class="activity">🚉 ไปสถานีรถไฟ</span><span class="click-hint">👆 แท็บเพื่อดู</span></li>
-                        <li data-activity="train-return" data-distance="869 กม." data-from="ชิงเต่าเหนือ (青岛北)" data-to="เซี่ยงไฮ้ หงเฉียว (上海虹桥)" data-taxi-cost="N/A" data-train="240-400 RMB (ชั้น 2 / ชั้น 1)" data-metro="N/A" data-walking="N/A" data-station="Hongqiao Railway Station (สาย 2, 10)" data-description="รถไฟ Fuxing ความเร็วสูงกลับเซี่ยงไฮ้ ออก ~16:20 ถึง ~20:30 ใช้เวลา ~4 ชม. นั่งชมทิวทัศน์จีนยามเย็น แนะนำซื้อเบียร์ Tsingtao และขนมจากสถานีมาดื่มบนรถไฟ ชมพระอาทิตย์ตกระหว่างทาง"><span class="time">16:20-16:43</span><span class="activity">🚄 เวลาเดินทาง</span><span class="click-hint">👆 แท็บเพื่อดู</span></li>
-                        <li data-activity="arrive-shanghai-hotel" data-distance="22 กม." data-from="สถานีหงเฉียว" data-to="โรงแรมในเซี่ยงไฮ้" data-taxi-cost="60-100 RMB" data-train="N/A" data-metro="6 RMB (สาย 2 หรือ 10)" data-walking="N/A" data-station="Hongqiao Railway Station (สาย 2, 10)" data-description="กลับถึงเซี่ยงไฮ้แล้ว! เช็คอินโรงแรมและพักผ่อนสักครู่ก่อนออกไปทานอาหารเย็น นั่ง Metro สาย 2 หรือ 10 จากสถานีหงเฉียว หรือเรียก DiDi เข้าแอป ค่าโดยสาร Metro ราคาถูกมาก ใช้เวลา ~35-45 นาที"><span class="time">19:40</span><span class="activity">🏨 ถึงเซี่ยงไฮ้ / เข้าโรงแรม</span><span class="click-hint">👆 แท็บเพื่อดู</span></li>
-                        <li data-activity="mosaic-plaza" data-distance="2 กม." data-from="โรงแรม" data-to="Mosaic Plaza (ใกล้ The Bund)" data-taxi-cost="20-35 RMB" data-train="N/A" data-metro="4 RMB (สาย 2 หรือ 10)" data-walking="25 นาที" data-station="East Nanjing Road (สาย 2, 10)" data-description="Mosaic Plaza มีร้านอาหารหลายเจ้า: 🐟 Dongsheng (东盛) อาหารทะเล 150-300 RMB/คน | 🫕 New Sukiyaki ชาบูญี่ปุ่น 120-200 RMB/คน | 🍖 Long Time Ago (好久不见) อาหารฉือหม่า/ปิ้งย่าง 80-150 RMB/คน แนะนำจองล่วงหน้าช่วงวันหยุด"><span class="time">20:00</span><span class="activity">🍽️ Mosaic Plaza (Dongsheng / New Sukiyaki / Long Time Ago)</span><span class="click-hint">👆 แท็บเพื่อดู</span></li>
-                        <li data-activity="nanjing-road-night" data-distance="0.5 กม." data-from="Mosaic Plaza" data-to="ถนนหนานจิง" data-taxi-cost="N/A" data-train="N/A" data-metro="N/A" data-walking="7 นาที" data-station="East Nanjing Road (สาย 2, 10)" data-description="ถนนหนานจิงยามดึกยิ่งคึกคักกว่าตอนกลางวัน ไฟ LED ประดับสวยงามตลอดถนน นักท่องเที่ยวและคนท้องถิ่นออกมาเดินเยอะมาก ร้านค้าบางส่วนยังเปิดถึง 23:00 ถ่ายรูปยามค่ำได้สวยมาก ระวังนักต้มตุ๋น"><span class="time">ดึก</span><span class="activity">🌙 ถนนหนานจิงยามดึก</span><span class="click-hint">👆 แท็บเพื่อดู</span></li>
-                    </ul>
+        <section class="day-card">
+            <div class="day-head">
+                <span class="badge">วันที่ 6</span>
+                <div>
+                    <div class="day-title">เที่ยวจุดเช็คอินรอบเมือง</div>
+                    <div class="day-date">14 เมษายน 2026</div>
                 </div>
             </div>
+            <ul class="timeline">
+                <li><span class="time">07:30</span>ออกจากโรงแรม</li>
+                <li><span class="time">07:45</span>Manner Coffee (Gubei Binjiang Branch) + North Bund Greenland</li>
+                <li><span class="time">08:20</span>Jing'an Temple</li>
+                <li><span class="time">11:30</span>DiDi ไป Flower coffee (Rui)</li>
+                <li><span class="time">13:00</span>Shanghai Postal Museum</li>
+                <li><span class="time">14:00</span>Zhapu Bridge</li>
+                <li><span class="time">14:30</span>Xintianan tang Church</li>
+                <li><span class="time">15:00</span>Rock Bund (ชมวิวหอไข่มุก)</li>
+                <li><span class="time">16:15</span>Shanghai People's Heros Memorial Tower</li>
+                <li><span class="time">16:45</span>The Bund Sightseeing Platform</li>
+                <li><span class="time">17:30</span>The Bund - Chen Yi Square</li>
+                <li><span class="time">18:30</span>Mosaic Plaza (เลือก 1 ร้าน: Dong sheng / New sukiyaki / Long time ago)</li>
+            </ul>
+        </section>
 
-            <!-- Day 5 -->
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <span class="day-badge">วันที่ 5</span>
-                    <span class="date">📅 13 เมษายน 2026 - ดิสนีย์แลนด์</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/18-03-12_ShanghaiDisney_013.jpg" alt="Disneyland" class="timeline-image">
-                    <h3>🎢 เซี่ยงไฮ้ดิสนีย์แลนด์</h3>
-                    <ul class="schedule-list">
-                        <li data-activity="leave-hotel-disney" data-duration="1 ชั่วโมง" data-distance="38 กม." data-from="โรงแรมในเซี่ยงไฮ้" data-to="Shanghai Disneyland Resort" data-taxi-cost="100-160 RMB" data-train="N/A" data-metro="9 RMB (Metro สาย 11 ตรง)" data-walking="N/A" data-station="Disneyland Resort (สาย 11)" data-description="ออกแต่เช้าให้ถึงดิสนีย์ก่อนประตูเปิด 07:00 น. นั่งเมโทรสาย 11 จากสถานีต่างๆ ใจกลางเมือง ตรงไป Disneyland Resort ใช้เวลา 50-60 นาที แนะนำซื้อตั๋วออนไลน์ล่วงหน้าบนแอป Shanghai Disney Resort เพื่อหลีกเลี่ยงคิวซื้อตั๋ว"><span class="time">06:00</span><span class="activity">🏨 ออกจากโรงแรม (แนะนำเวลา)</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(🚇 นั่งเมโทรสาย 11 เข้าสวนสนุกใช้เวลา 50-60 นาที)</small></li>
-                        <li data-activity="disneyland-rides" data-duration="14 ชั่วโมง" data-distance="ภายในสวนสนุก" data-from="ประตูทางเข้า Disneyland" data-to="ทุก Zone ในสวนสนุก" data-taxi-cost="N/A" data-train="N/A" data-metro="N/A" data-walking="มาก (~10-12 กม./วัน)" data-station="Disneyland Resort (สาย 11)" data-description="💰 ค่าเข้า: 475 RMB (ธรรมดา) / 669 RMB (วันหยุด) ⭐ ไฮไลท์: TRON Lightcycle Run (จองล่วงหน้า!), Zootopia: Hot Pursuit, Pirates of Caribbean, Frozen Ever After, Peter Pan's Flight 🎆 ดูพลุ 21:00 น. 💡 ซื้อ Lightning Lane Pass ข้ามคิวได้ แนะนำไปเครื่องเล่นเด็ดก่อนตอนเช้า"><span class="time">07:00</span><span class="activity">🏰 เซี่ยงไฮ้ดิสนีย์แลนด์ แนะนำให้รีบไปเข้าคิวตั้งแต่ประตูยังไม่เปิด!</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(🎢 เที่ยวสวนสนุกเต็มๆ + รอดูพลุปิด 14 ชม.)</small></li>
-                        <li data-activity="return-hotel-disney" data-duration="1 ชั่วโมง" data-distance="38 กม." data-from="Shanghai Disneyland Resort" data-to="โรงแรมในเซี่ยงไฮ้" data-taxi-cost="120-200 RMB (DiDi)" data-train="N/A" data-metro="9 RMB (สาย 11)" data-walking="N/A" data-station="Disneyland Resort (สาย 11)" data-description="หลังชมพลุตอน 21:00 คนจะแน่นมาก! แนะนำ: รีบออกก่อนพลุจบ 10 นาที หรือรอให้ฝูงชนออกไปก่อน 20-30 นาที ควรจอง DiDi ล่วงหน้าผ่านแอปก่อนสวนสนุกปิด เพราะแท็กซี่หายากมากหลังปิด"><span class="time">21:00</span><span class="activity">🚕 กลับโรงแรม</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(🚖 ควรจองรถล่วงหน้าหรือนั่งเมโทร)</small></li>
-                    </ul>
+        <section class="day-card">
+            <div class="day-head">
+                <span class="badge">วันที่ 7</span>
+                <div>
+                    <div class="day-title">สายคาเฟ่และช้อปปิ้ง</div>
+                    <div class="day-date">15 เมษายน 2026</div>
                 </div>
             </div>
+            <ul class="timeline">
+                <li><span class="time">08:00</span>ออกจากโรงแรม</li>
+                <li><span class="time">08:15</span>มื้อเช้า Lai Lai Xiaolong</li>
+                <li><span class="time">09:30</span>ถ่ายรูปตึก 1000 Trees</li>
+                <li><span class="time">10:00</span>Wukang Building + กาแฟ</li>
+                <li><span class="time">11:00</span>DiDi ไป Starbucks Reserve Roastery</li>
+                <li><span class="time">12:00</span>HKRI Taikoo Hui (The locus + Butterful & Creamorous)</li>
+                <li><span class="time">13:30</span>DiDi ไป Huaihai 755: Miniso Pink, 13 DE MARZO, New York Bagels Museum</li>
+                <li><span class="time">15:00</span>ทาน New Sukiyaki หรือ Dongsheng Buffet</li>
+                <li>นั่ง DiDi ไปย่าน Xintiandi</li>
+                <li><span class="time">18:00</span>Super Brand Mall</li>
+            </ul>
+        </section>
 
-            <!-- Day 6 -->
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <span class="day-badge">วันที่ 6</span>
-                    <span class="date">📅 14 เมษายน 2026 - เที่ยวจุดสำคัญรอบเซี่ยงไฮ้</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/The_Bund_2.jpg/1280px-The_Bund_2.jpg" alt="Shanghai Sightseeing" class="timeline-image">
-                    <h3>🌆 ชมศิลปวัฒนธรรมเซี่ยงไฮ้</h3>
-                    <ul class="schedule-list">
-                        <li data-activity="leave-hotel-sight" data-distance="3 กม." data-from="โรงแรม" data-to="North Bund / Manner Coffee" data-taxi-cost="25-40 RMB" data-train="N/A" data-metro="4 RMB (สาย 12)" data-walking="N/A" data-station="International Passenger Terminal (สาย 12)" data-description="วันชมสถาปัตยกรรมและวัฒนธรรมเซี่ยงไฮ้เต็มวัน เริ่มต้นที่ North Bund เก็บวิวเช้า แล้วเวียนรอบเมืองชมสถานที่สำคัญหลายแห่ง ใส่รองเท้าที่เดินสบายเพราะเดินเยอะมากวันนี้"><span class="time">07:30</span><span class="activity">🏨 ออกจากโรงแรม</span></li>
-                        <li data-activity="manner-coffee" data-duration="30 นาที" data-distance="3 กม." data-from="โรงแรม" data-to="Manner Coffee (ใกล้ North Bund)" data-taxi-cost="25-40 RMB" data-train="N/A" data-metro="4 RMB (สาย 12)" data-walking="N/A" data-station="International Passenger Terminal (สาย 12)" data-description="Manner Coffee ร้านกาแฟดังของเซี่ยงไฮ้ ราคาถูกกว่า Starbucks มาก กาแฟ 15-25 RMB/แก้ว มีสาขาหลายร้อยแห่งทั่วเมือง เมนูแนะนำ: Latte (15 RMB), Coconut Latte (20 RMB), Cold Brew (18 RMB) เหมาะพักเติมพลังก่อนเดิน"><span class="time">07:45</span><span class="activity">☕ เติมคาเฟอีนที่ Manner</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(🚶 เดินชิล 10 นาทีไปจุดชมวิว)</small></li>
-                        <li data-activity="north-bund" data-duration="1 ชั่วโมง" data-distance="0.3 กม." data-from="Manner Coffee" data-to="North Bund Viewpoint (北外滩)" data-taxi-cost="N/A" data-train="N/A" data-metro="N/A" data-walking="5 นาที" data-station="International Passenger Terminal (สาย 12)" data-description="North Bund (北外滩) พรอมโมแนดใหม่ที่มองเห็น The Bund และ Lujiazui Skyline ในมุมที่ไม่เหมือนใคร เปิดฟรีตลอด 24 ชั่วโมง วิวสวยมากช่วงเช้าก่อนนักท่องเที่ยวเยอะ มองเห็น Oriental Pearl Tower, Shanghai Tower และตึก Bund พร้อมกันในภาพเดียว"><span class="time">08:20</span><span class="activity">🏙️ ถ่ายรูปเล่นที่ North Bund</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(🚶 เผื่อเวลาเดิน 1 ชม. / นั่งเมโทรไปวัด ~30 นาที)</small></li>
-                        <li data-activity="jingan-temple" data-duration="1 ชั่วโมง" data-cost="50 RMB" data-distance="8 กม." data-from="North Bund" data-to="วัดจิ้งอัน (Jing'an Temple)" data-taxi-cost="35-55 RMB" data-train="N/A" data-metro="4 RMB (สาย 2 หรือ 7)" data-walking="N/A" data-station="Jing'an Temple (สาย 2, 7)" data-description="วัดพุทธโบราณอายุกว่า 1,700 ปีกลางใจเมืองเซี่ยงไฮ้ ค่าเข้า 50 RMB รายล้อมด้วยตึกสูงระฟ้าเป็น Contrast ที่หาไม่ได้ที่ไหนในโลก ภายในมีพระพุทธรูปทองคำขนาดใหญ่ เปิด 07:30-17:00 แต่งกายสุภาพ ห้ามสวมกางเกงขาสั้น"><span class="time">10:00</span><span class="activity">🏯 ไหว้พระวัดจิ้งอัน</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(⏳ ใช้เวลาในวัดประมาณ 1 ชม.)</small></li>
-                        <li data-activity="rei-flower" data-duration="1 ชั่วโมง" data-distance="2 กม." data-from="วัดจิ้งอัน" data-to="Rei Flower Coffee" data-taxi-cost="20-30 RMB" data-train="N/A" data-metro="N/A" data-walking="22 นาที" data-station="Jing'an Temple (สาย 2, 7)" data-description="Rei Flower Coffee คาเฟ่ดีไซน์สุดสวย ดอกไม้ตกแต่งในเครื่องดื่ม ราคา 35-55 RMB เป็น Specialty Coffee Specialty สุดฮิตใน Xiaohongshu เหมาะถ่ายรูปลง IG มาก เมนูแนะนำ: Latte พร้อม Edible Flower บนโฟม"><span class="time">11:30</span><span class="activity">🌸 พักเบรคเก๋ๆ ที่ Rei Flower Coffee</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(🚇 เดินทางต่อไปไปรษณีย์ ~25 นาที)</small></li>
-                        <li data-activity="postal-museum" data-duration="45 นาที" data-distance="4 กม." data-from="Rei Flower Coffee" data-to="Shanghai Postal Museum (上海邮政博物馆)" data-taxi-cost="25-40 RMB" data-train="N/A" data-metro="4 RMB (สาย 12)" data-walking="N/A" data-station="Tiantong Road (สาย 12)" data-description="พิพิธภัณฑ์ไปรษณีย์เซี่ยงไฮ้ในอาคารสไตล์ยุโรปสร้างปี 1924 เข้าชมฟรี (ลงทะเบียนที่หน้าเคาน์เตอร์) ชั้นบนมีระเบียงชมวิวสะพานไว่ไป๋ตู้และแม่น้ำหวงผู่ที่สวยงามมาก เปิด 09:00-17:00 ปิดวันจันทร์"><span class="time">13:00</span><span class="activity">🏛️ Shanghai Postal Museum</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(📸 ถ่ายรูปสถาปัตยกรรมสุดคลาสสิก ~45 นาที)</small></li>
-                        <li data-activity="zhapu-bridge" data-duration="20 นาที" data-distance="0.5 กม." data-from="Shanghai Postal Museum" data-to="สะพานจาปู้ (Zhapu Bridge)" data-taxi-cost="N/A" data-train="N/A" data-metro="N/A" data-walking="7 นาที" data-station="Tiantong Road (สาย 12)" data-description="สะพานจาปู้เป็นจุดถ่ายรูป Iconic ยอดนิยม เห็นสะพานไว่ไป๋ตู้ตรงหน้า มีตึก Pudong เป็นฉากหลัง แนะนำถ่ายรูปจากมุมบนสะพานหรือริมน้ำด้านล่าง เปิดฟรีตลอดเวลา วิวสวยทั้งกลางวันและกลางคืน"><span class="time">14:00</span><span class="activity">🌉 แชะภาพที่สะพานจาปู้</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(🚇 นั่งเมโทรไป Xintiandi ~20 นาที)</small></li>
-                        <li data-activity="xintiandi" data-distance="5 กม." data-from="สะพานจาปู้" data-to="ซินเทียนตี้ (Xintiandi 新天地)" data-taxi-cost="30-45 RMB" data-train="N/A" data-metro="4 RMB (สาย 10 หรือ 13)" data-walking="N/A" data-station="Xintiandi (สาย 10, 13)" data-description="ซินเทียนตี้ (新天地) ย่านเก่าที่ได้รับการบูรณะสวยงามสไตล์ Shikumen เต็มไปด้วยร้านอาหาร คาเฟ่ บูติก เข้าฟรี มีแหล่งประวัติศาสตร์ CCP Congress ครั้งแรก เดินเล่นช้อปปิ้งสบายใจ บรรยากาศยุโรปผสมจีน"><span class="time">14:30</span><span class="activity">🏛️ ซินเทียนตี้ (Xintiandi)</span></li>
-                        <li data-activity="rock-bund" data-distance="4 กม." data-from="ซินเทียนตี้" data-to="Rock Bund (外滩源)" data-taxi-cost="25-40 RMB" data-train="N/A" data-metro="4 RMB (สาย 10)" data-walking="N/A" data-station="East Nanjing Road (สาย 2, 10)" data-description="Rock Bund (外滩源) ย่านอาคารประวัติศาสตร์ยุคอาณานิคมที่ได้รับการบูรณะ มีพิพิธภัณฑ์ศิลปะ Rockbund Art Museum (ค่าเข้า 50-80 RMB) ร้านอาหารหรู Gallery ต่างๆ อาคาร Art Deco ปี 1930s สวยมาก เข้าชมบริเวณภายนอกฟรี"><span class="time">15:00</span><span class="activity">🏢 Rock Bund</span></li>
-                        <li data-activity="heroes-memorial" data-distance="0.5 กม." data-from="Rock Bund" data-to="Shanghai People’s Heroes Memorial Tower" data-taxi-cost="N/A" data-train="N/A" data-metro="N/A" data-walking="7 นาที" data-station="East Nanjing Road (สาย 2, 10)" data-description="อนุสรณ์สถานวีรบุรุษประชาชนเซี่ยงไฮ้ (上海人民英雄纪念塔) ริมฝั่ง The Bund ติดแม่น้ำหวงผู่ เปิดชมฟรีตลอดเวลา จุดถ่ายรูปกับ Skyline Pudong ยามเย็นแสงสวยมาก ไม่ค่อยมีนักท่องเที่ยวแวะ จึงไม่แออัด"><span class="time">16:15</span><span class="activity">🗽 Shanghai People’s Heroes Memorial Tower</span></li>
-                        <li data-activity="bund-platform" data-distance="0.3 กม." data-from="Heroes Memorial Tower" data-to="The Bund Platform (外滩)" data-taxi-cost="N/A" data-train="N/A" data-metro="N/A" data-walking="5 นาที" data-station="East Nanjing Road (สาย 2, 10)" data-description="The Bund (外滩) แนวอาคารยุคอาณานิคมริมแม่น้ำหวงผู่ยาว 1.5 กม. ชม Skyline ตึกสูงใน Pudong ฝั่งตรงข้าม เปิดฟรีตลอด 24 ชั่วโมง ช่วง 17:00-19:00 แสงทองสวยที่สุด ก่อนฟ้ามืดถ่ายรูป Bund + Pudong ได้สวยมาก"><span class="time">16:45</span><span class="activity">🌉 The Bund (platform)</span></li>
-                        <li data-activity="chen-yi-square" data-distance="0.2 กม." data-from="The Bund Platform" data-to="Chen Yi Square (陈毅广场)" data-taxi-cost="N/A" data-train="N/A" data-metro="N/A" data-walking="3 นาที" data-station="East Nanjing Road (สาย 2, 10)" data-description="Chen Yi Square (陈毅广场) ลานกว้างหน้า The Bund มีรูปปั้นนายพล Chen Yi อดีตนายกเทศมนตรีเซี่ยงไฮ้ เป็นจุดนัดพบยอดนิยมเปิดฟรีตลอดเวลา ถ่ายรูปกับ Skyline Pudong ในช่วง Golden Hour สวยมาก"><span class="time">17:30</span><span class="activity">⛲ Chen Yi Square</span></li>
-                        <li data-activity="mosaic-plaza-2" data-distance="1.5 กม." data-from="Chen Yi Square" data-to="Mosaic Plaza" data-taxi-cost="20-30 RMB" data-train="N/A" data-metro="4 RMB" data-walking="20 นาที" data-station="East Nanjing Road (สาย 2, 10)" data-description="ทานอาหารเย็นที่ Mosaic Plaza ใกล้ The Bund: 🐟 Dongsheng อาหารทะเล 150-300 RMB/คน | 🫕 New Sukiyaki ชาบูญี่ปุ่น 120-200 RMB/คน | 🍖 Long Time Ago ปิ้งย่าง/ฉือหม่า 80-150 RMB/คน แนะนำจองโต๊ะล่วงหน้าผ่านแอป Dianping"><span class="time">18:30</span><span class="activity">🍽️ Mosaic Plaza (Dongsheng / New Sukiyaki / Long Time Ago)</span></li>
-                    </ul>
+        <section class="day-card">
+            <div class="day-head">
+                <span class="badge">วันที่ 8</span>
+                <div>
+                    <div class="day-title">วันเดินทางกลับ</div>
+                    <div class="day-date">16 เมษายน 2026</div>
                 </div>
             </div>
+            <ul class="timeline">
+                <li>ช่วงเช้าพักผ่อนตามอัธยาศัย</li>
+                <li>เช็คเอาท์จาก Shanghai Rezen Estelle Hotel ก่อนเวลา 12:00 น.</li>
+            </ul>
+        </section>
+    </main>
 
-            <!-- Day 7 -->
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <span class="day-badge">วันที่ 7</span>
-                    <span class="date">📅 15 เมษายน 2026 - คาเฟ่ & ช้อปปิ้ง</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Xintiandi5.jpg" alt="Cafe & Shopping" class="timeline-image">
-                    <h3>☕ เดินเล่นคาเฟ่ & ช้อปปิ้งของฝาก</h3>
-                    <ul class="schedule-list">
-                        <li data-activity="1000-tree" data-duration="1.5 ชั่วโมง" data-distance="7 กม." data-from="โรงแรม" data-to="1000 Trees (上海千树)" data-taxi-cost="35-55 RMB" data-train="N/A" data-metro="4 RMB (สาย 13 หรือ สาย 4)" data-walking="N/A" data-station="Changhua Road (สาย 13)" data-description="1000 Trees (上海千树) อาคารดีไซน์ล้ำโลกโดย Thomas Heatherwick สถาปนิกชื่อดัง มีต้นไม้กว่า 1,000 ต้นเติบโตบนผนังและหลังคา ข้างในมีร้านค้า คาเฟ่ ตลาดของออกแบบ ถ่ายรูปสวยมาก เปิด 10:00-22:00 เข้าชมบริเวณภายนอกฟรี"><span class="time">08:30</span><span class="activity">🌳 ชมสถาปัตยกรรม 1000 Trees</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(⏳ เดินชมตึกและถ่ายภาพ ~1.5 ชม.)</small></li>
-                        <li data-activity="wukang-building" data-duration="30 นาที" data-distance="6 กม." data-from="1000 Trees" data-to="Wukang Mansion (武康大楼)" data-taxi-cost="30-45 RMB" data-train="N/A" data-metro="4 RMB (สาย 11)" data-walking="N/A" data-station="Changshu Road (สาย 1, 7)" data-description="Wukang Mansion (武康大楼) สร้างปี 1924 สไตล์ Art Deco ทรงเรือสุดงดงาม จุดถ่ายรูปฮิตที่สุดของเซี่ยงไฮ้ มุมถ่ายที่ดีที่สุดคือยืนกลางถนน Wukang Road ช่วงเช้าแสงดีที่สุด ร้านกาแฟน่ารักรอบข้างเยอะมาก เข้าชมด้านนอกฟรีตลอดเวลา"><span class="time">10:00</span><span class="activity">🏢 ถ่ายรูป Wukang Mansion</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(🚖 เดินต่อ/นั่งรถไป Roastery 10 นาที)</small></li>
-                        <li data-activity="starbucks-reserve" data-duration="45 นาที" data-distance="1.5 กม." data-from="Wukang Mansion" data-to="Starbucks Reserve Roastery (星巴克臻选烘焙工坊)" data-taxi-cost="20-30 RMB" data-train="N/A" data-metro="N/A" data-walking="18 นาที (ผ่าน French Concession)" data-station="Changshu Road (สาย 1, 7)" data-description="Starbucks Reserve Roastery ร้านที่ใหญ่ที่สุดในโลก 2,700 ตร.ม. 3 ชั้น ราคา 60-120 RMB เป็น Landmark เซี่ยงไฮ้ ในตัวเอง มี Reserve Bar, Princi Italian Bakery เปิด 07:00-23:00 มักมีคิวรอ 15-30 นาที แนะนำสั่งเมนู Reserve Exclusive"><span class="time">10:40</span><span class="activity">☕ Starbucks Reserve Roastery</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(☕ เผื่อเวลาดื่มด่ำ ~45 นาที)</small></li>
-                        <li data-activity="the-louis-butterful" data-distance="0.7 กม." data-from="Starbucks Reserve Roastery" data-to="The Louis / Butterful & Creamorous" data-taxi-cost="N/A" data-train="N/A" data-metro="N/A" data-walking="9 นาที" data-station="Changshu Road (สาย 1, 7)" data-description="🥐 The Louis ร้านขนมปังเนยสไตล์ญี่ปุ่น ราคา 25-45 RMB เนยหอมมาก | 🍨 Butterful & Creamorous ไอศกรีมเนยพรีเมียม ราคา 45-88 RMB/ถ้วย ทั้งสองร้านดังมากใน Xiaohongshu แนะนำลองทั้งคู่ อยู่ใน French Concession บรรยากาศดีมาก"><span class="time">11:00</span><span class="activity">🥐 The Louis + Butterful & Creamorous</span></li>
-                        <li data-activity="huaihai-zhonglu" data-distance="0.5 กม." data-from="The Louis" data-to="ถนนหวยไห่จงลู่ (Huaihai Zhonglu 淮海中路)" data-taxi-cost="N/A" data-train="N/A" data-metro="N/A" data-walking="7 นาที" data-station="South Shaanxi Road (สาย 1, 10, 12)" data-description="ถนนหวยไห่จงลู่ ย่านช้อปปิ้งหรูชิคของเซี่ยงไฮ้ยาว 6 กม. มีแบรนด์ระดับโลก ร้านกาแฟท้องถิ่น บูติก ผ่านย่าน French Concession เก่า บรรยากาศสบายๆ เดินเล่นช้อปปิ้งได้นานเท่าที่ต้องการ เปิดส่วนใหญ่ 10:00-22:00"><span class="time">12:00</span><span class="activity">🛍️ ถนนหวยไห่จง (Huaihai Zhonglu)</span></li>
-                        <li data-activity="13-demarzo" data-duration="30 นาที" data-distance="1.5 กม." data-from="ถนนหวยไห่จง" data-to="13 DE MARZO" data-taxi-cost="20-30 RMB" data-train="N/A" data-metro="4 RMB" data-walking="18 นาที" data-station="South Shaanxi Road (สาย 1, 10, 12)" data-description="13 DE MARZO ร้านเครื่องดื่มสุดฮิตของจีน เมนูเด็ด Honey Bear (หมีน้ำผึ้ง) ราคา 35-55 RMB อาจมีคิว 20-40 นาที Viral มากใน TikTok และ Xiaohongshu ควรออร์เดอร์ผ่านแอปก่อนถึงร้าน เป็นของฝากที่ถ่ายรูปได้สวยมาก"><span class="time">14:30</span><span class="activity">🐻 ซื้อเครื่องดื่มน้องหมี 13 DE MARZO</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(⏳ อาจมีคิวเล็กน้อย เผื่อเวลา 30 นาที)</small></li>
-                        <li data-activity="xintiandi-2" data-distance="1.5 กม." data-from="13 DE MARZO" data-to="ซินเทียนตี้ (Xintiandi 新天地)" data-taxi-cost="20-30 RMB" data-train="N/A" data-metro="4 RMB (สาย 10, 13)" data-walking="18 นาที" data-station="Xintiandi (สาย 10, 13)" data-description="ซินเทียนตี้รอบที่สอง ช่วงบ่ายบรรยากาศดีมาก เดินช้อปปิ้งร้านของขวัญ ของฝาก และร้านดีไซน์เนอร์ท้องถิ่น มีคาเฟ่หลายเจ้าน่าลอง เหมาะซื้อของฝากราคาดี ร้านค้าเปิดถึง 22:00-23:00"><span class="time">15:00</span><span class="activity">🏛️ ซินเทียนตี้ (Xintiandi)</span></li>
-                        <li data-activity="ny-bagels" data-duration="1 ชั่วโมง" data-distance="2.5 กม." data-from="ซินเทียนตี้" data-to="New York Bagels Museum" data-taxi-cost="20-35 RMB" data-train="N/A" data-metro="4 RMB (สาย 1)" data-walking="N/A" data-station="South Shaanxi Road (สาย 1, 10, 12)" data-description="New York Bagels Museum ร้านเบเกิลชื่อดังในเซี่ยงไฮ้ ราคา 20-40 RMB/ชิ้น มักมีคิวยาว 30-60 นาที เมนูแนะนำ: Cream Cheese Bagel, Everything Bagel ตกแต่งสไตล์นิวยอร์กเหมาะถ่ายรูปมาก เปิด 08:00-20:00"><span class="time">17:06</span><span class="activity">🥯 ซื้อเบเกิล New York Bagels Museum</span><br><small style="color:#6B7280; font-size: 0.8em; margin-left: 55px;">(⏳ เผื่อเวลาเข้าคิวและถ่ายรูปหน้าร้าน ~1 ชม.)</small></li>
-                        <li data-activity="super-brand" data-distance="3.5 กม." data-from="New York Bagels Museum" data-to="Super Brand Mall (正大广场)" data-taxi-cost="30-50 RMB" data-train="N/A" data-metro="4 RMB (สาย 2 ถึง Lujiazui)" data-walking="N/A" data-station="Lujiazui (สาย 2)" data-description="Super Brand Mall (正大广场) ห้างขนาดใหญ่ 10 ชั้นใน Lujiazui เหมาะซื้อของฝากก่อนกลับ มีซูเปอร์มาร์เก็ต Ole' ร้านอาหาร และร้านค้าแบรนด์ต่างๆ เดินทางสะดวกใกล้รถไฟใต้ดิน Lujiazui มองเห็น Oriental Pearl Tower ด้านนอก เปิด 10:00-22:00"><span class="time">18:00</span><span class="activity">🛍️ ห้างสรรพสินค้า Super Brand</span></li>
-                        <li data-activity="bund-finale" data-distance="0.5 กม." data-from="Super Brand Mall" data-to="The Bund (คืนสุดท้าย)" data-taxi-cost="N/A" data-train="N/A" data-metro="N/A" data-walking="7 นาที" data-station="Lujiazui (สาย 2)" data-description="บอกลาเดอะบันด์คืนสุดท้าย ชม Skyline ยามค่ำคืนที่สวยที่สุดในโลก ไฟ LED ของ Oriental Pearl Tower, Shanghai Tower และ Shanghai World Financial Center สะท้อนบนแม่น้ำหวงผู่งดงามตระการตา เปิดฟรีตลอด 24 ชั่วโมง อย่าลืมบันทึกความทรงจำ 🌙"><span class="time">21:00</span><span class="activity">🌉 บอกลาเดอะบันด์</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Modal -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 id="modalTitle">Activity Title</h2>
-                <span class="time" id="modalTime">Time</span>
-                <button class="modal-close" id="modalClose">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="location-info">
-                    <h3>📍 ข้อมูลสถานที่</h3>
-                    <p><strong>From:</strong> <span id="modalFrom">-</span></p>
-                    <p><strong>To:</strong> <span id="modalTo">-</span></p>
-                    <p><strong>คำบรรยาย:</strong> <span id="modalDescription">-</span></p>
-                    <span class="distance-badge" id="modalDistance">ระยะทาง: -</span>
-                </div>
-                <div class="travel-info">
-                    <h3>🚗 ตัวเลือกการเดินทาง</h3>
-                    <div class="travel-options">
-                        <div class="travel-option" id="taxiOption">
-                            <div class="travel-option-icon">🚕</div>
-                            <div class="travel-option-details">
-                                <h4>แท็กซี่ / ตี้ตี (DiDi)</h4>
-                                <p class="cost" id="taxiCost">ราคาโดยประมาณ: -</p>
-                                <p class="time" id="taxiTime">เวลาเดินทาง: -</p>
-                            </div>
-                        </div>
-                        <div class="travel-option train" id="trainOption" style="display: none;">
-                            <div class="travel-option-icon">🚄</div>
-                            <div class="travel-option-details">
-                                <h4>รถไฟ</h4>
-                                <p class="cost" id="trainCost">ราคาโดยประมาณ: -</p>
-                                <p class="time" id="trainTime">เวลาเดินทาง: -</p>
-                            </div>
-                        </div>
-                        <div class="travel-option metro" id="metroOption" style="display: none;">
-                            <div class="travel-option-icon">🚇</div>
-                            <div class="travel-option-details">
-                                <h4>รถไฟใต้ดิน (Metro)</h4>
-                                <p class="cost" id="metroCost">ราคาโดยประมาณ: -</p>
-                                <p class="time" id="metroTime">เวลาเดินทาง: -</p>
-                            </div>
-                        </div>
-                        <div class="travel-option walking" id="walkingOption" style="display: none;">
-                            <div class="travel-option-icon">🚶</div>
-                            <div class="travel-option-details">
-                                <h4>เดินเท้า</h4>
-                                <p class="time" id="walkingTime">เวลาเดินทาง: -</p>
-                            </div>
-                        </div>
-                    </div>
-                    <p style="margin-top: 15px; color: var(--gray); font-size: 0.9rem;">
-                        <strong>🚉 สถานีอ้างอิง:</strong> <span id="modalStation">-</span>
-                    </p>
-                </div>
-                <div class="photo-spots">
-                    <h3>📸 📸 ภาพสถานที่ & จุดถ่ายรูป (คลิกที่รูปเพื่อขยาย)</h3>
-                    <div class="photo-spots-grid" id="photoSpotsGrid"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightboxOverlay">
-        <span class="lightbox-close" id="lightboxClose">&times;</span>
-        <img src="" alt="Expanded Image" id="lightboxImg">
-    </div>
-
-    <!-- Footer -->
     <footer>
-        <p>✈️ ขอให้เที่ยวจีนอย่างสนุกสนานและปลอดภัยขีดสุด! ✈️ ✈️</p>
-        <p style="margin-top: 10px; font-size: 0.9rem;">9 - 15 เมษายน 2026 | เซี่ยงไฮ้ & ชิงเต่า</p>
+        อัปเดตตามข้อมูลล่าสุดเรียบร้อยแล้ว • ขอให้ทริปสนุกและเดินทางปลอดภัย ✈️
     </footer>
 
     <script>
-        const photoSpotsData = {
-    "airport": [
-        {
-            "name": "Pudong Terminal (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://www.ana.co.jp/guide/prepare/airport-guide/international/bkk/images/20220823_bkk_tran_e.jpg",
-            "desc": "Shanghai Pudong International Airport (IATA: PVG, ICAO: ZSPD) is one of the two international airpor..."
-        },
-        {
-            "name": "Pudong Terminal (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://www.siammandarinahotel.com/wp-content/uploads/2024/02/Suvarnabhumi-Airport-Terminal-Map-SAT-1.png",
-            "desc": "Shanghai Pudong International Airport (IATA: PVG, ICAO: ZSPD) is one of the two international airpor..."
-        },
-        {
-            "name": "Pudong Terminal (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "http://photos.wikimapia.org/p/00/02/12/80/95_full.jpg",
-            "desc": "Shanghai Pudong International Airport (IATA: PVG, ICAO: ZSPD) is one of the two international airpor..."
-        },
-        {
-            "name": "Pudong Terminal (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://upload.wikimedia.org/wikipedia/commons/8/88/Suvarnabhumi_Airport_Terminal_E_interior_at_dusk.jpg",
-            "desc": "Shanghai Pudong International Airport (IATA: PVG, ICAO: ZSPD) is one of the two international airpor..."
-        },
-        {
-            "name": "Pudong Terminal (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://www.siammandarinahotel.com/wp-content/uploads/2024/02/Suvarnabhumi-Quick-Guide-Terminal-Map.jpg",
-            "desc": "Shanghai Pudong International Airport (IATA: PVG, ICAO: ZSPD) is one of the two international airpor..."
-        },
-        {
-            "name": "Pudong Terminal (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://maps.airportinformation.com/airportinformation/BKK.png",
-            "desc": "Shanghai Pudong International Airport (IATA: PVG, ICAO: ZSPD) is one of the two international airpor..."
-        }
-    ],
-    "arrive-shanghai": [
-        {
-            "name": "Maglev รถไฟ (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://c8.alamy.com/comp/ABBM8P/shanghai-pudong-international-airport-terminal-ABBM8P.jpg",
-            "desc": "The Shanghai maglev train (SMT) or Shanghai Transrapid (Chinese: 上海磁浮示范运营线; pinyin: Shànghǎi Cífú Sh..."
-        },
-        {
-            "name": "Maglev รถไฟ (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://c8.alamy.com/comp/TCYHHH/shanghai-pudong-international-airport-terminal-t2-TCYHHH.jpg",
-            "desc": "The Shanghai maglev train (SMT) or Shanghai Transrapid (Chinese: 上海磁浮示范运营线; pinyin: Shànghǎi Cífú Sh..."
-        },
-        {
-            "name": "Maglev รถไฟ (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://upload.wikimedia.org/wikipedia/commons/8/89/Shanghai_Pudong_Airport_2024_%28cropped%29.jpg",
-            "desc": "The Shanghai maglev train (SMT) or Shanghai Transrapid (Chinese: 上海磁浮示范运营线; pinyin: Shànghǎi Cífú Sh..."
-        },
-        {
-            "name": "Maglev รถไฟ (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://www.chinaairlinetravel.com/airport-guide/shanghai-airport/images/pudong/map/map-t1-t2.jpg",
-            "desc": "The Shanghai maglev train (SMT) or Shanghai Transrapid (Chinese: 上海磁浮示范运营线; pinyin: Shànghǎi Cífú Sh..."
-        },
-        {
-            "name": "Maglev รถไฟ (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://c8.alamy.com/comp/D5T67T/shanghai-pudong-airport-interior-in-china-D5T67T.jpg",
-            "desc": "The Shanghai maglev train (SMT) or Shanghai Transrapid (Chinese: 上海磁浮示范运营线; pinyin: Shànghǎi Cífú Sh..."
-        },
-        {
-            "name": "Maglev รถไฟ (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/M3NTG0/shanghai-pudong-international-airport-terminal-china-M3NTG0.jpg",
-            "desc": "The Shanghai maglev train (SMT) or Shanghai Transrapid (Chinese: 上海磁浮示范运营线; pinyin: Shànghǎi Cífú Sh..."
-        }
-    ],
-    "nanjing-road": [
-        {
-            "name": "ถนนหนานจิง (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://c8.alamy.com/comp/JEKB46/nanjing-east-road-in-shanghai-at-night-nanjing-east-road-is-one-of-JEKB46.jpg",
-            "desc": "ถนนหนานจิง (Chinese: 南京路; pinyin: Nánjīng Lù; Shanghainese: Noecin Lu) is a road in Shanghai, the ..."
-        },
-        {
-            "name": "ถนนหนานจิง (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://c8.alamy.com/comp/2J3K2TX/pedestrian-signs-on-east-nanjing-road-downtown-shanghai-china-east-nanjing-road-huangpu-district-shanghai-china-2J3K2TX.jpg",
-            "desc": "ถนนหนานจิง (Chinese: 南京路; pinyin: Nánjīng Lù; Shanghainese: Noecin Lu) is a road in Shanghai, the ..."
-        },
-        {
-            "name": "ถนนหนานจิง (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://c8.alamy.com/comp/FC1AY4/shanghai-east-nanjing-road-shopping-at-night-FC1AY4.jpg",
-            "desc": "ถนนหนานจิง (Chinese: 南京路; pinyin: Nánjīng Lù; Shanghainese: Noecin Lu) is a road in Shanghai, the ..."
-        },
-        {
-            "name": "ถนนหนานจิง (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://c8.alamy.com/comp/JEKAG4/shanghai-june-5-2014-nanjing-east-road-at-night-nanjing-road-is-the-JEKAG4.jpg",
-            "desc": "ถนนหนานจิง (Chinese: 南京路; pinyin: Nánjīng Lù; Shanghainese: Noecin Lu) is a road in Shanghai, the ..."
-        },
-        {
-            "name": "ถนนหนานจิง (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://c8.alamy.com/comp/CPNTY6/east-nanjing-road-shanghai-CPNTY6.jpg",
-            "desc": "ถนนหนานจิง (Chinese: 南京路; pinyin: Nánjīng Lù; Shanghainese: Noecin Lu) is a road in Shanghai, the ..."
-        },
-        {
-            "name": "ถนนหนานจิง (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/FC1AXK/shanghai-east-nanjing-road-shopping-at-night-FC1AXK.jpg",
-            "desc": "ถนนหนานจิง (Chinese: 南京路; pinyin: Nánjīng Lù; Shanghainese: Noecin Lu) is a road in Shanghai, the ..."
-        }
-    ],
-    "waibaidu-bund": [
-        {
-            "name": "Waibaidu Bridge (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Shanghai_banner_Garden_Bridge.jpg",
-            "desc": "The Waibaidu Bridge (Chinese: 外白渡桥; pinyin: Wàibáidù Qiáo; Shanghainese: Ngabahdu Jio), called the G..."
-        },
-        {
-            "name": "Waibaidu Bridge (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://c8.alamy.com/comp/T5BHC5/shanghai-waibaidu-bridge-and-light-tracks-at-night-light-tracks-of-cars-on-the-shanghai-waibaidu-bridge-T5BHC5.jpg",
-            "desc": "The Waibaidu Bridge (Chinese: 外白渡桥; pinyin: Wàibáidù Qiáo; Shanghainese: Ngabahdu Jio), called the G..."
-        },
-        {
-            "name": "Waibaidu Bridge (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://watermark.lovepik.com/photo/50161/6025_lovepik-shanghai-bund-waibaidu-bridge-night-view-photo-image_wh1200.jpg",
-            "desc": "The Waibaidu Bridge (Chinese: 外白渡桥; pinyin: Wàibáidù Qiáo; Shanghainese: Ngabahdu Jio), called the G..."
-        },
-        {
-            "name": "Waibaidu Bridge (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://img.lovepik.com/photo/20211123/medium/lovepik-night-view-of-waibaidu-bridge-in-shanghai-picture_500776020.jpg",
-            "desc": "The Waibaidu Bridge (Chinese: 外白渡桥; pinyin: Wàibáidù Qiáo; Shanghainese: Ngabahdu Jio), called the G..."
-        },
-        {
-            "name": "Waibaidu Bridge (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://watermark.lovepik.com/photo/20211122/large/lovepik-night-view-of-waibaidu-bridge-in-shanghai-picture_500697624.jpg",
-            "desc": "The Waibaidu Bridge (Chinese: 外白渡桥; pinyin: Wàibáidù Qiáo; Shanghainese: Ngabahdu Jio), called the G..."
-        },
-        {
-            "name": "Waibaidu Bridge (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/CEK1T3/waibaidu-bridge-at-night-shanghai-china-CEK1T3.jpg",
-            "desc": "The Waibaidu Bridge (Chinese: 外白渡桥; pinyin: Wàibáidù Qiáo; Shanghainese: Ngabahdu Jio), called the G..."
-        }
-    ],
-    "train-station": [
-        {
-            "name": "Hongqiao Railway Station (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://www.chinaairlinetravel.com/railway-station/images/shanghai-hongqiao/view-departure-hall6.jpg",
-            "desc": "Shanghai Hongqiao (simplified Chinese: 上海虹桥站; traditional Chinese: 上海虹橋站; pinyin: Shànghǎi Hóngqiáo ..."
-        },
-        {
-            "name": "Hongqiao Railway Station (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://c8.alamy.com/comp/BWYXRY/electronic-traffic-information-board-shanghai-hongqiao-railway-station-BWYXRY.jpg",
-            "desc": "Shanghai Hongqiao (simplified Chinese: 上海虹桥站; traditional Chinese: 上海虹橋站; pinyin: Shànghǎi Hóngqiáo ..."
-        },
-        {
-            "name": "Hongqiao Railway Station (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://www.chinaairlinetravel.com/railway-station/shanghai-hongqiao/images/view-shanghai-hongqiao.jpg",
-            "desc": "Shanghai Hongqiao (simplified Chinese: 上海虹桥站; traditional Chinese: 上海虹橋站; pinyin: Shànghǎi Hóngqiáo ..."
-        },
-        {
-            "name": "Hongqiao Railway Station (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://c8.alamy.com/comp/2NCHTY9/shanghai-china-february-14-2023-passengers-wait-to-board-trains-at-shanghai-hongqiao-railway-station-in-shanghai-china-february-14-2023-the-2NCHTY9.jpg",
-            "desc": "Shanghai Hongqiao (simplified Chinese: 上海虹桥站; traditional Chinese: 上海虹橋站; pinyin: Shànghǎi Hóngqiáo ..."
-        },
-        {
-            "name": "Hongqiao Railway Station (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://data.chinatravel.com/images/mobile-first/china-trains/shanghai-hongqiao-railway-station-map.jpg",
-            "desc": "Shanghai Hongqiao (simplified Chinese: 上海虹桥站; traditional Chinese: 上海虹橋站; pinyin: Shànghǎi Hóngqiáo ..."
-        },
-        {
-            "name": "Hongqiao Railway Station (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/2X26W20/hongqiao-railway-station-shanghai-china-asia-information-display-with-train-details-and-departure-times-at-a-railway-station-yichang-hubei-2X26W20.jpg",
-            "desc": "Shanghai Hongqiao (simplified Chinese: 上海虹桥站; traditional Chinese: 上海虹橋站; pinyin: Shànghǎi Hóngqiáo ..."
-        }
-    ],
-    "train-depart": [
-        {
-            "name": "Fuxing High Speed รถไฟ (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://railway-international.com/storage/Image K/Fuxing.jpg",
-            "desc": "Fuxing (simplified Chinese: 复兴号; traditional Chinese: 復興號; pinyin: Fùxīng Hào; lit. 'Rejuvenation'),..."
-        },
-        {
-            "name": "Fuxing High Speed รถไฟ (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://c8.alamy.com/comp/2HJEX4H/beijing-china-september-29-2019-fuxing-type-high-speed-train-high-speed-at-south-railway-station-in-beijing-china-2HJEX4H.jpg",
-            "desc": "Fuxing (simplified Chinese: 复兴号; traditional Chinese: 復興號; pinyin: Fùxīng Hào; lit. 'Rejuvenation'),..."
-        },
-        {
-            "name": "Fuxing High Speed รถไฟ (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://c8.alamy.com/comp/2HPKD2A/the-fuxing-high-speed-train-2HPKD2A.jpg",
-            "desc": "Fuxing (simplified Chinese: 复兴号; traditional Chinese: 復興號; pinyin: Fùxīng Hào; lit. 'Rejuvenation'),..."
-        },
-        {
-            "name": "Fuxing High Speed รถไฟ (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://c8.alamy.com/comp/W5MDFR/file-a-fuxing-high-speed-bullet-train-of-crh-china-railway-high-speed-arrives-at-the-nanjing-railway-station-in-nanjing-city-east-chinas-jian-W5MDFR.jpg",
-            "desc": "Fuxing (simplified Chinese: 复兴号; traditional Chinese: 復興號; pinyin: Fùxīng Hào; lit. 'Rejuvenation'),..."
-        },
-        {
-            "name": "Fuxing High Speed รถไฟ (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://c8.alamy.com/comp/2H1R1CG/beijing-china-september-29-2019-high-speed-train-interior-car-wagon-fuxing-high-speed-beijing-south-railway-station-in-china-2H1R1CG.jpg",
-            "desc": "Fuxing (simplified Chinese: 复兴号; traditional Chinese: 復興號; pinyin: Fùxīng Hào; lit. 'Rejuvenation'),..."
-        },
-        {
-            "name": "Fuxing High Speed รถไฟ (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://img-new.cgtrader.com/items/4867154/bd1930e3b4/cr400af-fuxing-emu-china-high-speed-rail-3d-model-bd1930e3b4.jpg",
-            "desc": "Fuxing (simplified Chinese: 复兴号; traditional Chinese: 復興號; pinyin: Fùxīng Hào; lit. 'Rejuvenation'),..."
-        }
-    ],
-    "arrive-qingdao": [
-        {
-            "name": "Qingdao North Station (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://alchetron.com/cdn/qingdaobei-railway-station-ded8d733-6a39-400d-bc20-34c180a1741-resize-750.jpg",
-            "desc": "Qingdaobei (Qingdao North) railway station (simplified Chinese: 青岛北站; traditional Chinese: 青島北站; pin..."
-        },
-        {
-            "name": "Qingdao North Station (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://c8.alamy.com/comp/2T0X8BF/grimsby-town-railway-station-exterior-2T0X8BF.jpg",
-            "desc": "Qingdaobei (Qingdao North) railway station (simplified Chinese: 青岛北站; traditional Chinese: 青島北站; pin..."
-        },
-        {
-            "name": "Qingdao North Station (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://c8.alamy.com/comp/2RBYRA6/norwich-thorpe-railway-station-exterior-2RBYRA6.jpg",
-            "desc": "Qingdaobei (Qingdao North) railway station (simplified Chinese: 青岛北站; traditional Chinese: 青島北站; pin..."
-        },
-        {
-            "name": "Qingdao North Station (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://c8.alamy.com/comp/2RBYRD7/norwich-thorpe-railway-station-exterior-2RBYRD7.jpg",
-            "desc": "Qingdaobei (Qingdao North) railway station (simplified Chinese: 青岛北站; traditional Chinese: 青島北站; pin..."
-        },
-        {
-            "name": "Qingdao North Station (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://ak-d.tripcdn.com/images/0100x12000842kxkh9CFE_C_880_350_R5.jpg",
-            "desc": "Qingdaobei (Qingdao North) railway station (simplified Chinese: 青岛北站; traditional Chinese: 青島北站; pin..."
-        },
-        {
-            "name": "Qingdao North Station (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/3BJYHKN/haapsalu-railway-station-exterior-view-3BJYHKN.jpg",
-            "desc": "Qingdaobei (Qingdao North) railway station (simplified Chinese: 青岛北站; traditional Chinese: 青島北站; pin..."
-        }
-    ],
-    "qingdao-beach": [
-        {
-            "name": "Badaguan (มุมหลัก)",
-            "img": "https://upload.wikimedia.org/wikipedia/commons/e/e6/%E9%9D%92%E5%B2%9B%E5%85%AB%E5%A4%A7%E5%85%B3%E8%8A%B1%E7%9F%B3%E6%A5%BC.jpg",
-            "desc": "Badaguan (Chinese: 八大关; pinyin: Bādàguān; lit. 'the eight great passes') is a historical mansion are..."
-        }
-    ],
-    "qingdao-city": [
-        {
-            "name": "Tsingtao Brewery (มุมหลัก)",
-            "img": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Tsingtao_Brewery_in_Qingdao.jpg",
-            "desc": "Tsingtao Brewery Co. Ltd."
-        }
-    ],
-    "qingdao-station": [
-        {
-            "name": "Qingdao North Station (มุมหลัก)",
-            "img": "https://upload.wikimedia.org/wikipedia/commons/e/e4/West_fa%C3%A7ade_of_Qingdaobei_Railway_Station_%2820191003160751%29.jpg",
-            "desc": "Qingdaobei (Qingdao North) railway station (simplified Chinese: 青岛北站; traditional Chinese: 青島北站; pin..."
-        }
-    ],
-    "train-return": [
-        {
-            "name": "Fuxing รถไฟ returning (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://static.vecteezy.com/system/resources/previews/031/222/159/large_2x/train-window-view-at-sunset-ai-generated-photo.jpg",
-            "desc": "Enjoying the scenic high-speed views on the way back."
-        },
-        {
-            "name": "Fuxing รถไฟ returning (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://img.freepik.com/premium-photo/sunset-seen-through-train-window_1048944-26211919.jpg",
-            "desc": "Enjoying the scenic high-speed views on the way back."
-        },
-        {
-            "name": "Fuxing รถไฟ returning (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://img.freepik.com/premium-photo/sunset-seen-through-train-window_1048944-20206437.jpg",
-            "desc": "Enjoying the scenic high-speed views on the way back."
-        },
-        {
-            "name": "Fuxing รถไฟ returning (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://img.freepik.com/premium-photo/sunset-seen-through-train-window_1048944-18773660.jpg",
-            "desc": "Enjoying the scenic high-speed views on the way back."
-        },
-        {
-            "name": "Fuxing รถไฟ returning (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://img.freepik.com/premium-photo/sunset-seen-through-train-window_1048944-6091729.jpg",
-            "desc": "Enjoying the scenic high-speed views on the way back."
-        },
-        {
-            "name": "Fuxing รถไฟ returning (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://img.freepik.com/premium-photo/sunset-looking-out-train-window_1127-25173.jpg",
-            "desc": "Enjoying the scenic high-speed views on the way back."
-        }
-    ],
-    "arrive-shanghai-hotel": [
-        {
-            "name": "Shanghai Skyline Night (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://icons.veryicon.com/png/o/miscellaneous/shanghai-metro-line/shanghai-metro-line-2.png",
-            "desc": "Beautiful scenery of Shanghai skyline."
-        },
-        {
-            "name": "Shanghai Skyline Night (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://www.chinatoursnet.com/Public/Home/img/icon/shanghai.jpg",
-            "desc": "Beautiful scenery of Shanghai skyline."
-        },
-        {
-            "name": "Shanghai Skyline Night (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://global.yometro.com/images/maps/shanghai-metro-map.jpg",
-            "desc": "Beautiful scenery of Shanghai skyline."
-        },
-        {
-            "name": "Shanghai Skyline Night (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://www.chinajourneyguide.com/wp-content/uploads/2025/06/Shanghai-Metro-Line-2-1536x864.jpg",
-            "desc": "Beautiful scenery of Shanghai skyline."
-        },
-        {
-            "name": "Shanghai Skyline Night (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://c8.alamy.com/comp/2DD33WB/shanghai-metro-line-2-2DD33WB.jpg",
-            "desc": "Beautiful scenery of Shanghai skyline."
-        },
-        {
-            "name": "Shanghai Skyline Night (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/2G03BD3/shanghaichina-feb192021-shanghai-pudong-international-airport-stationshanghai-metro-line-2-trains-2G03BD3.jpg",
-            "desc": "Beautiful scenery of Shanghai skyline."
-        }
-    ],
-    "mosaic-plaza": [
-        {
-            "name": "ถนนหนานจิง at Night (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://image-cdn.didatravel.com/Image/CN/29513/HD/Exterior/507624e8_z.jpg",
-            "desc": "Dining near ถนนหนานจิง pedestrian street."
-        },
-        {
-            "name": "ถนนหนานจิง at Night (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://pix8.agoda.net/hotelImages/451/45106/45106_16123015400050067029.jpg",
-            "desc": "Dining near ถนนหนานจิง pedestrian street."
-        },
-        {
-            "name": "ถนนหนานจิง at Night (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://crowne-plaza-shanghai-nanjing-road-an-ihg-hotel.hotels-shanghaichina.com/data/Pics/OriginalPhoto/13150/1315000/1315000396/crowne-plaza-nanjing-road-an-ihg-hotel-shanghai-pic-47.JPEG",
-            "desc": "Dining near ถนนหนานจิง pedestrian street."
-        },
-        {
-            "name": "ถนนหนานจิง at Night (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://crowne-plaza-shanghai-nanjing-road-an-ihg-hotel.hotels-shanghaichina.com/data/Pics/OriginalPhoto/13554/1355431/1355431553/crowne-plaza-nanjing-road-an-ihg-hotel-shanghai-pic-34.JPEG",
-            "desc": "Dining near ถนนหนานจิง pedestrian street."
-        },
-        {
-            "name": "ถนนหนานจิง at Night (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://crowne-plaza-shanghai-nanjing-road-an-ihg-hotel.hotels-shanghaichina.com/data/Pics/OriginalPhoto/13497/1349798/1349798830/pic-crowne-plaza-shanghai-nanjing-road-by-ihg-shanghai-25.JPEG",
-            "desc": "Dining near ถนนหนานจิง pedestrian street."
-        },
-        {
-            "name": "ถนนหนานจิง at Night (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://crowne-plaza-shanghai-nanjing-road-an-ihg-hotel.hotels-shanghaichina.com/data/Photos/OriginalPhoto/11411/1141179/1141179709.JPEG",
-            "desc": "Dining near ถนนหนานจิง pedestrian street."
-        }
-    ],
-    "qingdao-food": [
-        {
-            "name": "Zhanqiao Pier Evening (มุมหลัก)",
-            "img": "https://upload.wikimedia.org/wikipedia/commons/3/3d/%E9%9D%92%E5%B2%9B%E6%A0%88%E6%A1%A5_Ehemalige_Landungsbr%C3%BCcke_Qingdao.jpg",
-            "desc": "Enjoying Qingdao seafood with the beautiful seaside view."
-        }
-    ],
-    "leave-hotel-disney": [
-        {
-            "name": "Morning Shanghai (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://c8.alamy.com/comp/W8C2W0/interior-view-of-the-disney-resort-subway-station-on-metro-line-11-in-shanghai-china-25-april-2016-disney-resort-station-on-metro-line-11-opened-W8C2W0.jpg",
-            "desc": "Starting early to head to the Magic Kingdom."
-        },
-        {
-            "name": "Morning Shanghai (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://c8.alamy.com/comp/W8C2H5/interior-view-of-the-disney-resort-subway-station-on-metro-line-11-in-shanghai-china-25-april-2016-disney-resort-station-on-metro-line-11-opened-W8C2H5.jpg",
-            "desc": "Starting early to head to the Magic Kingdom."
-        },
-        {
-            "name": "Morning Shanghai (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://c8.alamy.com/comp/W8C1KG/interior-view-of-the-disney-resort-subway-station-on-metro-line-11-in-shanghai-china-25-april-2016-disney-resort-station-on-metro-line-11-opened-W8C1KG.jpg",
-            "desc": "Starting early to head to the Magic Kingdom."
-        },
-        {
-            "name": "Morning Shanghai (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://c8.alamy.com/comp/W8C1GH/interior-view-of-the-disney-resort-subway-station-on-metro-line-11-in-shanghai-china-25-april-2016-disney-resort-station-on-metro-line-11-opened-W8C1GH.jpg",
-            "desc": "Starting early to head to the Magic Kingdom."
-        },
-        {
-            "name": "Morning Shanghai (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://c8.alamy.com/comp/W8C036/view-of-a-guide-board-near-the-disney-resort-subway-station-on-metro-line-11-in-shanghai-china-25-april-2016-disney-resort-station-on-metro-line-W8C036.jpg",
-            "desc": "Starting early to head to the Magic Kingdom."
-        },
-        {
-            "name": "Morning Shanghai (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/W8C2NX/a-chinese-employee-is-pictured-on-the-platform-at-the-disney-resort-subway-station-on-metro-line-11-in-shanghai-china-25-april-2016-disney-resort-W8C2NX.jpg",
-            "desc": "Starting early to head to the Magic Kingdom."
-        }
-    ],
-    "disneyland-rides": [
-        {
-            "name": "Disneyland Castle (แนะนำจุดถ่ายภาพ) (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://www.mickeynews.com/wp-content/uploads/2018/03/SHDAD768937486-1280x640.jpg",
-            "desc": "เซี่ยงไฮ้ดิสนีย์แลนด์ Park is a theme park located in Chuansha New Town, Pudong, Shanghai, China."
-        },
-        {
-            "name": "Disneyland Castle (แนะนำจุดถ่ายภาพ) (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://animationxpress.com/wp-content/uploads/2019/01/Shanghai-Disneyland-Enchanted-Storybook-Castle.jpg",
-            "desc": "เซี่ยงไฮ้ดิสนีย์แลนด์ Park is a theme park located in Chuansha New Town, Pudong, Shanghai, China."
-        },
-        {
-            "name": "Disneyland Castle (แนะนำจุดถ่ายภาพ) (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://livingnomads.com/wp-content/uploads/2023/10/31/Shanghai-Disneyland_Enchanted-Storybook-Castle1.jpg",
-            "desc": "เซี่ยงไฮ้ดิสนีย์แลนด์ Park is a theme park located in Chuansha New Town, Pudong, Shanghai, China."
-        },
-        {
-            "name": "Disneyland Castle (แนะนำจุดถ่ายภาพ) (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://i.redd.it/25isqlrxtvgz.jpg",
-            "desc": "เซี่ยงไฮ้ดิสนีย์แลนด์ Park is a theme park located in Chuansha New Town, Pudong, Shanghai, China."
-        },
-        {
-            "name": "Disneyland Castle (แนะนำจุดถ่ายภาพ) (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://www.mickeynews.com/wp-content/uploads/2016/06/Enchanted-Storybook-Castle-Night-1280-1280x640.jpg",
-            "desc": "เซี่ยงไฮ้ดิสนีย์แลนด์ Park is a theme park located in Chuansha New Town, Pudong, Shanghai, China."
-        },
-        {
-            "name": "Disneyland Castle (แนะนำจุดถ่ายภาพ) (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://livingnomads.com/wp-content/uploads/2023/10/31/Shanghai-Disneyland_Enchanted-Storybook-Castle3.jpg",
-            "desc": "เซี่ยงไฮ้ดิสนีย์แลนด์ Park is a theme park located in Chuansha New Town, Pudong, Shanghai, China."
-        }
-    ],
-    "return-hotel-disney": [
-        {
-            "name": "Disneyland at Night (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://fireworks.org/wp-content/uploads/2025/01/1738127784_maxresdefault.jpg",
-            "desc": "Watching the fireworks before heading back."
-        },
-        {
-            "name": "Disneyland at Night (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://i.pinimg.com/originals/cc/3d/9d/cc3d9ddb9c5c77e99c7f44b495c31899.jpg",
-            "desc": "Watching the fireworks before heading back."
-        },
-        {
-            "name": "Disneyland at Night (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://i.ytimg.com/vi/KMgD7wQfy1Y/maxresdefault.jpg",
-            "desc": "Watching the fireworks before heading back."
-        },
-        {
-            "name": "Disneyland at Night (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://i.ytimg.com/vi/QeuhMBRYoa0/maxresdefault.jpg",
-            "desc": "Watching the fireworks before heading back."
-        },
-        {
-            "name": "Disneyland at Night (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://s.hdnux.com/photos/01/31/72/14/23569172/3/rawImage.jpg",
-            "desc": "Watching the fireworks before heading back."
-        },
-        {
-            "name": "Disneyland at Night (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://yourdisney.asia/wp-content/uploads/shd-zootopia-land-night.jpg",
-            "desc": "Watching the fireworks before heading back."
-        }
-    ],
-    "jingan-temple": [
-        {
-            "name": "วัดจิ้งอัน (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://chine365.fr/images/1000x650/shanghai-temple-jing-an-7.jpg",
-            "desc": "วัดจิ้งอัน (simplified Chinese: 静安寺; traditional Chinese: 靜安寺; pinyin: Jìng'ān Sì; Shanghainese:..."
-        },
-        {
-            "name": "วัดจิ้งอัน (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://c8.alamy.com/comp/2DDXR4B/shanghai-jing-an-temple-2DDXR4B.jpg",
-            "desc": "วัดจิ้งอัน (simplified Chinese: 静安寺; traditional Chinese: 靜安寺; pinyin: Jìng'ān Sì; Shanghainese:..."
-        },
-        {
-            "name": "วัดจิ้งอัน (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://c8.alamy.com/comp/2BE1ETC/jing-an-temple-in-shanghai-china-2BE1ETC.jpg",
-            "desc": "วัดจิ้งอัน (simplified Chinese: 静安寺; traditional Chinese: 靜安寺; pinyin: Jìng'ān Sì; Shanghainese:..."
-        },
-        {
-            "name": "วัดจิ้งอัน (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "http://upload.wikimedia.org/wikipedia/commons/7/74/Jing'an_Temple,Shanghai.JPG",
-            "desc": "วัดจิ้งอัน (simplified Chinese: 静安寺; traditional Chinese: 靜安寺; pinyin: Jìng'ān Sì; Shanghainese:..."
-        },
-        {
-            "name": "วัดจิ้งอัน (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://c8.alamy.com/comp/BBKE52/jing-an-temple-shanghai-china-BBKE52.jpg",
-            "desc": "วัดจิ้งอัน (simplified Chinese: 静安寺; traditional Chinese: 靜安寺; pinyin: Jìng'ān Sì; Shanghainese:..."
-        },
-        {
-            "name": "วัดจิ้งอัน (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/2BE1ETT/jing-an-temple-in-shanghai-china-2BE1ETT.jpg",
-            "desc": "วัดจิ้งอัน (simplified Chinese: 静安寺; traditional Chinese: 靜安寺; pinyin: Jìng'ān Sì; Shanghainese:..."
-        }
-    ],
-    "xintiandi": [
-        {
-            "name": "ซินเทียนตี้ (มุมหลัก)",
-            "img": "https://upload.wikimedia.org/wikipedia/commons/7/7f/ซินเทียนตี้5.jpg",
-            "desc": "ซินเทียนตี้ (Chinese: 新天地; pinyin: Xīntiāndì, Shanghainese: Shinthidi lit. \"New Sky and Earth\", fig."
-        }
-    ],
-    "bund-platform": [
-        {
-            "name": "The Bund Evening (มุมหลัก)",
-            "img": "https://upload.wikimedia.org/wikipedia/commons/5/5a/The_Bund_2.jpg",
-            "desc": "The Bund is a waterfront area and a protected historical district in central Shanghai. The area cent..."
-        }
-    ],
-    "starbucks-reserve": [
-        {
-            "name": "ถนนหนานจิง Coffees (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://portfolio.etcconnect.com/wp-content/uploads/2020/05/Starbucks_Shanghai_10092018_05.jpg",
-            "desc": "Shopping and coffee in the heart of Shanghai."
-        },
-        {
-            "name": "ถนนหนานจิง Coffees (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://content-prod-live.cert.starbucks.com/binary/v2/asset/132-45783.jpg",
-            "desc": "Shopping and coffee in the heart of Shanghai."
-        },
-        {
-            "name": "ถนนหนานจิง Coffees (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://content-prod-live.cert.starbucks.com/binary/v2/asset/132-40082.jpg",
-            "desc": "Shopping and coffee in the heart of Shanghai."
-        },
-        {
-            "name": "ถนนหนานจิง Coffees (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://c8.alamy.com/comp/2RD6FJJ/shanghai-china-october-27-2021-exterior-of-starbucks-reserve-roastery-in-shanghai-the-second-largest-in-the-world-2RD6FJJ.jpg",
-            "desc": "Shopping and coffee in the heart of Shanghai."
-        },
-        {
-            "name": "ถนนหนานจิง Coffees (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://content-prod-live.cert.starbucks.com/binary/v2/asset/132-57386.jpg",
-            "desc": "Shopping and coffee in the heart of Shanghai."
-        },
-        {
-            "name": "ถนนหนานจิง Coffees (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/2YD67F9/shanghai-starbucks-reserve-roastery-2YD67F9.jpg",
-            "desc": "Shopping and coffee in the heart of Shanghai."
-        }
-    ],
-    "super-brand": [
-        {
-            "name": "Super Brand Mall & Lujiazui (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://www.superbrandmall.com/og-image.jpg",
-            "desc": "Super Brand Mall (正大广场) 10 ชั้น ใน Lujiazui เหมาะซื้อของฝากก่อนกลับ มองเห็น Oriental Pearl Tower"
-        },
-        {
-            "name": "Super Brand Mall & Lujiazui (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://c8.alamy.com/comp/ERT886/super-brand-mall-in-lujiazui-financial-district-in-pudong-in-shanghai-ERT886.jpg",
-            "desc": "Super Brand Mall (正大广场) 10 ชั้น ใน Lujiazui เหมาะซื้อของฝากก่อนกลับ มองเห็น Oriental Pearl Tower"
-        },
-        {
-            "name": "Super Brand Mall & Lujiazui (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://c8.alamy.com/comp/ERT891/super-brand-mall-in-lujiazui-financial-district-in-pudong-in-shanghai-ERT891.jpg",
-            "desc": "Super Brand Mall (正大广场) 10 ชั้น ใน Lujiazui เหมาะซื้อของฝากก่อนกลับ มองเห็น Oriental Pearl Tower"
-        },
-        {
-            "name": "Super Brand Mall & Lujiazui (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://c8.alamy.com/comp/W8HEE3/shoppers-walk-past-stalls-and-stores-at-super-brand-mall-in-the-lujiazui-financial-district-in-pudong-shanghai-china-1-september-2015-until-rece-W8HEE3.jpg",
-            "desc": "Super Brand Mall (正大广场) 10 ชั้น ใน Lujiazui เหมาะซื้อของฝากก่อนกลับ มองเห็น Oriental Pearl Tower"
-        },
-        {
-            "name": "Super Brand Mall & Lujiazui (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://st4.depositphotos.com/21607914/24411/i/1600/depositphotos_244111886-stock-photo-socialite-paris-hilton-shopping-superbrand.jpg",
-            "desc": "Super Brand Mall (正大广场) 10 ชั้น ใน Lujiazui เหมาะซื้อของฝากก่อนกลับ มองเห็น Oriental Pearl Tower"
-        },
-        {
-            "name": "Super Brand Mall & Lujiazui (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/2F0E143/the-super-brand-mall-in-shanghais-lujiazui-pudong-district-china-2F0E143.jpg",
-            "desc": "Super Brand Mall (正大广场) 10 ชั้น ใน Lujiazui เหมาะซื้อของฝากก่อนกลับ มองเห็น Oriental Pearl Tower"
-        }
-    ],
-    "bund-finale": [
-        {
-            "name": "The Bund Finale (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://c8.alamy.com/comp/C74B0B/shanghai-night-skyline-view-along-huangpu-river-and-the-bund-shanghai-C74B0B.jpg",
-            "desc": "The perfect end to a beautiful journey."
-        },
-        {
-            "name": "The Bund Finale (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://c8.alamy.com/comp/E4667N/shanghai-night-skyline-the-view-along-huangpu-river-and-the-bund-shanghai-E4667N.jpg",
-            "desc": "The perfect end to a beautiful journey."
-        },
-        {
-            "name": "The Bund Finale (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://img.freepik.com/premium-photo/bund-shanghai-night_1166198-8335.jpg",
-            "desc": "The perfect end to a beautiful journey."
-        },
-        {
-            "name": "The Bund Finale (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://darksky.org/app/uploads/2023/07/shanghai-at-night-scaled-1.jpg",
-            "desc": "The perfect end to a beautiful journey."
-        },
-        {
-            "name": "The Bund Finale (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://c8.alamy.com/comp/C74EN5/shanghai-night-skyline-view-along-huangpu-river-and-the-bund-shanghai-C74EN5.jpg",
-            "desc": "The perfect end to a beautiful journey."
-        },
-        {
-            "name": "The Bund Finale (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/C74EH8/shanghai-night-skyline-view-along-huangpu-river-and-the-bund-shanghai-C74EH8.jpg",
-            "desc": "The perfect end to a beautiful journey."
-        }
-    ],
-    "leave-hotel-q": [
-        {
-            "name": "Hongqiao Railway Station (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://www.chinaairlinetravel.com/railway-station/images/shanghai-hongqiao/map/shanghai-metro-map.jpg",
-            "desc": "สถานีรถไฟหงเฉียว หนึ่งในสถานีที่ใหญ่ที่สุดในจีน มี 30 ชานชาลา เชื่อมต่อกับสนามบินหงเฉียวและ Metro สาย 2, 10, 17"
-        },
-        {
-            "name": "Hongqiao Railway Station (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://c8.alamy.com/comp/HHNNPM/shanghai-hongqiao-railway-station-shanghai-china-HHNNPM.jpg",
-            "desc": "สถานีรถไฟหงเฉียว หนึ่งในสถานีที่ใหญ่ที่สุดในจีน มี 30 ชานชาลา เชื่อมต่อกับสนามบินหงเฉียวและ Metro สาย 2, 10, 17"
-        },
-        {
-            "name": "Hongqiao Railway Station (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://c8.alamy.com/comp/BWYXJ5/shanghai-hongqiao-railway-station-shanghai-china-BWYXJ5.jpg",
-            "desc": "สถานีรถไฟหงเฉียว หนึ่งในสถานีที่ใหญ่ที่สุดในจีน มี 30 ชานชาลา เชื่อมต่อกับสนามบินหงเฉียวและ Metro สาย 2, 10, 17"
-        },
-        {
-            "name": "Hongqiao Railway Station (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://data.chinatravel.com/images/mobile-first/china-trains/shanghai-hongqiao-railway-station-map.jpg",
-            "desc": "สถานีรถไฟหงเฉียว หนึ่งในสถานีที่ใหญ่ที่สุดในจีน มี 30 ชานชาลา เชื่อมต่อกับสนามบินหงเฉียวและ Metro สาย 2, 10, 17"
-        },
-        {
-            "name": "Hongqiao Railway Station (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://c8.alamy.com/comp/DY9FXR/shanghai-hongqiao-railway-station-in-minhang-district-largest-railway-DY9FXR.jpg",
-            "desc": "สถานีรถไฟหงเฉียว หนึ่งในสถานีที่ใหญ่ที่สุดในจีน มี 30 ชานชาลา เชื่อมต่อกับสนามบินหงเฉียวและ Metro สาย 2, 10, 17"
-        },
-        {
-            "name": "Hongqiao Railway Station (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/2M6DF9X/shanghai-hongqiao-railway-train-station-in-china-2M6DF9X.jpg",
-            "desc": "สถานีรถไฟหงเฉียว หนึ่งในสถานีที่ใหญ่ที่สุดในจีน มี 30 ชานชาลา เชื่อมต่อกับสนามบินหงเฉียวและ Metro สาย 2, 10, 17"
-        }
-    ],
-    "qingdao-tour": [
-        {
-            "name": "Zhanqiao Pier ยามเย็น (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://c8.alamy.com/comp/2BPD40N/qingdao-china-november-14-this-is-an-evening-view-of-zhanqiao-pier-along-the-waterfront-in-the-evening-on-november-14-2019-in-qingdao-2BPD40N.jpg",
-            "desc": "ท่าเรือจ่านเฉียวยามเย็น สัญลักษณ์ของชิงเต่า ค่าเข้า 15 RMB ชมทะเลสวยงาม"
-        },
-        {
-            "name": "Zhanqiao Pier ยามเย็น (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://chinatripedia.com/wp-content/uploads/2024/05/xiaoyushan-park.jpg",
-            "desc": "ท่าเรือจ่านเฉียวยามเย็น สัญลักษณ์ของชิงเต่า ค่าเข้า 15 RMB ชมทะเลสวยงาม"
-        },
-        {
-            "name": "Zhanqiao Pier ยามเย็น (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://chinatripedia.com/wp-content/uploads/2024/05/Qingdao-Post-and-Telecommunications-Museum.jpg",
-            "desc": "ท่าเรือจ่านเฉียวยามเย็น สัญลักษณ์ของชิงเต่า ค่าเข้า 15 RMB ชมทะเลสวยงาม"
-        },
-        {
-            "name": "Zhanqiao Pier ยามเย็น (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://c8.alamy.com/comp/2KA867B/a-beautiful-night-view-of-the-zhanqiao-pier-in-qingdao-china-2KA867B.jpg",
-            "desc": "ท่าเรือจ่านเฉียวยามเย็น สัญลักษณ์ของชิงเต่า ค่าเข้า 15 RMB ชมทะเลสวยงาม"
-        },
-        {
-            "name": "Zhanqiao Pier ยามเย็น (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://news.cgtn.com/news/2025-04-26/Zhanqiao-Pier-Timeless-cinematic-icon-of-Qingdao-1CSZ9aM1cXe/img/0ae872e9339944beaa72f92ba23f9c56/0ae872e9339944beaa72f92ba23f9c56.jpeg",
-            "desc": "ท่าเรือจ่านเฉียวยามเย็น สัญลักษณ์ของชิงเต่า ค่าเข้า 15 RMB ชมทะเลสวยงาม"
-        },
-        {
-            "name": "Zhanqiao Pier ยามเย็น (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://news.cgtn.com/news/2025-04-26/Zhanqiao-Pier-Timeless-cinematic-icon-of-Qingdao-1CSZ9aM1cXe/img/cf9b5d9e3e1744b5adb9fee828b65d37/cf9b5d9e3e1744b5adb9fee828b65d37.jpeg",
-            "desc": "ท่าเรือจ่านเฉียวยามเย็น สัญลักษณ์ของชิงเต่า ค่าเข้า 15 RMB ชมทะเลสวยงาม"
-        }
-    ],
-    "qingdao-full": [
-        {
-            "name": "Badaguan (八大关) (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://www.dizolein.com/wp-content/uploads/2021/05/Ba-Da-Guan-13.jpg",
-            "desc": "ย่านบ้านสไตล์ยุโรป Badaguan บ้านพักตากอากาศยุคอาณานิคมที่ได้รับการอนุรักษ์ เข้าชมฟรี"
-        },
-        {
-            "name": "Badaguan (八大关) (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://img.lovepik.com/free-png/20220216/lovepik-qingdao-badaguan-european-architecture-png-image_401294688_wh860.png",
-            "desc": "ย่านบ้านสไตล์ยุโรป Badaguan บ้านพักตากอากาศยุคอาณานิคมที่ได้รับการอนุรักษ์ เข้าชมฟรี"
-        },
-        {
-            "name": "Badaguan (八大关) (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://img.lovepik.com/photo/50079/0173.jpg_wh860.jpg",
-            "desc": "ย่านบ้านสไตล์ยุโรป Badaguan บ้านพักตากอากาศยุคอาณานิคมที่ได้รับการอนุรักษ์ เข้าชมฟรี"
-        },
-        {
-            "name": "Badaguan (八大关) (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://i.pinimg.com/736x/a3/a8/7f/a3a87f8879d8dcfbc6e4ffa87ae0b94c.jpg",
-            "desc": "ย่านบ้านสไตล์ยุโรป Badaguan บ้านพักตากอากาศยุคอาณานิคมที่ได้รับการอนุรักษ์ เข้าชมฟรี"
-        },
-        {
-            "name": "Badaguan (八大关) (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "http://www.chinadiscover.net/images/shandongpictures/Badaguan (Eight Passes).jpg",
-            "desc": "ย่านบ้านสไตล์ยุโรป Badaguan บ้านพักตากอากาศยุคอาณานิคมที่ได้รับการอนุรักษ์ เข้าชมฟรี"
-        },
-        {
-            "name": "Badaguan (八大关) (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/M0KNWT/granite-mansion-in-badaguan-area-qingdao-china-M0KNWT.jpg",
-            "desc": "ย่านบ้านสไตล์ยุโรป Badaguan บ้านพักตากอากาศยุคอาณานิคมที่ได้รับการอนุรักษ์ เข้าชมฟรี"
-        }
-    ],
-    "qingdao-station-return": [
-        {
-            "name": "Qingdaobei Station (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://alchetron.com/cdn/qingdaobei-railway-station-ded8d733-6a39-400d-bc20-34c180a1741-resize-750.jpg",
-            "desc": "สถานีชิงเต่าเหนือ ออกแบบสมัยใหม่ เป็นสถานีหลักสำหรับรถไฟความเร็วสูง เชื่อมต่อ Metro สาย 3"
-        },
-        {
-            "name": "Qingdaobei Station (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://c8.alamy.com/comp/2T0X8BF/grimsby-town-railway-station-exterior-2T0X8BF.jpg",
-            "desc": "สถานีชิงเต่าเหนือ ออกแบบสมัยใหม่ เป็นสถานีหลักสำหรับรถไฟความเร็วสูง เชื่อมต่อ Metro สาย 3"
-        },
-        {
-            "name": "Qingdaobei Station (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://c8.alamy.com/comp/2RBYRA6/norwich-thorpe-railway-station-exterior-2RBYRA6.jpg",
-            "desc": "สถานีชิงเต่าเหนือ ออกแบบสมัยใหม่ เป็นสถานีหลักสำหรับรถไฟความเร็วสูง เชื่อมต่อ Metro สาย 3"
-        },
-        {
-            "name": "Qingdaobei Station (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://c8.alamy.com/comp/2RBYRD7/norwich-thorpe-railway-station-exterior-2RBYRD7.jpg",
-            "desc": "สถานีชิงเต่าเหนือ ออกแบบสมัยใหม่ เป็นสถานีหลักสำหรับรถไฟความเร็วสูง เชื่อมต่อ Metro สาย 3"
-        },
-        {
-            "name": "Qingdaobei Station (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://ak-d.tripcdn.com/images/0100x12000842kxkh9CFE_C_880_350_R5.jpg",
-            "desc": "สถานีชิงเต่าเหนือ ออกแบบสมัยใหม่ เป็นสถานีหลักสำหรับรถไฟความเร็วสูง เชื่อมต่อ Metro สาย 3"
-        },
-        {
-            "name": "Qingdaobei Station (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/3BJYHKN/haapsalu-railway-station-exterior-view-3BJYHKN.jpg",
-            "desc": "สถานีชิงเต่าเหนือ ออกแบบสมัยใหม่ เป็นสถานีหลักสำหรับรถไฟความเร็วสูง เชื่อมต่อ Metro สาย 3"
-        }
-    ],
-    "nanjing-road-night": [
-        {
-            "name": "East Nanjing Road at Night (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://p4-q.mafengwo.net/s11/M00/AC/71/wKgBEFxX4YGASqBqAA1jUJfnQJg99.jpeg",
-            "desc": "ถนนหนานจิงยามค่ำคืนไฟสวยงามตลอดสาย นักท่องเที่ยวทั้งไทยและต่างชาติมาเดินเล่นเยอะมาก"
-        },
-        {
-            "name": "East Nanjing Road at Night (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://p1-q.mafengwo.net/s1/M00/8E/FA/wKgIC1z2fGaAbjUJAB3sRq9HQ9k54.jpeg",
-            "desc": "ถนนหนานจิงยามค่ำคืนไฟสวยงามตลอดสาย นักท่องเที่ยวทั้งไทยและต่างชาติมาเดินเล่นเยอะมาก"
-        },
-        {
-            "name": "East Nanjing Road at Night (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://n3-q.mafengwo.net/s11/M00/AC/68/wKgBEFxX4X6AP00cAAiq9UwLTNI14.jpeg",
-            "desc": "ถนนหนานจิงยามค่ำคืนไฟสวยงามตลอดสาย นักท่องเที่ยวทั้งไทยและต่างชาติมาเดินเล่นเยอะมาก"
-        },
-        {
-            "name": "East Nanjing Road at Night (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://c8.alamy.com/comp/KR05N8/shanghai-nanjing-road-pedestrian-street-KR05N8.jpg",
-            "desc": "ถนนหนานจิงยามค่ำคืนไฟสวยงามตลอดสาย นักท่องเที่ยวทั้งไทยและต่างชาติมาเดินเล่นเยอะมาก"
-        },
-        {
-            "name": "East Nanjing Road at Night (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://c8.alamy.com/comp/KR05D1/shanghai-nanjing-road-pedestrian-street-KR05D1.jpg",
-            "desc": "ถนนหนานจิงยามค่ำคืนไฟสวยงามตลอดสาย นักท่องเที่ยวทั้งไทยและต่างชาติมาเดินเล่นเยอะมาก"
-        },
-        {
-            "name": "East Nanjing Road at Night (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/DYM961/nanjing-road-pedestrian-zone-and-busy-shopping-street-at-night-shanghai-DYM961.jpg",
-            "desc": "ถนนหนานจิงยามค่ำคืนไฟสวยงามตลอดสาย นักท่องเที่ยวทั้งไทยและต่างชาติมาเดินเล่นเยอะมาก"
-        }
-    ],
-    "leave-hotel-sight": [
-        {
-            "name": "North Bund Waterfront (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://watermark.lovepik.com/photo/20211120/large/lovepik-the-night-scene-of-shanghai-north-the-bund-picture_500409959.jpg",
-            "desc": "เริ่มต้นวันใหม่ที่ริมแม่น้ำหวงผู่ ชม Skyline เซี่ยงไฮ้ยามเช้าที่สวยงาม"
-        },
-        {
-            "name": "North Bund Waterfront (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://www.chinaholiday.com/photos/24211/6588904.jpg",
-            "desc": "เริ่มต้นวันใหม่ที่ริมแม่น้ำหวงผู่ ชม Skyline เซี่ยงไฮ้ยามเช้าที่สวยงาม"
-        },
-        {
-            "name": "North Bund Waterfront (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://www.chinaairlinetravel.com/hotel-image/Uploadhotelfile/Sunrise-On-The-Bund-Shanghai-deluxe-room.jpg",
-            "desc": "เริ่มต้นวันใหม่ที่ริมแม่น้ำหวงผู่ ชม Skyline เซี่ยงไฮ้ยามเช้าที่สวยงาม"
-        },
-        {
-            "name": "North Bund Waterfront (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://static.wixstatic.com/media/df4708_979df488eb214a77b753cefa00eb63ad~mv2.jpg/v1/fill/w_980,h_551,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/df4708_979df488eb214a77b753cefa00eb63ad~mv2.jpg",
-            "desc": "เริ่มต้นวันใหม่ที่ริมแม่น้ำหวงผู่ ชม Skyline เซี่ยงไฮ้ยามเช้าที่สวยงาม"
-        },
-        {
-            "name": "North Bund Waterfront (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://www.westchinago.com/wp-content/uploads/2025/08/shanghai-20250831i1.png",
-            "desc": "เริ่มต้นวันใหม่ที่ริมแม่น้ำหวงผู่ ชม Skyline เซี่ยงไฮ้ยามเช้าที่สวยงาม"
-        },
-        {
-            "name": "North Bund Waterfront (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/DM165P/the-bund-sunrise-shanghai-china-DM165P.jpg",
-            "desc": "เริ่มต้นวันใหม่ที่ริมแม่น้ำหวงผู่ ชม Skyline เซี่ยงไฮ้ยามเช้าที่สวยงาม"
-        }
-    ],
-    "manner-coffee": [
-        {
-            "name": "Manner Coffee (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://c8.alamy.com/comp/2XKEXK1/shanghai-china-july-3-2024-chinese-chain-coffee-brand-manner-coffee-expo-garden-store-in-shanghai-china-july-3-2024-2XKEXK1.jpg",
-            "desc": "Manner Coffee ร้านกาแฟ Specialty ดังของเซี่ยงไฮ้ ราคา 15-25 RMB กาแฟคุณภาพดีราคาประหยัด"
-        },
-        {
-            "name": "Manner Coffee (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://c8.alamy.com/comp/2XKEXJH/shanghai-china-july-3-2024-chinese-chain-coffee-brand-manner-coffee-expo-garden-store-in-shanghai-china-july-3-2024-2XKEXJH.jpg",
-            "desc": "Manner Coffee ร้านกาแฟ Specialty ดังของเซี่ยงไฮ้ ราคา 15-25 RMB กาแฟคุณภาพดีราคาประหยัด"
-        },
-        {
-            "name": "Manner Coffee (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://images.happycow.net/venues/1024/27/35/hcmp273523_1378521.jpeg",
-            "desc": "Manner Coffee ร้านกาแฟ Specialty ดังของเซี่ยงไฮ้ ราคา 15-25 RMB กาแฟคุณภาพดีราคาประหยัด"
-        },
-        {
-            "name": "Manner Coffee (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://images.happycow.net/venues/500/27/35/hcmp273523_1369234.jpeg",
-            "desc": "Manner Coffee ร้านกาแฟ Specialty ดังของเซี่ยงไฮ้ ราคา 15-25 RMB กาแฟคุณภาพดีราคาประหยัด"
-        },
-        {
-            "name": "Manner Coffee (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://images.happycow.net/venues/1024/27/35/hcmp273523_1369233.jpeg",
-            "desc": "Manner Coffee ร้านกาแฟ Specialty ดังของเซี่ยงไฮ้ ราคา 15-25 RMB กาแฟคุณภาพดีราคาประหยัด"
-        },
-        {
-            "name": "Manner Coffee (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://images.happycow.net/venues/500/42/61/hcmp426145_2983521.jpeg",
-            "desc": "Manner Coffee ร้านกาแฟ Specialty ดังของเซี่ยงไฮ้ ราคา 15-25 RMB กาแฟคุณภาพดีราคาประหยัด"
-        }
-    ],
-    "north-bund": [
-        {
-            "name": "North Bund Skyline View (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://watermark.lovepik.com/photo/20211120/large/lovepik-the-night-scene-of-shanghai-north-the-bund-picture_500409959.jpg",
-            "desc": "North Bund (北外滩) จุดชมวิว Skyline เซี่ยงไฮ้มุมใหม่ เห็น The Bund และ Lujiazui พร้อมกัน เปิดฟรี"
-        },
-        {
-            "name": "North Bund Skyline View (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://static.wixstatic.com/media/df4708_979df488eb214a77b753cefa00eb63ad~mv2.jpg/v1/fill/w_980,h_551,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/df4708_979df488eb214a77b753cefa00eb63ad~mv2.jpg",
-            "desc": "North Bund (北外滩) จุดชมวิว Skyline เซี่ยงไฮ้มุมใหม่ เห็น The Bund และ Lujiazui พร้อมกัน เปิดฟรี"
-        },
-        {
-            "name": "North Bund Skyline View (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://www.westchinago.com/wp-content/uploads/2025/08/shanghai-20250831i1.png",
-            "desc": "North Bund (北外滩) จุดชมวิว Skyline เซี่ยงไฮ้มุมใหม่ เห็น The Bund และ Lujiazui พร้อมกัน เปิดฟรี"
-        },
-        {
-            "name": "North Bund Skyline View (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://c8.alamy.com/comp/2CNC5X5/night-view-of-shanghai-north-bund-2CNC5X5.jpg",
-            "desc": "North Bund (北外滩) จุดชมวิว Skyline เซี่ยงไฮ้มุมใหม่ เห็น The Bund และ Lujiazui พร้อมกัน เปิดฟรี"
-        },
-        {
-            "name": "North Bund Skyline View (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://c8.alamy.com/comp/DW15WW/shanghai-skyline-from-north-bund-view-DW15WW.jpg",
-            "desc": "North Bund (北外滩) จุดชมวิว Skyline เซี่ยงไฮ้มุมใหม่ เห็น The Bund และ Lujiazui พร้อมกัน เปิดฟรี"
-        },
-        {
-            "name": "North Bund Skyline View (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1080,h_720/w_66,x_12,y_12,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/gtfetspxev6k6ofypdro/[CoreoftheBund]SofitelShanghaiNorthBundHotelAccommodationPackage.jpg",
-            "desc": "North Bund (北外滩) จุดชมวิว Skyline เซี่ยงไฮ้มุมใหม่ เห็น The Bund และ Lujiazui พร้อมกัน เปิดฟรี"
-        }
-    ],
-    "rei-flower": [
-        {
-            "name": "Rei Flower Coffee (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://dimg04.c-ctrip.com/images/1me4712000b4lv8iaF024.jpg",
-            "desc": "Rei Flower Coffee คาเฟ่ดีไซน์สุดสวย มีดอกไม้ตกแต่งในเครื่องดื่ม ราคา 35-55 RMB ฮิตมากใน Xiaohongshu"
-        },
-        {
-            "name": "Rei Flower Coffee (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://dimg04.c-ctrip.com/images/1me2z12000cmwcmnv7C5E_C_10000_560.jpg",
-            "desc": "Rei Flower Coffee คาเฟ่ดีไซน์สุดสวย มีดอกไม้ตกแต่งในเครื่องดื่ม ราคา 35-55 RMB ฮิตมากใน Xiaohongshu"
-        },
-        {
-            "name": "Rei Flower Coffee (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://youimg1.c-ctrip.com/target/1me2512000b4lp0c867E6.jpg",
-            "desc": "Rei Flower Coffee คาเฟ่ดีไซน์สุดสวย มีดอกไม้ตกแต่งในเครื่องดื่ม ราคา 35-55 RMB ฮิตมากใน Xiaohongshu"
-        },
-        {
-            "name": "Rei Flower Coffee (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://sawasdee.thaiairways.com/wp-content/uploads/2024/03/MAREN7-5.jpg",
-            "desc": "Rei Flower Coffee คาเฟ่ดีไซน์สุดสวย มีดอกไม้ตกแต่งในเครื่องดื่ม ราคา 35-55 RMB ฮิตมากใน Xiaohongshu"
-        },
-        {
-            "name": "Rei Flower Coffee (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://dimg04.c-ctrip.com/images/1me5312000cmw8vq23FA4_C_10000_560.jpg",
-            "desc": "Rei Flower Coffee คาเฟ่ดีไซน์สุดสวย มีดอกไม้ตกแต่งในเครื่องดื่ม ราคา 35-55 RMB ฮิตมากใน Xiaohongshu"
-        },
-        {
-            "name": "Rei Flower Coffee (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://dimg04.c-ctrip.com/images/1me6812000f4v0yik90ED_C_10000_560.jpg",
-            "desc": "Rei Flower Coffee คาเฟ่ดีไซน์สุดสวย มีดอกไม้ตกแต่งในเครื่องดื่ม ราคา 35-55 RMB ฮิตมากใน Xiaohongshu"
-        }
-    ],
-    "postal-museum": [
-        {
-            "name": "Shanghai Postal Museum (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://c8.alamy.com/comp/2XT7D9K/the-general-post-office-building-shanghai-china-2XT7D9K.jpg",
-            "desc": "พิพิธภัณฑ์ไปรษณีย์เซี่ยงไฮ้ในอาคารปี 1924 สไตล์ยุโรป เข้าฟรี ชั้นบนมีระเบียงชมวิวสะพานไว่ไป๋ตู้"
-        },
-        {
-            "name": "Shanghai Postal Museum (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://49fe30bb3aa7406c16dc-5c968119d095dc32d807923c59347cc2.ssl.cf1.rackcdn.com/2011.309.064_1.jpg",
-            "desc": "พิพิธภัณฑ์ไปรษณีย์เซี่ยงไฮ้ในอาคารปี 1924 สไตล์ยุโรป เข้าฟรี ชั้นบนมีระเบียงชมวิวสะพานไว่ไป๋ตู้"
-        },
-        {
-            "name": "Shanghai Postal Museum (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://c8.alamy.com/comp/2XT7DBJ/the-general-post-office-building-shanghai-china-2XT7DBJ.jpg",
-            "desc": "พิพิธภัณฑ์ไปรษณีย์เซี่ยงไฮ้ในอาคารปี 1924 สไตล์ยุโรป เข้าฟรี ชั้นบนมีระเบียงชมวิวสะพานไว่ไป๋ตู้"
-        },
-        {
-            "name": "Shanghai Postal Museum (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://c8.alamy.com/comp/2XT7DG3/the-general-post-office-building-shanghai-china-2XT7DG3.jpg",
-            "desc": "พิพิธภัณฑ์ไปรษณีย์เซี่ยงไฮ้ในอาคารปี 1924 สไตล์ยุโรป เข้าฟรี ชั้นบนมีระเบียงชมวิวสะพานไว่ไป๋ตู้"
-        },
-        {
-            "name": "Shanghai Postal Museum (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://c8.alamy.com/comp/2XT7DBX/the-general-post-office-building-shanghai-china-2XT7DBX.jpg",
-            "desc": "พิพิธภัณฑ์ไปรษณีย์เซี่ยงไฮ้ในอาคารปี 1924 สไตล์ยุโรป เข้าฟรี ชั้นบนมีระเบียงชมวิวสะพานไว่ไป๋ตู้"
-        },
-        {
-            "name": "Shanghai Postal Museum (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/2XT7DG5/the-general-post-office-building-shanghai-china-2XT7DG5.jpg",
-            "desc": "พิพิธภัณฑ์ไปรษณีย์เซี่ยงไฮ้ในอาคารปี 1924 สไตล์ยุโรป เข้าฟรี ชั้นบนมีระเบียงชมวิวสะพานไว่ไป๋ตู้"
-        }
-    ],
-    "zhapu-bridge": [
-        {
-            "name": "สะพานจาปู้ (Zhapu Bridge) (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://www.photohound.co/images/30530l.jpg",
-            "desc": "สะพานจาปู้จุดถ่ายรูป Iconic มองเห็นสะพานไว่ไป๋ตู้ตรงหน้า ตึก Pudong เป็นฉากหลัง เปิดฟรีตลอดเวลา"
-        },
-        {
-            "name": "สะพานจาปู้ (Zhapu Bridge) (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "http://2.bp.blogspot.com/-3A8lMk7Fjxg/TpDdMZBNr_I/AAAAAAAAA6Y/PpMEGZ5tGB4/s1600/Zhapu+Road+Bridge.jpg",
-            "desc": "สะพานจาปู้จุดถ่ายรูป Iconic มองเห็นสะพานไว่ไป๋ตู้ตรงหน้า ตึก Pudong เป็นฉากหลัง เปิดฟรีตลอดเวลา"
-        },
-        {
-            "name": "สะพานจาปู้ (Zhapu Bridge) (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://www.photohound.co/images/30523l.jpg",
-            "desc": "สะพานจาปู้จุดถ่ายรูป Iconic มองเห็นสะพานไว่ไป๋ตู้ตรงหน้า ตึก Pudong เป็นฉากหลัง เปิดฟรีตลอดเวลา"
-        },
-        {
-            "name": "สะพานจาปู้ (Zhapu Bridge) (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/6b6cf5107156875.5fa0bb6224b27.jpg",
-            "desc": "สะพานจาปู้จุดถ่ายรูป Iconic มองเห็นสะพานไว่ไป๋ตู้ตรงหน้า ตึก Pudong เป็นฉากหลัง เปิดฟรีตลอดเวลา"
-        },
-        {
-            "name": "สะพานจาปู้ (Zhapu Bridge) (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/12bb80107156875.5fa0c222aca86.jpg",
-            "desc": "สะพานจาปู้จุดถ่ายรูป Iconic มองเห็นสะพานไว่ไป๋ตู้ตรงหน้า ตึก Pudong เป็นฉากหลัง เปิดฟรีตลอดเวลา"
-        },
-        {
-            "name": "สะพานจาปู้ (Zhapu Bridge) (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/d1202b107156875.5fa0bb6226e5e.jpg",
-            "desc": "สะพานจาปู้จุดถ่ายรูป Iconic มองเห็นสะพานไว่ไป๋ตู้ตรงหน้า ตึก Pudong เป็นฉากหลัง เปิดฟรีตลอดเวลา"
-        }
-    ],
-    "rock-bund": [
-        {
-            "name": "Rock Bund (外滩源) (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://www.e-architect.com/wp-content/uploads/2010/04/rockbund-art-museum-shanghai-building-dca.jpg",
-            "desc": "Rock Bund ย่านอาคาร Art Deco ยุค 1930s ที่ได้รับการบูรณะ มี Gallery ศิลปะ และร้านอาหารหรู"
-        },
-        {
-            "name": "Rock Bund (外滩源) (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://www.metalocus.es/sites/default/files/metalocus_david-chipperfield_rockbund_34.jpg",
-            "desc": "Rock Bund ย่านอาคาร Art Deco ยุค 1930s ที่ได้รับการบูรณะ มี Gallery ศิลปะ และร้านอาหารหรู"
-        },
-        {
-            "name": "Rock Bund (外滩源) (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://www.metalocus.es/sites/default/files/metalocus_david-chipperfield_rockbund_35.jpg",
-            "desc": "Rock Bund ย่านอาคาร Art Deco ยุค 1930s ที่ได้รับการบูรณะ มี Gallery ศิลปะ และร้านอาหารหรู"
-        },
-        {
-            "name": "Rock Bund (外滩源) (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://www.metalocus.es/sites/default/files/files/metalocus_david-chipperfield_rockbund_03.jpg",
-            "desc": "Rock Bund ย่านอาคาร Art Deco ยุค 1930s ที่ได้รับการบูรณะ มี Gallery ศิลปะ และร้านอาหารหรู"
-        },
-        {
-            "name": "Rock Bund (外滩源) (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://www.metalocus.es/sites/default/files/files/metalocus_david-chipperfield_rockbund_15.jpg",
-            "desc": "Rock Bund ย่านอาคาร Art Deco ยุค 1930s ที่ได้รับการบูรณะ มี Gallery ศิลปะ และร้านอาหารหรู"
-        },
-        {
-            "name": "Rock Bund (外滩源) (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://www.metalocus.es/sites/default/files/metalocus_david-chipperfield_rockbund_28.jpg",
-            "desc": "Rock Bund ย่านอาคาร Art Deco ยุค 1930s ที่ได้รับการบูรณะ มี Gallery ศิลปะ และร้านอาหารหรู"
-        }
-    ],
-    "heroes-memorial": [
-        {
-            "name": "People's Heroes Memorial (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://media-cdn.tripadvisor.com/media/photo-s/0c/40/48/de/the-monument-to-the-people.jpg",
-            "desc": "อนุสรณ์สถานวีรบุรุษประชาชนเซี่ยงไฮ้ริมแม่น้ำหวงผู่ เปิดฟรี วิว Pudong สวยยามเย็น"
-        },
-        {
-            "name": "People's Heroes Memorial (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://media-cdn.tripadvisor.com/media/photo-s/0f/86/f6/9a/shanghai-people-s-heroes.jpg",
-            "desc": "อนุสรณ์สถานวีรบุรุษประชาชนเซี่ยงไฮ้ริมแม่น้ำหวงผู่ เปิดฟรี วิว Pudong สวยยามเย็น"
-        },
-        {
-            "name": "People's Heroes Memorial (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://media-cdn.tripadvisor.com/media/photo-s/10/6c/e9/73/carvings.jpg",
-            "desc": "อนุสรณ์สถานวีรบุรุษประชาชนเซี่ยงไฮ้ริมแม่น้ำหวงผู่ เปิดฟรี วิว Pudong สวยยามเย็น"
-        },
-        {
-            "name": "People's Heroes Memorial (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://media-cdn.tripadvisor.com/media/photo-s/10/6c/e9/60/at-night.jpg",
-            "desc": "อนุสรณ์สถานวีรบุรุษประชาชนเซี่ยงไฮ้ริมแม่น้ำหวงผู่ เปิดฟรี วิว Pudong สวยยามเย็น"
-        },
-        {
-            "name": "People's Heroes Memorial (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://media-cdn.tripadvisor.com/media/photo-s/16/62/53/7d/peoples-heroes-monument.jpg",
-            "desc": "อนุสรณ์สถานวีรบุรุษประชาชนเซี่ยงไฮ้ริมแม่น้ำหวงผู่ เปิดฟรี วิว Pudong สวยยามเย็น"
-        },
-        {
-            "name": "People's Heroes Memorial (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/2M7AFTJ/shanghai-the-peoples-heroes-monument-2M7AFTJ.jpg",
-            "desc": "อนุสรณ์สถานวีรบุรุษประชาชนเซี่ยงไฮ้ริมแม่น้ำหวงผู่ เปิดฟรี วิว Pudong สวยยามเย็น"
-        }
-    ],
-    "chen-yi-square": [
-        {
-            "name": "Chen Yi Square & The Bund (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://www.arabtravelers.com/wp-content/uploads/2023/05/Chen-Yi-Square-Shanghai.jpg",
-            "desc": "Chen Yi Square ลานกว้างหน้า The Bund มีรูปปั้นนายพล Chen Yi จุดนัดพบยอดนิยม เปิดฟรี"
-        },
-        {
-            "name": "Chen Yi Square & The Bund (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://www.urtrips.com/wp-content/uploads/2023/03/Chen-Yi-Square-Shanghai1.jpg",
-            "desc": "Chen Yi Square ลานกว้างหน้า The Bund มีรูปปั้นนายพล Chen Yi จุดนัดพบยอดนิยม เปิดฟรี"
-        },
-        {
-            "name": "Chen Yi Square & The Bund (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://c8.alamy.com/comp/BX0AR8/statue-of-chen-yi-chen-yi-square-near-the-bund-shanghai-china-BX0AR8.jpg",
-            "desc": "Chen Yi Square ลานกว้างหน้า The Bund มีรูปปั้นนายพล Chen Yi จุดนัดพบยอดนิยม เปิดฟรี"
-        },
-        {
-            "name": "Chen Yi Square & The Bund (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://www.alamy.com/aggregator-api/download?url=https://c8.alamy.com/comp/PY6HBK/statue-of-chen-yi-a-famous-mayor-of-shanghai-china-asia-on-chen-yi-square-along-the-bund-shanghai-PY6HBK.jpg",
-            "desc": "Chen Yi Square ลานกว้างหน้า The Bund มีรูปปั้นนายพล Chen Yi จุดนัดพบยอดนิยม เปิดฟรี"
-        },
-        {
-            "name": "Chen Yi Square & The Bund (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://cdn.britannica.com/45/127045-050-83518D23/statue-Chen-Yi-Shanghai.jpg",
-            "desc": "Chen Yi Square ลานกว้างหน้า The Bund มีรูปปั้นนายพล Chen Yi จุดนัดพบยอดนิยม เปิดฟรี"
-        },
-        {
-            "name": "Chen Yi Square & The Bund (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://img.freepik.com/premium-vector/decorative-square-frame-border-with-geometric-lines-symmetrical-pattern-vector-elements_1226483-16277.jpg",
-            "desc": "Chen Yi Square ลานกว้างหน้า The Bund มีรูปปั้นนายพล Chen Yi จุดนัดพบยอดนิยม เปิดฟรี"
-        }
-    ],
-    "mosaic-plaza-2": [
-        {
-            "name": "The Bund at Night (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://dimg04.c-ctrip.com/images/0206b120008m9mc5f70AA.jpg",
-            "desc": "ทานอาหารเย็นใกล้ The Bund บรรยากาศดียามค่ำคืน Skyline Pudong สวยงาม"
-        },
-        {
-            "name": "The Bund at Night (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://pavo.elongstatic.com/i/tHotel800_600/nw_OC5cHkTzjO.jpg",
-            "desc": "ทานอาหารเย็นใกล้ The Bund บรรยากาศดียามค่ำคืน Skyline Pudong สวยงาม"
-        },
-        {
-            "name": "The Bund at Night (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://pavo.elongstatic.com/i/tHotel800_600/nw_ZQXewttrYA.jpg",
-            "desc": "ทานอาหารเย็นใกล้ The Bund บรรยากาศดียามค่ำคืน Skyline Pudong สวยงาม"
-        },
-        {
-            "name": "The Bund at Night (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://images.freeimages.com/clg/istock/previews/3908/39083560-abstract-mosaic-style-shanghai-skyline-in-night-background.jpg",
-            "desc": "ทานอาหารเย็นใกล้ The Bund บรรยากาศดียามค่ำคืน Skyline Pudong สวยงาม"
-        },
-        {
-            "name": "The Bund at Night (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://www.kalzip.com/wp-content/uploads/2024/03/Shanghai-Culture-Plaza-1.jpg",
-            "desc": "ทานอาหารเย็นใกล้ The Bund บรรยากาศดียามค่ำคืน Skyline Pudong สวยงาม"
-        },
-        {
-            "name": "The Bund at Night (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://www.kalzip.com/wp-content/uploads/2024/03/Shanghai-Culture-Plaza-4.jpg",
-            "desc": "ทานอาหารเย็นใกล้ The Bund บรรยากาศดียามค่ำคืน Skyline Pudong สวยงาม"
-        }
-    ],
-    "1000-tree": [
-        {
-            "name": "1000 Trees Building (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/b20891141644591.6257bc573a81e.jpg",
-            "desc": "1000 Trees (上海千树) อาคารดีไซน์สุดล้ำโดย Thomas Heatherwick มีต้นไม้กว่า 1,000 ต้นบนผนังและหลังคา"
-        },
-        {
-            "name": "1000 Trees Building (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://www.topchinatravel.com/pic/city/shanghai/attractions/tianan-1000-trees-1.jpg",
-            "desc": "1000 Trees (上海千树) อาคารดีไซน์สุดล้ำโดย Thomas Heatherwick มีต้นไม้กว่า 1,000 ต้นบนผนังและหลังคา"
-        },
-        {
-            "name": "1000 Trees Building (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://www.topchinatravel.com/pic/city/shanghai/attractions/tianan-1000-trees-2.jpg",
-            "desc": "1000 Trees (上海千树) อาคารดีไซน์สุดล้ำโดย Thomas Heatherwick มีต้นไม้กว่า 1,000 ต้นบนผนังและหลังคา"
-        },
-        {
-            "name": "1000 Trees Building (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://www.schueco.com/resource/blob/3079926/8fc9d80e76fbd86d39136814ea59a102/4017a05-data.jpg",
-            "desc": "1000 Trees (上海千树) อาคารดีไซน์สุดล้ำโดย Thomas Heatherwick มีต้นไม้กว่า 1,000 ต้นบนผนังและหลังคา"
-        },
-        {
-            "name": "1000 Trees Building (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://globalcad.co.uk/wp-content/uploads/2019/08/globalcad-3d-structural-modelling-1000-trees1.jpg",
-            "desc": "1000 Trees (上海千树) อาคารดีไซน์สุดล้ำโดย Thomas Heatherwick มีต้นไม้กว่า 1,000 ต้นบนผนังและหลังคา"
-        },
-        {
-            "name": "1000 Trees Building (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://architecture.live/wp-content/uploads/2024/02/10-11.jpg",
-            "desc": "1000 Trees (上海千树) อาคารดีไซน์สุดล้ำโดย Thomas Heatherwick มีต้นไม้กว่า 1,000 ต้นบนผนังและหลังคา"
-        }
-    ],
-    "wukang-building": [
-        {
-            "name": "Wukang Mansion (武康大楼) (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://www.photohound.co/images/1017375l.jpg",
-            "desc": "Wukang Mansion สร้างปี 1924 สไตล์ Art Deco ทรงเรือ จุดถ่ายรูปฮิตที่สุดของเซี่ยงไฮ้ เข้าชมด้านนอกฟรี"
-        },
-        {
-            "name": "Wukang Mansion (武康大楼) (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/87bca3117708685.607b059c9e625.jpg",
-            "desc": "Wukang Mansion สร้างปี 1924 สไตล์ Art Deco ทรงเรือ จุดถ่ายรูปฮิตที่สุดของเซี่ยงไฮ้ เข้าชมด้านนอกฟรี"
-        },
-        {
-            "name": "Wukang Mansion (武康大楼) (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/f3d8f3117708685.607aecdbdd7a5.jpg",
-            "desc": "Wukang Mansion สร้างปี 1924 สไตล์ Art Deco ทรงเรือ จุดถ่ายรูปฮิตที่สุดของเซี่ยงไฮ้ เข้าชมด้านนอกฟรี"
-        },
-        {
-            "name": "Wukang Mansion (武康大楼) (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://mir-s3-cdn-cf.behance.net/project_modules/fs/a4ae9f128870649.615ef24ccdd94.jpg",
-            "desc": "Wukang Mansion สร้างปี 1924 สไตล์ Art Deco ทรงเรือ จุดถ่ายรูปฮิตที่สุดของเซี่ยงไฮ้ เข้าชมด้านนอกฟรี"
-        },
-        {
-            "name": "Wukang Mansion (武康大楼) (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://c8.alamy.com/comp/2F6R2X8/shanghai-china-october-5-2015-the-famous-landmark-wukang-mansion-building-on-wukong-road-on-the-puxi-side-of-shanghai-china-2F6R2X8.jpg",
-            "desc": "Wukang Mansion สร้างปี 1924 สไตล์ Art Deco ทรงเรือ จุดถ่ายรูปฮิตที่สุดของเซี่ยงไฮ้ เข้าชมด้านนอกฟรี"
-        },
-        {
-            "name": "Wukang Mansion (武康大楼) (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://www.westchinago.com/wp-content/uploads/2025/02/shanghai-map-20250216i1.jpg",
-            "desc": "Wukang Mansion สร้างปี 1924 สไตล์ Art Deco ทรงเรือ จุดถ่ายรูปฮิตที่สุดของเซี่ยงไฮ้ เข้าชมด้านนอกฟรี"
-        }
-    ],
-    "the-louis-butterful": [
-        {
-            "name": "The Louis & Butterful (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://img.restaurantguru.com/w550/h367/r37c-Mr-Louis-Bakery-meat.jpg",
-            "desc": "The Louis ขนมปังเนยญี่ปุ่น 25-45 RMB | Butterful & Creamorous ไอศกรีมเนยพรีเมียม 45-88 RMB ดังมากใน Xiaohongshu"
-        },
-        {
-            "name": "The Louis & Butterful (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://static.wixstatic.com/media/a0b118_b1009af228ad42029741da1e8bea4614~mv2.png/v1/fill/w_980,h_757,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/a0b118_b1009af228ad42029741da1e8bea4614~mv2.png",
-            "desc": "The Louis ขนมปังเนยญี่ปุ่น 25-45 RMB | Butterful & Creamorous ไอศกรีมเนยพรีเมียม 45-88 RMB ดังมากใน Xiaohongshu"
-        },
-        {
-            "name": "The Louis & Butterful (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://naturalpoland.com/wp-content/uploads/shanghai-bakery-exhibition-1024x277.jpg",
-            "desc": "The Louis ขนมปังเนยญี่ปุ่น 25-45 RMB | Butterful & Creamorous ไอศกรีมเนยพรีเมียม 45-88 RMB ดังมากใน Xiaohongshu"
-        },
-        {
-            "name": "The Louis & Butterful (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://assets.locations.nothingbundtcakes.com.prod.rioseo.com/images/location-description-image.png",
-            "desc": "The Louis ขนมปังเนยญี่ปุ่น 25-45 RMB | Butterful & Creamorous ไอศกรีมเนยพรีเมียม 45-88 RMB ดังมากใน Xiaohongshu"
-        },
-        {
-            "name": "The Louis & Butterful (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://res.cloudinary.com/mazarine-digital/image/upload/ar_12:7,c_fill,f_auto,q_auto,w_3840/v1/mazarine_refonte_2022/images/LOUIS_VUITTOON_POPUP SPACE_SHANGHAI/LOUIS_VUITTON_POP_UP_SPACE_SHANGHAI_1_z5wkny.jpg",
-            "desc": "The Louis ขนมปังเนยญี่ปุ่น 25-45 RMB | Butterful & Creamorous ไอศกรีมเนยพรีเมียม 45-88 RMB ดังมากใน Xiaohongshu"
-        },
-        {
-            "name": "The Louis & Butterful (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://res.cloudinary.com/mazarine-digital/image/upload/ar_12:7,c_fill,f_auto,q_auto,w_3840/v1/mazarine_refonte_2022/images/LOUIS_VUITTOON_POPUP SPACE_SHANGHAI/LOUIS_VUITTON_POP_UP_SPACE_SHANGHAI_2_icel20.jpg",
-            "desc": "The Louis ขนมปังเนยญี่ปุ่น 25-45 RMB | Butterful & Creamorous ไอศกรีมเนยพรีเมียม 45-88 RMB ดังมากใน Xiaohongshu"
-        }
-    ],
-    "huaihai-zhonglu": [
-        {
-            "name": "Huaihai Zhonglu (淮海中路) (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://static.wixstatic.com/media/df4708_5949c1a5ef4045b998478729c7b755e8~mv2.jpg/v1/fill/w_1000,h_563,al_c,q_85,usm_0.66_1.00_0.01/df4708_5949c1a5ef4045b998478729c7b755e8~mv2.jpg",
-            "desc": "ถนนช้อปปิ้งหรูของเซี่ยงไฮ้ ผ่านย่าน French Concession บรรยากาศสบายๆ แบรนด์ระดับโลก และร้านท้องถิ่น"
-        },
-        {
-            "name": "Huaihai Zhonglu (淮海中路) (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://c8.alamy.com/comp/2M7AHH8/shanghai-huaihai-road-2M7AHH8.jpg",
-            "desc": "ถนนช้อปปิ้งหรูของเซี่ยงไฮ้ ผ่านย่าน French Concession บรรยากาศสบายๆ แบรนด์ระดับโลก และร้านท้องถิ่น"
-        },
-        {
-            "name": "Huaihai Zhonglu (淮海中路) (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://c8.alamy.com/comp/2M7AJ0G/shanghai-huaihai-road-2M7AJ0G.jpg",
-            "desc": "ถนนช้อปปิ้งหรูของเซี่ยงไฮ้ ผ่านย่าน French Concession บรรยากาศสบายๆ แบรนด์ระดับโลก และร้านท้องถิ่น"
-        },
-        {
-            "name": "Huaihai Zhonglu (淮海中路) (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://blog.airpaz.com/wp-content/uploads/Shanghai-Huaihai-Road-1.png",
-            "desc": "ถนนช้อปปิ้งหรูของเซี่ยงไฮ้ ผ่านย่าน French Concession บรรยากาศสบายๆ แบรนด์ระดับโลก และร้านท้องถิ่น"
-        },
-        {
-            "name": "Huaihai Zhonglu (淮海中路) (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://data.chinatravel.com/images/mobile-first/shanghai/huaihai-road.jpg",
-            "desc": "ถนนช้อปปิ้งหรูของเซี่ยงไฮ้ ผ่านย่าน French Concession บรรยากาศสบายๆ แบรนด์ระดับโลก และร้านท้องถิ่น"
-        },
-        {
-            "name": "Huaihai Zhonglu (淮海中路) (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://c8.alamy.com/comp/2M7AHHG/shanghai-huaihai-road-2M7AHHG.jpg",
-            "desc": "ถนนช้อปปิ้งหรูของเซี่ยงไฮ้ ผ่านย่าน French Concession บรรยากาศสบายๆ แบรนด์ระดับโลก และร้านท้องถิ่น"
-        }
-    ],
-    "13-demarzo": [
-        {
-            "name": "13 DE MARZO - Honey Bear (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://thesmartlocal.my/wp-content/uploads/2025/12/13de-marzo-cafe-2.jpg",
-            "desc": "13 DE MARZO ร้านเครื่องดื่มสุดฮิต เมนู Honey Bear 35-55 RMB Viral ใน TikTok และ Xiaohongshu"
-        },
-        {
-            "name": "13 DE MARZO - Honey Bear (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://thesmartlocal.my/wp-content/uploads/2025/12/13DE-MARZO-CAFE-KL.jpg",
-            "desc": "13 DE MARZO ร้านเครื่องดื่มสุดฮิต เมนู Honey Bear 35-55 RMB Viral ใน TikTok และ Xiaohongshu"
-        },
-        {
-            "name": "13 DE MARZO - Honey Bear (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://kickstw.com.au/wp-content/uploads/2023/02/13De-Marzo-Bear-Forearm-Hoodie-Cream-1.jpg",
-            "desc": "13 DE MARZO ร้านเครื่องดื่มสุดฮิต เมนู Honey Bear 35-55 RMB Viral ใน TikTok และ Xiaohongshu"
-        },
-        {
-            "name": "13 DE MARZO - Honey Bear (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://kickstw.com.au/wp-content/uploads/2022/12/13De-Marzo-Bear-Drawstring-Hoodie-White-1.jpg",
-            "desc": "13 DE MARZO ร้านเครื่องดื่มสุดฮิต เมนู Honey Bear 35-55 RMB Viral ใน TikTok และ Xiaohongshu"
-        },
-        {
-            "name": "13 DE MARZO - Honey Bear (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://kickstw.com.au/wp-content/uploads/2023/04/13de-Marzo-Bear-Knit-Tee-Cream-1.jpg",
-            "desc": "13 DE MARZO ร้านเครื่องดื่มสุดฮิต เมนู Honey Bear 35-55 RMB Viral ใน TikTok และ Xiaohongshu"
-        },
-        {
-            "name": "13 DE MARZO - Honey Bear (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://kickstw.com.au/wp-content/uploads/2023/05/13De-Marzo-Bear-Logo-Sling-Case-Blue-3-1.jpg",
-            "desc": "13 DE MARZO ร้านเครื่องดื่มสุดฮิต เมนู Honey Bear 35-55 RMB Viral ใน TikTok และ Xiaohongshu"
-        }
-    ],
-    "xintiandi-2": [
-        {
-            "name": "ซินเทียนตี้ (Xintiandi) (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://www.xintiandi.com/wp-content/uploads/2019/01/WechatIMG1119.jpeg",
-            "desc": "ซินเทียนตี้ช่วงบ่าย เดินช้อปปิ้งร้านของฝากและดีไซน์เนอร์ท้องถิ่น บรรยากาศสไตล์ Shikumen สวยงาม"
-        },
-        {
-            "name": "ซินเทียนตี้ (Xintiandi) (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://www.xintiandi.com/wp-content/uploads/2019/01/WechatIMG1120.jpeg",
-            "desc": "ซินเทียนตี้ช่วงบ่าย เดินช้อปปิ้งร้านของฝากและดีไซน์เนอร์ท้องถิ่น บรรยากาศสไตล์ Shikumen สวยงาม"
-        },
-        {
-            "name": "ซินเทียนตี้ (Xintiandi) (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://www.xintiandi.com/wp-content/uploads/2019/01/WechatIMG1121.jpeg",
-            "desc": "ซินเทียนตี้ช่วงบ่าย เดินช้อปปิ้งร้านของฝากและดีไซน์เนอร์ท้องถิ่น บรรยากาศสไตล์ Shikumen สวยงาม"
-        },
-        {
-            "name": "ซินเทียนตี้ (Xintiandi) (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://www.xintiandi.com/wp-content/uploads/2019/01/shanghailogo-02.png",
-            "desc": "ซินเทียนตี้ช่วงบ่าย เดินช้อปปิ้งร้านของฝากและดีไซน์เนอร์ท้องถิ่น บรรยากาศสไตล์ Shikumen สวยงาม"
-        },
-        {
-            "name": "ซินเทียนตี้ (Xintiandi) (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://www.xintiandi.com/wp-content/uploads/2019/01/湖滨道购物中心.jpg",
-            "desc": "ซินเทียนตี้ช่วงบ่าย เดินช้อปปิ้งร้านของฝากและดีไซน์เนอร์ท้องถิ่น บรรยากาศสไตล์ Shikumen สวยงาม"
-        },
-        {
-            "name": "ซินเทียนตี้ (Xintiandi) (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://www.treksplorer.com/wp-content/uploads/houses-shops-xintiandi-shanghai.jpg",
-            "desc": "ซินเทียนตี้ช่วงบ่าย เดินช้อปปิ้งร้านของฝากและดีไซน์เนอร์ท้องถิ่น บรรยากาศสไตล์ Shikumen สวยงาม"
-        }
-    ],
-    "ny-bagels": [
-        {
-            "name": "New York Bagels Museum (มุมหลัก) (รูปภาพสถานที่จริง 1)",
-            "img": "https://ak-d.tripcdn.com/images/100i10000000plv9r43EF_W_500_0_R5_Q50.jpg",
-            "desc": "New York Bagels Museum ร้านเบเกิลชื่อดัง ราคา 20-40 RMB ตกแต่งสไตล์นิวยอร์ก เหมาะถ่ายรูปมาก"
-        },
-        {
-            "name": "New York Bagels Museum (มุมหลัก) (รูปภาพสถานที่จริง 2)",
-            "img": "https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1200,h_630/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/jcf0wjttbjvoej9gcojv/ShangHai museum.jpg",
-            "desc": "New York Bagels Museum ร้านเบเกิลชื่อดัง ราคา 20-40 RMB ตกแต่งสไตล์นิวยอร์ก เหมาะถ่ายรูปมาก"
-        },
-        {
-            "name": "New York Bagels Museum (มุมหลัก) (รูปภาพสถานที่จริง 3)",
-            "img": "https://www.chinajourneyguide.com/wp-content/uploads/2025/04/Shanghai-Museum-East.jpeg",
-            "desc": "New York Bagels Museum ร้านเบเกิลชื่อดัง ราคา 20-40 RMB ตกแต่งสไตล์นิวยอร์ก เหมาะถ่ายรูปมาก"
-        },
-        {
-            "name": "New York Bagels Museum (มุมหลัก) (รูปภาพสถานที่จริง 4)",
-            "img": "https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1079,h_719/w_66,x_12,y_12,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/oym2qtvrhlejoadsmju3/ShanghaiMuseumTicket.jpg",
-            "desc": "New York Bagels Museum ร้านเบเกิลชื่อดัง ราคา 20-40 RMB ตกแต่งสไตล์นิวยอร์ก เหมาะถ่ายรูปมาก"
-        },
-        {
-            "name": "New York Bagels Museum (มุมหลัก) (รูปภาพสถานที่จริง 5)",
-            "img": "https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1152,h_649/w_71,x_13,y_13,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/pbagyw39a1n2scgpq4fu/ShanghaiMuseumofGlass.jpg",
-            "desc": "New York Bagels Museum ร้านเบเกิลชื่อดัง ราคา 20-40 RMB ตกแต่งสไตล์นิวยอร์ก เหมาะถ่ายรูปมาก"
-        },
-        {
-            "name": "New York Bagels Museum (มุมหลัก) (รูปภาพสถานที่จริง 6)",
-            "img": "https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1156,h_651/w_71,x_13,y_13,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/mqlwoisjifhbhv7dduci/ShanghaiMuseumofGlass.jpg",
-            "desc": "New York Bagels Museum ร้านเบเกิลชื่อดัง ราคา 20-40 RMB ตกแต่งสไตล์นิวยอร์ก เหมาะถ่ายรูปมาก"
-        }
-    ]
-};
+        const PASSCODE = 'heekuy69';
+        const overlay = document.getElementById('passwordOverlay');
+        const input = document.getElementById('passwordInput');
+        const button = document.getElementById('unlockBtn');
+        const error = document.getElementById('passwordError');
 
-        const modalOverlay = document.getElementById('modalOverlay');
-        const modalClose = document.getElementById('modalClose');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalTime = document.getElementById('modalTime');
-        const modalFrom = document.getElementById('modalFrom');
-        const modalTo = document.getElementById('modalTo');
-        const modalDescription = document.getElementById('modalDescription');
-        const modalDistance = document.getElementById('modalDistance');
-        const modalStation = document.getElementById('modalStation');
-        const taxiOption = document.getElementById('taxiOption');
-        const trainOption = document.getElementById('trainOption');
-        const metroOption = document.getElementById('metroOption');
-        const walkingOption = document.getElementById('walkingOption');
-        const taxiCost = document.getElementById('taxiCost');
-        const taxiTime = document.getElementById('taxiTime');
-        const trainCost = document.getElementById('trainCost');
-        const trainTime = document.getElementById('trainTime');
-        const metroCost = document.getElementById('metroCost');
-        const metroTime = document.getElementById('metroTime');
-        const walkingTime = document.getElementById('walkingTime');
-        const photoSpotsGrid = document.getElementById('photoSpotsGrid');
-
-        document.querySelectorAll('.schedule-list li').forEach(item => {
-            item.addEventListener('click', () => {
-                const activity = item.dataset.activity;
-                const from = item.dataset.from;
-                const to = item.dataset.to;
-                const distance = item.dataset.distance;
-                const taxiCostValue = item.dataset.taxiCost;
-                const trainCostValue = item.dataset.train;
-                const metroCostValue = item.dataset.metro;
-                const walkingTimeValue = item.dataset.walking;
-                const station = item.dataset.station;
-                const description = item.dataset.description;
-                const time = item.querySelector('.time').textContent;
-                const activityText = item.querySelector('.activity').textContent;
-
-                modalTitle.textContent = activityText;
-                modalTime.textContent = time;
-                modalFrom.textContent = from;
-                modalTo.textContent = to;
-                modalDescription.textContent = description;
-                modalDistance.textContent = 'ระยะทาง: ' + distance;
-                modalStation.textContent = station;
-
-                taxiCost.textContent = 'ราคาโดยประมาณ: ' + taxiCostValue;
-                taxiTime.textContent = 'เวลาเดินทาง: ~' + calculateTime(distance, 'taxi');
-
-                if (trainCostValue !== 'N/A') {
-                    trainOption.style.display = 'flex';
-                    trainCost.textContent = 'ราคาโดยประมาณ: ' + trainCostValue;
-                    trainTime.textContent = 'เวลาเดินทาง: ' + calculateTime(distance, 'train');
-                } else {
-                    trainOption.style.display = 'none';
-                }
-
-                if (metroCostValue !== 'N/A') {
-                    metroOption.style.display = 'flex';
-                    metroCost.textContent = 'ราคาโดยประมาณ: ' + metroCostValue;
-                    metroTime.textContent = 'เวลาเดินทาง: ' + calculateTime(distance, 'metro');
-                } else {
-                    metroOption.style.display = 'none';
-                }
-
-                if (walkingTimeValue !== 'N/A') {
-                    walkingOption.style.display = 'flex';
-                    walkingTime.textContent = 'เวลาเดินทาง: ' + walkingTimeValue;
-                } else {
-                    walkingOption.style.display = 'none';
-                }
-
-                loadPhotoSpots(activity);
-                modalOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-        });
-
-        modalClose.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) {
-                closeModal();
-            }
-        });
-
-        function closeModal() {
-            modalOverlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        function calculateTime(distance, mode) {
-            if (distance === 'Varies' || distance === 'N/A') return 'Varies';
-            const dist = parseFloat(distance);
-            if (isNaN(dist)) return 'Varies';
-            switch (mode) {
-                case 'taxi': return Math.round(dist / 20 * 60) + ' - ' + Math.round(dist / 15 * 60) + ' min';
-                case 'train': return Math.round(dist / 250 * 60) + ' - ' + Math.round(dist / 200 * 60) + ' min';
-                case 'metro': return Math.round(dist / 25 * 60) + ' - ' + Math.round(dist / 20 * 60) + ' min';
-                default: return 'Varies';
+        function unlockSite() {
+            if (input.value === PASSCODE) {
+                overlay.style.display = 'none';
+                error.textContent = '';
+            } else {
+                error.textContent = 'รหัสไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง';
             }
         }
 
-        function loadPhotoSpots(activity) {
-            const spots = photoSpotsData[activity] || [];
-            photoSpotsGrid.innerHTML = '';
-            if (spots.length === 0) {
-                photoSpotsGrid.innerHTML = '<p style="color: var(--gray); grid-column: 1/-1;">No specific photo spots for this activity.</p>';
-                return;
-            }
-            spots.forEach(spot => {
-                const spotElement = document.createElement('div');
-                spotElement.className = 'photo-spot';
-                spotElement.innerHTML = '<img src="' + spot.img + '" alt="' + spot.name + '"><div class="photo-spot-info"><h4>' + spot.name + '</h4><p>' + spot.desc + '</p></div>';
-                photoSpotsGrid.appendChild(spotElement);
-            });
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
+        button.addEventListener('click', unlockSite);
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') unlockSite();
         });
-
-        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.2 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.timeline-item').forEach(item => {
-            observer.observe(item);
-        });
-
-        document.querySelector('.scroll-indicator').addEventListener('click', () => {
-            document.querySelector('.timeline-container').scrollIntoView({ behavior: 'smooth' });
-        });
-
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero');
-            if (scrolled < window.innerHeight) {
-                hero.style.backgroundPositionY = scrolled * 0.5 + 'px';
-            }
-        });
-    
-        // Lightbox Logic
-        const lightbox = document.getElementById('lightboxOverlay');
-        const lightboxImg = document.getElementById('lightboxImg');
-        const lightboxClose = document.getElementById('lightboxClose');
-
-        document.addEventListener('click', (e) => {
-            if (e.target.tagName === 'IMG' && e.target.closest('.photo-spot')) {
-                lightbox.classList.add('active');
-                lightboxImg.src = e.target.src;
-            }
-        });
-
-        lightboxClose.addEventListener('click', () => lightbox.classList.remove('active'));
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) lightbox.classList.remove('active');
-        });
-
     </script>
 </body>
 
