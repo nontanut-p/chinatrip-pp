@@ -1,446 +1,1350 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>แผนเที่ยวจีน 9-16 เม.ย. 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --text: #0f172a;
-            --muted: #64748b;
-            --accent: #dc2626;
-            --accent-2: #f59e0b;
-            --line: #e2e8f0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarot Shuffle Demo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #111827;
+      color: #f9fafb;
+      min-height: 100vh;
+    }
 
-        body {
-            font-family: 'Prompt', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-        }
+    .app {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
 
-        .password-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.88);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            padding: 20px;
-        }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
 
-        .password-box {
-            width: min(420px, 100%);
-            background: #fff;
-            border-radius: 18px;
-            padding: 24px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-        }
+    .subtitle {
+      color: #cbd5e1;
+      margin-bottom: 20px;
+    }
 
-        .password-box h2 { margin-bottom: 8px; color: var(--accent); }
-        .password-box p { color: var(--muted); margin-bottom: 14px; }
+    .panel {
+      background: #1f2937;
+      border: 1px solid #374151;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    }
 
-        .password-box input {
-            width: 100%;
-            border: 1px solid #cbd5e1;
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 10px;
-            font: inherit;
-        }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
 
-        .password-box button {
-            width: 100%;
-            border: none;
-            background: linear-gradient(90deg, var(--accent), #b91c1c);
-            color: #fff;
-            border-radius: 12px;
-            padding: 12px;
-            font: inherit;
-            font-weight: 600;
-            cursor: pointer;
-        }
+    select {
+      width: 100%;
+      border: 1px solid #4b5563;
+      border-radius: 14px;
+      background: #0f172a;
+      color: #f9fafb;
+      padding: 12px 14px;
+      font-size: 16px;
+      outline: none;
+    }
 
-        #passwordError { color: #b91c1c; font-size: 0.9rem; min-height: 22px; margin-top: 6px; }
+    textarea {
+      width: 100%;
+      min-height: 90px;
+      resize: vertical;
+      border: 1px solid #4b5563;
+      border-radius: 14px;
+      background: #0f172a;
+      color: #f9fafb;
+      padding: 14px;
+      font-size: 16px;
+      outline: none;
+    }
 
-        .cat-sticker {
-            position: fixed;
-            width: clamp(120px, 18vw, 220px);
-            height: auto;
-            z-index: 10000;
-            pointer-events: none;
-            display: none;
-            filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.25));
-        }
+    textarea:focus {
+      border-color: #93c5fd;
+    }
 
-        .cat-sticker.corner {
-            right: 14px;
-            bottom: 14px;
-            display: block;
-            transform: rotate(-4deg);
-            animation: cornerPop 0.4s ease;
-        }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
 
-        @keyframes cornerPop {
-            from { transform: scale(0.6) rotate(-10deg); opacity: 0; }
-            to { transform: scale(1) rotate(-4deg); opacity: 1; }
-        }
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      background: #e5e7eb;
+      color: #111827;
+      transition: transform 0.08s ease, opacity 0.15s ease;
+    }
 
-        header {
-            background: linear-gradient(135deg, #7f1d1d, #dc2626);
-            color: #fff;
-            padding: 48px 20px;
-            text-align: center;
-        }
+    button:hover {
+      opacity: 0.9;
+    }
 
-        header h1 { font-size: clamp(1.8rem, 4vw, 3rem); }
-        header p { margin-top: 8px; opacity: 0.95; }
+    button:active {
+      transform: scale(0.97);
+    }
 
-        .container {
-            max-width: 1024px;
-            margin: 0 auto;
-            padding: 28px 16px 60px;
-        }
+    button.primary {
+      background: #60a5fa;
+      color: #0f172a;
+    }
 
-        .notice {
-            background: #fff7ed;
-            border: 1px solid #fed7aa;
-            color: #9a3412;
-            border-radius: 14px;
-            padding: 14px;
-            margin-bottom: 20px;
-        }
+    button.danger {
+      background: #f87171;
+      color: #111827;
+    }
 
-        .day-card {
-            background: var(--card);
-            border: 1px solid var(--line);
-            border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 16px;
-            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
-        }
+    button.success {
+      background: #34d399;
+      color: #052e16;
+    }
 
-        .day-head {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 12px;
-        }
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
 
-        .badge {
-            display: inline-block;
-            background: #fee2e2;
-            color: #b91c1c;
-            border-radius: 999px;
-            padding: 4px 12px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
+    .status {
+      margin-top: 12px;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
 
-        .day-title { font-size: 1.1rem; font-weight: 600; }
-        .day-date { color: var(--muted); font-size: 0.95rem; }
+    .table-area {
+      position: relative;
+      min-height: 720px;
+      background: radial-gradient(circle at center, #1e3a8a 0%, #0f172a 62%);
+      border: 1px solid #334155;
+      border-radius: 24px;
+      overflow: auto;
+      padding: 18px;
+      user-select: none;
+    }
 
-        ul.timeline {
-            list-style: none;
-            border-left: 3px solid #fecaca;
-            padding-left: 14px;
-            display: grid;
-            gap: 10px;
-        }
+    .deck-stack {
+      position: absolute;
+      left: 24px;
+      top: 24px;
+      width: 120px;
+      height: 170px;
+      border-radius: 16px;
+      background: repeating-linear-gradient(45deg, #334155, #334155 8px, #475569 8px, #475569 16px);
+      border: 2px solid #cbd5e1;
+      display: grid;
+      place-items: center;
+      color: #f8fafc;
+      font-weight: 900;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+    }
 
-        .timeline li {
-            background: #fff;
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            padding: 10px;
-        }
+    .opened-area {
+      position: absolute;
+      left: 160px;
+      top: 24px;
+      min-width: 420px;
+      height: 170px;
+      z-index: 12000;
+      pointer-events: none;
+    }
 
-        .time { color: var(--accent); font-weight: 600; margin-right: 6px; }
-        .sub { color: var(--muted); font-size: 0.92rem; margin-top: 4px; }
+    .opened-title {
+      font-weight: 900;
+      color: #dbeafe;
+      margin-bottom: 8px;
+      font-size: 13px;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    }
 
-        .ticket-box {
-            margin-top: 10px;
-            border: 1px dashed #cbd5e1;
-            border-radius: 12px;
-            padding: 10px;
-            background: #f8fafc;
-        }
+    .opened-slots {
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+      align-items: flex-start;
+    }
 
-        footer {
-            text-align: center;
-            padding: 24px;
-            color: var(--muted);
-            font-size: 0.92rem;
-        }
-    </style>
+    .opened-placeholder {
+      width: 92px;
+      height: 132px;
+      color: #94a3b8;
+      font-size: 12px;
+      border: 2px dashed rgba(203, 213, 225, 0.55);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: rgba(15, 23, 42, 0.35);
+    }
+
+    .opened-card {
+      width: 92px;
+      height: 132px;
+      border-radius: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.78);
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 900;
+      font-size: 11px;
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
+      animation: openedCardIn 0.35s ease both;
+    }
+
+    .opened-card small {
+      display: block;
+      margin-top: 5px;
+      color: #fef3c7;
+      font-size: 10px;
+    }
+
+    .opened-card-position {
+      color: #dbeafe;
+      font-size: 9px;
+      margin-bottom: 4px;
+      line-height: 1.15;
+    }
+
+    .followup-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .followup-item {
+      width: 180px;
+      border: 1px solid #475569;
+      background: #0f172a;
+      border-radius: 16px;
+      padding: 10px;
+    }
+
+    .followup-question {
+      color: #cbd5e1;
+      font-size: 12px;
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+
+    @keyframes openedCardIn {
+      from { opacity: 0; transform: translateY(-10px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .deck-stack.shake {
+      animation: shake 0.35s linear 2;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      20% { transform: translate(-6px, 3px) rotate(-3deg); }
+      40% { transform: translate(6px, -3px) rotate(3deg); }
+      60% { transform: translate(-4px, -2px) rotate(-2deg); }
+      80% { transform: translate(4px, 3px) rotate(2deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+
+    .card {
+      position: absolute;
+      width: var(--card-width, 92px);
+      height: var(--card-height, 132px);
+      border-radius: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.75);
+      background: #64748b;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
+      cursor: grab;
+      transition: left 0.55s ease, top 0.55s ease, transform 0.55s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+    }
+
+    .card.arranging {
+      transition-delay: var(--arrange-delay, 0ms);
+    }
+
+    .card.dragging {
+      cursor: grabbing;
+      z-index: 9999;
+      box-shadow: 0 18px 28px rgba(0, 0, 0, 0.5);
+    }
+
+    .card.face-down {
+      background: repeating-linear-gradient(45deg, #7c3aed, #7c3aed 8px, #4f46e5 8px, #4f46e5 16px);
+      color: transparent;
+    }
+
+    .card.face-down::after {
+      content: "TAROT";
+      color: white;
+      font-size: 16px;
+      letter-spacing: 2px;
+    }
+
+    .card.selected {
+      outline: 4px solid #facc15;
+      transform: scale(1.06) !important;
+    }
+
+    .card.revealed {
+      cursor: default;
+    }
+
+    .spread {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .spread.celtic-layout {
+      position: relative;
+      min-height: 720px;
+      display: block;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 22px;
+      padding: 18px;
+      overflow: auto;
+    }
+
+    .celtic-card-slot {
+      position: absolute;
+      width: 120px;
+      height: 170px;
+      border-radius: 16px;
+      border: 1px dashed #64748b;
+      background: rgba(15, 23, 42, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8px;
+      color: #cbd5e1;
+      font-size: 11px;
+    }
+
+    .celtic-card-slot.crossing {
+      transform: rotate(90deg);
+      z-index: 2;
+    }
+
+    .celtic-card-face {
+      width: 100%;
+      height: 100%;
+      border-radius: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.72);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 7px;
+      font-weight: 900;
+      font-size: 10px;
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .celtic-card-face small {
+      display: block;
+      margin-top: 4px;
+      color: #fef3c7;
+      font-size: 9px;
+    }
+
+    .celtic-label {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -34px;
+      color: #dbeafe;
+      font-size: 10px;
+      line-height: 1.15;
+      text-align: center;
+    }
+
+    .slot {
+      min-height: 190px;
+      border: 1px dashed #64748b;
+      border-radius: 18px;
+      padding: 14px;
+      background: #0f172a;
+    }
+
+    .slot-title {
+      color: #93c5fd;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .slot-card {
+      height: 132px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px;
+      font-weight: 900;
+      border: 2px solid rgba(255, 255, 255, 0.65);
+    }
+
+    .reveal-overlay {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: rgba(2, 6, 23, 0.45);
+      z-index: 20000;
+      pointer-events: none;
+    }
+
+    .reveal-card {
+      width: 190px;
+      height: 270px;
+      perspective: 1000px;
+    }
+
+    .reveal-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.75s ease;
+    }
+
+    .reveal-card.flip .reveal-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .reveal-card-face {
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      border: 3px solid rgba(255, 255, 255, 0.85);
+      backface-visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 18px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+      font-weight: 900;
+    }
+
+    .reveal-card-back {
+      background: repeating-linear-gradient(45deg, #7c3aed, #7c3aed 12px, #4f46e5 12px, #4f46e5 24px);
+      font-size: 28px;
+      letter-spacing: 4px;
+    }
+
+    .reveal-card-front {
+      transform: rotateY(180deg);
+    }
+
+    .reveal-position {
+      color: #dbeafe;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .reveal-name {
+      font-size: 26px;
+      line-height: 1.15;
+    }
+
+    .reveal-orientation {
+      margin-top: 14px;
+      color: #fef3c7;
+      font-size: 16px;
+    }
+
+    pre {
+      background: #020617;
+      color: #dbeafe;
+      padding: 14px;
+      border-radius: 14px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .hint {
+      color: #cbd5e1;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+  </style>
 </head>
-
 <body>
-    <img id="catSticker" class="cat-sticker" src="./Gemini_Generated_Image_jlyskojlyskojlys.png" alt="cute cats">
-    <div class="password-overlay" id="passwordOverlay">
-        <div class="password-box">
-            <h2>🔐 ใส่รหัสก่อนเข้าเว็บ</h2>
-            <p>กรุณาใส่รหัสเพื่อดูแผนการเดินทาง</p>
-            <input id="passwordInput" type="password" placeholder="ใส่รหัสที่นี่" />
-            <button id="unlockBtn">เข้าสู่แผนเที่ยว</button>
-            <div id="passwordError"></div>
+  <main class="app">
+    <h1>Tarot Shuffle Demo</h1>
+    <div class="subtitle">Demo: ถามคำถาม → สร้างสำรับ 78 ใบ → สับ/ตัด/กระจาย/ลาก/เขย่า → เปิด 3 ใบ → console.log JSON</div>
+
+    <section class="panel">
+      <label for="spreadMode">โหมดการอ่านไพ่</label>
+      <select id="spreadMode">
+        <option value="three_card_general">3 Cards: Past / Present / Advice</option>
+        <option value="celtic_cross">Celtic Cross: 10 Cards</option>
+      </select>
+
+      <label for="questionInput" style="margin-top: 14px;">คำถามของผู้ใช้</label>
+      <textarea id="questionInput" placeholder="เช่น ความสัมพันธ์นี้ควรไปต่อไหม?"></textarea>
+
+      <div class="controls">
+        <button class="primary" id="createDeckBtn">1) สร้างสำรับ 78 ใบ</button>
+        <button id="shuffleBtn" disabled>2) สับไพ่</button>
+        <button id="cutBtn" disabled>3) ตัดครึ่ง</button>
+        <button id="scatterBtn" disabled>4) กระจายไพ่</button>
+        <button id="arrangeBtn" disabled>5) เรียงให้หยิบง่าย</button>
+        <button id="shakeBtn" disabled>เขย่า</button>
+        <button class="success" id="revealBtn" disabled>เปิดไพ่</button>
+        <button class="danger" id="resetBtn">Reset</button>
+      </div>
+
+      <div class="status" id="statusText">ยังไม่ได้สร้างสำรับ</div>
+      <div class="hint">หมายเหตุ: ไพ่ follow-up ในอนาคตควรดึงจาก remainingDeck ต่อจากสำรับเดิม ไม่ควรสร้างสำรับใหม่</div>
+    </section>
+
+    <section class="panel">
+      <div class="table-area" id="tableArea">
+        <div class="deck-stack" id="deckStack">78</div>
+        <div class="opened-area" id="openedArea">
+          <div class="opened-title">ไพ่ที่เปิดแล้ว</div>
+          <div class="opened-slots" id="openedSlots">
+            <div class="opened-placeholder">ยังไม่มีไพ่</div>
+          </div>
         </div>
-    </div>
+      </div>
+    </section>
 
-    <header>
-        <h1>แผนทริปจีน 2026</h1>
-        <p>เซี่ยงไฮ้ • เจ่าจวง (ซานตง) • ดิสนีย์แลนด์ | 9 - 16 เมษายน 2026</p>
-    </header>
+    <section class="panel">
+      <h2 id="resultTitle">ผลไพ่</h2>
+      <div class="spread" id="spreadResult">
+        <div class="slot"><div class="slot-title">1. พื้นหลัง / Past</div><div>ยังไม่เปิด</div></div>
+        <div class="slot"><div class="slot-title">2. ปัจจุบัน / Present</div><div>ยังไม่เปิด</div></div>
+        <div class="slot"><div class="slot-title">3. คำแนะนำ / Advice</div><div>ยังไม่เปิด</div></div>
+      </div>
+    </section>
 
-    <main class="container">
-        <div class="notice">
-            ปรับแผนตามข้อมูลล่าสุดที่ให้มาแล้ว โดยยึด “เวลาตั๋วจริง” สำหรับรถไฟวันที่ 10 และ 12 เมษายน 2026
+    <section class="panel" id="followUpPanel">
+      <h2>Follow-up Cards</h2>
+      <label for="followUpInput">คำถามต่อเนื่อง</label>
+      <textarea id="followUpInput" placeholder="เช่น แล้วถ้าฉันรอ เขาจะติดต่อกลับมาไหม?" disabled></textarea>
+      <div class="controls">
+        <button class="success" id="followUpBtn" disabled>เริ่มเลือกไพ่ Follow-up 1 ใบ</button>
+      </div>
+      <div class="status" id="followUpStatus">เปิดไพ่หลัก 3 ใบก่อน แล้วจึงถามต่อเนื่องได้</div>
+      <div class="followup-list" id="followUpList">
+        <div class="opened-placeholder">ยังไม่มี Follow-up</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>JSON สำหรับส่งให้ AI</h2>
+      <pre id="jsonOutput">ยังไม่มีข้อมูล</pre>
+    </section>
+  </main>
+
+  <script>
+    const tarotCards = [
+      // Major Arcana
+      "The Fool", "The Magician", "The High Priestess", "The Empress", "The Emperor", "The Hierophant",
+      "The Lovers", "The Chariot", "Strength", "The Hermit", "Wheel of Fortune", "Justice",
+      "The Hanged Man", "Death", "Temperance", "The Devil", "The Tower", "The Star", "The Moon", "The Sun",
+      "Judgement", "The World",
+
+      // Wands
+      "Ace of Wands", "Two of Wands", "Three of Wands", "Four of Wands", "Five of Wands", "Six of Wands",
+      "Seven of Wands", "Eight of Wands", "Nine of Wands", "Ten of Wands", "Page of Wands", "Knight of Wands",
+      "Queen of Wands", "King of Wands",
+
+      // Cups
+      "Ace of Cups", "Two of Cups", "Three of Cups", "Four of Cups", "Five of Cups", "Six of Cups",
+      "Seven of Cups", "Eight of Cups", "Nine of Cups", "Ten of Cups", "Page of Cups", "Knight of Cups",
+      "Queen of Cups", "King of Cups",
+
+      // Swords
+      "Ace of Swords", "Two of Swords", "Three of Swords", "Four of Swords", "Five of Swords", "Six of Swords",
+      "Seven of Swords", "Eight of Swords", "Nine of Swords", "Ten of Swords", "Page of Swords", "Knight of Swords",
+      "Queen of Swords", "King of Swords",
+
+      // Pentacles
+      "Ace of Pentacles", "Two of Pentacles", "Three of Pentacles", "Four of Pentacles", "Five of Pentacles", "Six of Pentacles",
+      "Seven of Pentacles", "Eight of Pentacles", "Nine of Pentacles", "Ten of Pentacles", "Page of Pentacles", "Knight of Pentacles",
+      "Queen of Pentacles", "King of Pentacles"
+    ];
+
+    const spreadDefinitions = {
+      three_card_general: {
+        id: "three_card_general",
+        name: "Three Card General Reading",
+        cardCount: 3,
+        positions: [
+          { key: "past", label: "พื้นหลัง / Past", meaning: "รากของเรื่องหรือพลังงานที่ส่งผลมาถึงตอนนี้" },
+          { key: "present", label: "ปัจจุบัน / Present", meaning: "สถานการณ์หรือพลังงานหลักในตอนนี้" },
+          { key: "advice", label: "คำแนะนำ / Advice", meaning: "แนวทางที่ควรใช้รับมือกับคำถามนี้" }
+        ]
+      },
+      celtic_cross: {
+        id: "celtic_cross",
+        name: "Celtic Cross Reading",
+        cardCount: 10,
+        positions: [
+          { key: "present", label: "1. Present / สถานการณ์ปัจจุบัน", meaning: "แกนหลักของสถานการณ์ตอนนี้" },
+          { key: "challenge", label: "2. Challenge / สิ่งที่ขวาง", meaning: "อุปสรรค แรงต้าน หรือสิ่งที่ต้องผ่าน" },
+          { key: "foundation", label: "3. Foundation / รากของเรื่อง", meaning: "สาเหตุลึก ๆ หรือพื้นฐานของสถานการณ์" },
+          { key: "past", label: "4. Recent Past / อดีตที่ผ่านมา", meaning: "สิ่งที่เพิ่งเกิดและยังส่งผลต่อปัจจุบัน" },
+          { key: "crown", label: "5. Crown / สิ่งที่อยู่เหนือเรื่อง", meaning: "เป้าหมาย ความคิด ความคาดหวัง หรือสิ่งที่ผู้ถามรับรู้" },
+          { key: "near_future", label: "6. Near Future / อนาคตใกล้", meaning: "แนวโน้มระยะสั้นถัดไป" },
+          { key: "self", label: "7. Self / ตัวผู้ถาม", meaning: "ทัศนคติ พลังงาน หรือบทบาทของผู้ถาม" },
+          { key: "environment", label: "8. Environment / คนรอบข้าง", meaning: "อิทธิพลภายนอก คนรอบตัว หรือสภาพแวดล้อม" },
+          { key: "hopes_fears", label: "9. Hopes & Fears / ความหวังและความกลัว", meaning: "สิ่งที่คาดหวังและสิ่งที่กังวล" },
+          { key: "outcome", label: "10. Outcome / แนวโน้มผลลัพธ์", meaning: "ทิศทางโดยรวมถ้ายังเดินตามพลังงานเดิม" }
+        ]
+      }
+    };
+
+    function getCurrentSpread() {
+      return spreadDefinitions[spreadMode.value] || spreadDefinitions.three_card_general;
+    }
+
+    const tableArea = document.getElementById("tableArea");
+    const deckStack = document.getElementById("deckStack");
+    const openedSlots = document.getElementById("openedSlots");
+    const statusText = document.getElementById("statusText");
+    const questionInput = document.getElementById("questionInput");
+    const spreadMode = document.getElementById("spreadMode");
+    const resultTitle = document.getElementById("resultTitle");
+    const spreadResult = document.getElementById("spreadResult");
+    const jsonOutput = document.getElementById("jsonOutput");
+    const followUpInput = document.getElementById("followUpInput");
+    const followUpBtn = document.getElementById("followUpBtn");
+    const followUpStatus = document.getElementById("followUpStatus");
+    const followUpList = document.getElementById("followUpList");
+
+    const createDeckBtn = document.getElementById("createDeckBtn");
+    const shuffleBtn = document.getElementById("shuffleBtn");
+    const cutBtn = document.getElementById("cutBtn");
+    const scatterBtn = document.getElementById("scatterBtn");
+    const shakeBtn = document.getElementById("shakeBtn");
+    const arrangeBtn = document.getElementById("arrangeBtn");
+    const revealBtn = document.getElementById("revealBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    let deck = [];
+    let selectedCards = [];
+    let revealedCards = [];
+    let followUpCards = [];
+    let isSelectingFollowUp = false;
+    let pendingFollowUpQuestion = "";
+    let zIndexCounter = 10;
+    let isArranging = false;
+
+    function createTarotDeck() {
+      return tarotCards.map((name, index) => ({
+        id: index + 1,
+        name,
+        orientation: Math.random() < 0.5 ? "upright" : "reversed",
+        color: getCardColor(index),
+        isFaceDown: true,
+        x: 38 + Math.random() * 10,
+        y: 36 + Math.random() * 10,
+        width: 92,
+        height: 132,
+        rotation: Math.random() * 8 - 4
+      }));
+    }
+
+    function getCardColor(index) {
+      const colors = ["#64748b", "#7c3aed", "#2563eb", "#059669", "#d97706", "#dc2626", "#be185d", "#0f766e"];
+      return colors[index % colors.length];
+    }
+
+    // Fisher-Yates shuffle เหมือนสับสำรับจริง: สลับตำแหน่งไพ่ใน array ทั้งกอง
+    function shuffleDeck(cards) {
+      const result = [...cards];
+      for (let i = result.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [result[i], result[j]] = [result[j], result[i]];
+      }
+      return result;
+    }
+
+    // ตัดไพ่: ย้ายครึ่งล่างขึ้นบนหรือครึ่งบนลงล่าง
+    function cutDeck(cards) {
+      const cutIndex = Math.floor(cards.length / 2 + (Math.random() * 12 - 6));
+      return [...cards.slice(cutIndex), ...cards.slice(0, cutIndex)];
+    }
+
+    // กระจายไพ่บนโต๊ะให้ user ลากเล่นได้
+    function scatterDeck(cards) {
+      const rect = tableArea.getBoundingClientRect();
+      return cards.map(card => ({
+        ...card,
+        x: 170 + Math.random() * Math.max(200, rect.width - 290),
+        y: 40 + Math.random() * Math.max(220, rect.height - 190),
+        rotation: Math.random() * 70 - 35
+      }));
+    }
+
+    // เขย่า: สับซ้ำ + ขยับตำแหน่งบนโต๊ะเล็กน้อย
+    function shakeDeck(cards) {
+      const shuffled = shuffleDeck(cards);
+      return shuffled.map(card => ({
+        ...card,
+        x: Math.max(160, Math.min(card.x + (Math.random() * 90 - 45), tableArea.clientWidth - 110)),
+        y: Math.max(30, Math.min(card.y + (Math.random() * 90 - 45), tableArea.clientHeight - 150)),
+        rotation: card.rotation + (Math.random() * 36 - 18)
+      }));
+    }
+
+    // เรียงไพ่เป็นแถว ๆ เพื่อให้หยิบง่าย แต่ยังคงลำดับสำรับหลังสับ/ตัดไว้
+    function arrangeDeckForPicking(cards) {
+      const cardWidth = 70;
+      const cardHeight = 100;
+      const gapX = 10;
+      const gapY = 12;
+      const startX = 24;
+      const startY = 440;
+      const availableWidth = Math.max(300, tableArea.clientWidth - startX - 24);
+      const cardsPerRow = Math.max(4, Math.floor(availableWidth / (cardWidth + gapX)));
+
+      // สำคัญ: ไม่ shuffle ใหม่ แต่เรียงตามตำแหน่งจริงที่ผู้ใช้เห็นบนโต๊ะ
+      // ใบบนสุด/ใกล้ซ้ายบนมากกว่า จะถูกวางก่อน เหมือนกวาดไพ่จากตำแหน่งจริงมาเรียง
+      const positionSortedCards = [...cards].sort((a, b) => {
+        const rowA = Math.round(a.y / 70);
+        const rowB = Math.round(b.y / 70);
+        if (rowA !== rowB) return rowA - rowB;
+        return a.x - b.x;
+      });
+
+      return positionSortedCards.map((card, index) => {
+        const row = Math.floor(index / cardsPerRow);
+        const col = index % cardsPerRow;
+        return {
+          ...card,
+          x: startX + col * (cardWidth + gapX),
+          y: startY + row * (cardHeight + gapY),
+          width: cardWidth,
+          height: cardHeight,
+          rotation: Math.random() * 2 - 1,
+          zIndex: index + 1
+        };
+      });
+    }
+
+    function renderDeck() {
+      tableArea.querySelectorAll(".card").forEach(el => el.remove());
+      deckStack.textContent = String(deck.length - revealedCards.length - followUpCards.length);
+
+      deck.forEach(card => {
+        if (revealedCards.some(c => c.id === card.id)) return;
+        if (followUpCards.some(item => item.card.id === card.id)) return;
+
+        const cardEl = document.createElement("div");
+        cardEl.className = "card face-down";
+        if (selectedCards.some(c => c.id === card.id)) {
+          cardEl.classList.add("selected");
+        }
+
+        if (isArranging) {
+          cardEl.classList.add("arranging");
+          cardEl.style.setProperty("--arrange-delay", `${Math.min((card.zIndex || 1) * 8, 420)}ms`);
+        }
+
+        cardEl.dataset.id = String(card.id);
+        cardEl.style.left = `${card.x}px`;
+        cardEl.style.top = `${card.y}px`;
+        cardEl.style.setProperty("--card-width", `${card.width || 92}px`);
+        cardEl.style.setProperty("--card-height", `${card.height || 132}px`);
+        cardEl.style.transform = `rotate(${card.rotation}deg)`;
+        cardEl.style.zIndex = String(card.zIndex || card.id);
+
+        cardEl.addEventListener("pointerdown", onCardPointerDown);
+        cardEl.addEventListener("click", () => toggleSelectCard(card.id));
+
+        tableArea.appendChild(cardEl);
+      });
+    }
+
+    function onCardPointerDown(event) {
+      const cardEl = event.currentTarget;
+      const cardId = Number(cardEl.dataset.id);
+      const card = deck.find(c => c.id === cardId);
+      if (!card) return;
+
+      event.preventDefault();
+      cardEl.setPointerCapture(event.pointerId);
+      cardEl.classList.add("dragging");
+      card.zIndex = ++zIndexCounter;
+      cardEl.style.zIndex = String(card.zIndex);
+
+      const startX = event.clientX;
+      const startY = event.clientY;
+      const originalX = card.x;
+      const originalY = card.y;
+
+      function moveHandler(moveEvent) {
+        const dx = moveEvent.clientX - startX;
+        const dy = moveEvent.clientY - startY;
+        card.x = Math.max(0, Math.min(originalX + dx, tableArea.clientWidth - (card.width || 92)));
+        card.y = Math.max(0, Math.min(originalY + dy, tableArea.clientHeight - (card.height || 132)));
+        card.rotation += Math.random() * 1.8 - 0.9;
+        cardEl.style.left = `${card.x}px`;
+        cardEl.style.top = `${card.y}px`;
+        cardEl.style.transform = `rotate(${card.rotation}deg)`;
+      }
+
+      function upHandler() {
+        cardEl.classList.remove("dragging");
+        cardEl.removeEventListener("pointermove", moveHandler);
+        cardEl.removeEventListener("pointerup", upHandler);
+        cardEl.removeEventListener("pointercancel", upHandler);
+      }
+
+      cardEl.addEventListener("pointermove", moveHandler);
+      cardEl.addEventListener("pointerup", upHandler);
+      cardEl.addEventListener("pointercancel", upHandler);
+    }
+
+    async function toggleSelectCard(cardId) {
+      if (isArranging) return;
+
+      if (isSelectingFollowUp) {
+        await revealPickedFollowUpCard(cardId);
+        return;
+      }
+
+      if (revealedCards.length > 0) return;
+
+      const spread = getCurrentSpread();
+      const card = deck.find(c => c.id === cardId);
+      if (!card) return;
+
+      const alreadySelected = selectedCards.some(c => c.id === cardId);
+      if (alreadySelected) {
+        selectedCards = selectedCards.filter(c => c.id !== cardId);
+      } else {
+        if (selectedCards.length >= spread.cardCount) {
+          statusText.textContent = `เลือกได้สูงสุด ${spread.cardCount} ใบเท่านั้น ถ้าจะเปลี่ยนให้กดไพ่ที่เลือกไว้ออกก่อน`;
+          return;
+        }
+        selectedCards.push(card);
+      }
+
+      revealBtn.disabled = selectedCards.length !== spread.cardCount;
+      statusText.textContent = `เลือกแล้ว ${selectedCards.length}/${spread.cardCount} ใบ`;
+      renderDeck();
+    }
+
+    async function revealSelectedCards() {
+      const spread = getCurrentSpread();
+      if (selectedCards.length !== spread.cardCount) {
+        statusText.textContent = `กรุณาเลือกไพ่ให้ครบ ${spread.cardCount} ใบก่อนเปิด`;
+        return;
+      }
+
+      revealBtn.disabled = true;
+      shuffleBtn.disabled = true;
+      cutBtn.disabled = true;
+      scatterBtn.disabled = true;
+      shakeBtn.disabled = true;
+      arrangeBtn.disabled = true;
+
+      revealedCards = [];
+
+      for (let i = 0; i < selectedCards.length; i++) {
+        const card = {
+          ...selectedCards[i],
+          position: spread.positions[i]
+        };
+
+        statusText.textContent = `กำลังเปิดไพ่ใบที่ ${i + 1}/${spread.cardCount}: ${card.position.label}`;
+        await animateRevealCard(card, i);
+        revealedCards.push(card);
+        renderOpenedCards();
+        renderSpreadResult();
+      }
+
+      const aiPayload = buildAiPayload();
+      console.log("AI Payload:", aiPayload);
+      jsonOutput.textContent = JSON.stringify(aiPayload, null, 2);
+
+      renderDeck();
+      enableFollowUpMode();
+      statusText.textContent = "เปิดไพ่ครบ 3 ใบแล้ว ดู JSON ใน console หรือด้านล่าง และถาม Follow-up ต่อได้";
+    }
+
+    function animateRevealCard(card, index) {
+      return new Promise(resolve => {
+        const overlay = document.createElement("div");
+        overlay.className = "reveal-overlay";
+
+        const revealCard = document.createElement("div");
+        revealCard.className = "reveal-card";
+        revealCard.innerHTML = `
+          <div class="reveal-card-inner">
+            <div class="reveal-card-face reveal-card-back">TAROT</div>
+            <div class="reveal-card-face reveal-card-front" style="background:${card.color};">
+              <div>
+                <div class="reveal-position">${index + 1}. ${card.position.label}</div>
+                <div class="reveal-name">${card.name}</div>
+                <div class="reveal-orientation">${card.orientation === "upright" ? "Upright" : "Reversed"}</div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        overlay.appendChild(revealCard);
+        tableArea.appendChild(overlay);
+
+        setTimeout(() => {
+          revealCard.classList.add("flip");
+        }, 120);
+
+        setTimeout(() => {
+          overlay.remove();
+          resolve();
+        }, 1250);
+      });
+    }
+
+    function renderFollowUpList() {
+      if (!followUpList) return;
+
+      if (followUpCards.length === 0) {
+        followUpList.innerHTML = `<div class="opened-placeholder">ยังไม่มี Follow-up</div>`;
+        return;
+      }
+
+      followUpList.innerHTML = followUpCards.map((item, index) => `
+        <div class="followup-item">
+          <div class="followup-question">Q${index + 1}: ${item.question}</div>
+          <div class="opened-card" style="background:${item.card.color};">
+            <div>
+              <div class="opened-card-position">Follow-up ${index + 1}</div>
+              ${item.card.name}
+              <small>${item.card.orientation === "upright" ? "Upright" : "Reversed"}</small>
+            </div>
+          </div>
         </div>
+      `).join("");
+    }
 
-        <section class="day-card">
-            <div class="day-head">
-                <span class="badge">วันที่ 1</span>
-                <div>
-                    <div class="day-title">เดินทางถึงเซี่ยงไฮ้ + เที่ยวกลางคืน</div>
-                    <div class="day-date">9 เมษายน 2026</div>
-                </div>
-            </div>
-            <ul class="timeline">
-                <li><span class="time">06:30</span>เดินทางไปสนามบิน</li>
-                <li><span class="time">07:20</span>ถึงสนามบิน</li>
-                <li><span class="time">10:45</span>เครื่องบินออกเดินทาง</li>
-                <li><span class="time">16:00</span>ถึงสนามบินเซี่ยงไฮ้</li>
-                <li><span class="time">18:00</span>แวะร้าน Blue Bottle Coffee</li>
-                <li><span class="time">18:30</span>เดินเล่น Nanjing Road + ทานร้าน Xiesanba (บะหมี่ปู)</li>
-                <li><span class="time">20:00</span>ถ่ายรูปสะพาน Waibaidu และ The Bund (วิวกลางคืน หอไข่มุก + ผู่ตง)</li>
-                <li><span class="time">ที่พัก</span>เช็คอิน Hanting Hotel (พัก 1 คืน)</li>
-            </ul>
-        </section>
+    function renderOpenedCards() {
+      if (!openedSlots) return;
 
-        <section class="day-card">
-            <div class="day-head">
-                <span class="badge">วันที่ 2</span>
-                <div>
-                    <div class="day-title">เดินทางไปหาเพื่อนที่เจ่าจวง (ซานตง)</div>
-                    <div class="day-date">10 เมษายน 2026</div>
-                </div>
-            </div>
-            <ul class="timeline">
-                <li><span class="time">05:10</span>เช็คเอาท์จาก Hanting Hotel</li>
-                <li><span class="time">06:10</span>นั่ง DiDi ถึงสถานี Shanghai Hongqiao</li>
-                <li><span class="time">07:22</span>รถไฟความเร็วสูงออกเดินทาง (อิงตั๋วจริง)</li>
-                <li><span class="time">10:38</span>ถึงสถานีเจ่าจวง (อิงตั๋วจริง)</li>
-                <li>เพื่อนชาวจีนมารับที่สถานี และพักที่เจ่าจวงคืนที่ 1</li>
-            </ul>
-            <div class="ticket-box">
-                <strong>ข้อมูลตั๋ว Shanghai Hongqiao → Zaozhuang</strong><br>
-                ขบวน: G550 | ประตู: 1A/1B<br>
-                First Class (ตู้ 02): 4F CHOTKLANG PANUCHANART, 4A Treevipanon Krittin, 4C CHITSIRIPARAT NONTANUT, 4D PUENGSATIT KAWINTIP
-            </div>
-        </section>
+      if (revealedCards.length === 0) {
+        openedSlots.innerHTML = `
+          <div class="opened-placeholder">ช่องที่ 1</div>
+          <div class="opened-placeholder">ช่องที่ 2</div>
+          <div class="opened-placeholder">ช่องที่ 3</div>
+        `;
+        return;
+      }
 
-        <section class="day-card">
-            <div class="day-head">
-                <span class="badge">วันที่ 3</span>
-                <div>
-                    <div class="day-title">อยู่กับเพื่อนที่เจ่าจวง</div>
-                    <div class="day-date">11 เมษายน 2026</div>
-                </div>
-            </div>
-            <ul class="timeline">
-                <li>ใช้เวลาเที่ยวและทำกิจกรรมกับเพื่อนที่เจ่าจวง</li>
-                <li>พักที่เจ่าจวงคืนที่ 2</li>
-            </ul>
-        </section>
+      const opened = revealedCards.map(card => `
+        <div class="opened-card" style="background:${card.color};">
+          <div>
+            <div class="opened-card-position">${card.position.label}</div>
+            ${card.name}
+            <small>${card.orientation === "upright" ? "Upright" : "Reversed"}</small>
+          </div>
+        </div>
+      `);
 
-        <section class="day-card">
-            <div class="day-head">
-                <span class="badge">วันที่ 4</span>
-                <div>
-                    <div class="day-title">เดินทางกลับเซี่ยงไฮ้</div>
-                    <div class="day-date">12 เมษายน 2026</div>
-                </div>
-            </div>
-            <ul class="timeline">
-                <li>เดินทางไปสถานีรถไฟเจ่าจวง</li>
-                <li><span class="time">13:38</span>รถไฟออกจากเจ่าจวง</li>
-                <li><span class="time">17:13</span>ถึงสถานี Shanghai Hongqiao</li>
-                <li>นำสัมภาระไปเก็บที่โรงแรม Shanghai Rezen Estelle Hotel (Nanjing Road Walkway Bund Branch)</li>
-                <li>เดินไปห้าง Mosaic Plaza เลือกอาหารเย็น (Dong sheng / New sukiyaki / Long time ago)</li>
-                <li><span class="time">22:00</span>เดินเล่น Nanjing Road</li>
-            </ul>
-            <div class="ticket-box">
-                <strong>ข้อมูลตั๋ว Zaozhuang → Shanghai Hongqiao</strong><br>
-                ขบวน: G1705<br>
-                First Class (ตู้ 15): 8A CHOTKLANG PANUCHANART, 8C Treevipanon Krittin, 8D CHITSIRIPARAT NONTANUT, 8F PUENGSATIT KAWINTIP
-            </div>
-            <div class="sub" style="margin-top:10px;">
-                ข้อมูลโรงแรม: 7th Floor, Yuehui Plaza, No. 337 Shandong Middle Road, Huangpu, Shanghai<br>
-                เข้าพัก 12-16 เม.ย. 2026 (4 คืน) | Check-in หลัง 14:00 | Check-out ก่อน 12:00
-            </div>
-        </section>
+      const placeholders = Array.from({ length: 3 - revealedCards.length }, (_, index) => `
+        <div class="opened-placeholder">ช่องที่ ${revealedCards.length + index + 1}</div>
+      `);
 
-        <section class="day-card">
-            <div class="day-head">
-                <span class="badge">วันที่ 5</span>
-                <div>
-                    <div class="day-title">ตะลุย Shanghai Disneyland</div>
-                    <div class="day-date">13 เมษายน 2026</div>
-                </div>
+      openedSlots.innerHTML = [...opened, ...placeholders].join("");
+    }
+
+    function renderSpreadResult() {
+      const spread = getCurrentSpread();
+      resultTitle.textContent = spread.id === "celtic_cross" ? "ผลไพ่ Celtic Cross" : "ผลไพ่ 3 ใบ";
+
+      if (spread.id === "celtic_cross") {
+        spreadResult.className = "spread celtic-layout";
+        spreadResult.innerHTML = renderCelticCrossLayout();
+        return;
+      }
+
+      spreadResult.className = "spread";
+      if (revealedCards.length === 0) {
+        spreadResult.innerHTML = spread.positions.map((position, index) => `
+          <div class="slot"><div class="slot-title">${index + 1}. ${position.label}</div><div>ยังไม่เปิด</div></div>
+        `).join("");
+        return;
+      }
+
+      spreadResult.innerHTML = revealedCards.map(card => `
+        <div class="slot">
+          <div class="slot-title">${card.position.label}</div>
+          <div class="slot-card" style="background: ${card.color};">
+            <div>
+              ${card.name}<br />
+              <small>${card.orientation === "upright" ? "Upright" : "Reversed"}</small>
             </div>
-            <ul class="timeline">
-                <li><span class="time">06:00</span>ออกจากโรงแรม เรียก DiDi</li>
-                <li><span class="time">06:50</span>ถึง Shanghai Disneyland</li>
-                <li><span class="time">21:00</span>เดินทางกลับจากดิสนีย์แลนด์</li>
-                <li><span class="time">22:00</span>ถึงโรงแรม</li>
-            </ul>
-        </section>
+          </div>
+          <div class="hint">${card.position.meaning}</div>
+        </div>
+      `).join("");
+    }
 
-        <section class="day-card">
-            <div class="day-head">
-                <span class="badge">วันที่ 6</span>
-                <div>
-                    <div class="day-title">เที่ยวจุดเช็คอินรอบเมือง</div>
-                    <div class="day-date">14 เมษายน 2026</div>
-                </div>
+    function renderCelticCrossLayout() {
+      const layout = [
+        { left: 260, top: 260, crossing: false }, // 1 Present
+        { left: 260, top: 260, crossing: true },  // 2 Challenge crosses card 1
+        { left: 260, top: 460, crossing: false }, // 3 Foundation
+        { left: 100, top: 260, crossing: false }, // 4 Past
+        { left: 260, top: 60, crossing: false },  // 5 Crown
+        { left: 420, top: 260, crossing: false }, // 6 Near Future
+        { left: 650, top: 520, crossing: false }, // 7 Self
+        { left: 650, top: 360, crossing: false }, // 8 Environment
+        { left: 650, top: 200, crossing: false }, // 9 Hopes/Fears
+        { left: 650, top: 40, crossing: false }   // 10 Outcome
+      ];
+
+      const spread = getCurrentSpread();
+      return spread.positions.map((position, index) => {
+        const card = revealedCards[index];
+        const pos = layout[index];
+        const face = card ? `
+          <div class="celtic-card-face" style="background:${card.color};">
+            <div>
+              ${card.name}
+              <small>${card.orientation === "upright" ? "Upright" : "Reversed"}</small>
             </div>
-            <ul class="timeline">
-                <li><span class="time">07:30</span>ออกจากโรงแรม</li>
-                <li><span class="time">07:45</span>Manner Coffee (Gubei Binjiang Branch) + North Bund Greenland</li>
-                <li><span class="time">08:20</span>Jing'an Temple</li>
-                <li><span class="time">11:30</span>DiDi ไป Flower coffee (Rui)</li>
-                <li><span class="time">13:00</span>Shanghai Postal Museum</li>
-                <li><span class="time">14:00</span>Zhapu Bridge</li>
-                <li><span class="time">14:30</span>Xintianan tang Church</li>
-                <li><span class="time">15:00</span>Rock Bund (ชมวิวหอไข่มุก)</li>
-                <li><span class="time">16:15</span>Shanghai People's Heros Memorial Tower</li>
-                <li><span class="time">16:45</span>The Bund Sightseeing Platform</li>
-                <li><span class="time">17:30</span>The Bund - Chen Yi Square</li>
-                <li><span class="time">18:30</span>Mosaic Plaza (เลือก 1 ร้าน: Dong sheng / New sukiyaki / Long time ago)</li>
-            </ul>
-        </section>
+          </div>
+        ` : `<div>${index + 1}</div>`;
 
-        <section class="day-card">
-            <div class="day-head">
-                <span class="badge">วันที่ 7</span>
-                <div>
-                    <div class="day-title">สายคาเฟ่และช้อปปิ้ง</div>
-                    <div class="day-date">15 เมษายน 2026</div>
-                </div>
-            </div>
-            <ul class="timeline">
-                <li><span class="time">08:00</span>ออกจากโรงแรม</li>
-                <li><span class="time">08:15</span>มื้อเช้า Lai Lai Xiaolong</li>
-                <li><span class="time">09:30</span>ถ่ายรูปตึก 1000 Trees</li>
-                <li><span class="time">10:00</span>Wukang Building + กาแฟ</li>
-                <li><span class="time">11:00</span>DiDi ไป Starbucks Reserve Roastery</li>
-                <li><span class="time">12:00</span>HKRI Taikoo Hui (The locus + Butterful & Creamorous)</li>
-                <li><span class="time">13:30</span>DiDi ไป Huaihai 755: Miniso Pink, 13 DE MARZO, New York Bagels Museum</li>
-                <li><span class="time">15:00</span>ทาน New Sukiyaki หรือ Dongsheng Buffet</li>
-                <li>นั่ง DiDi ไปย่าน Xintiandi</li>
-                <li><span class="time">18:00</span>Super Brand Mall</li>
-            </ul>
-        </section>
+        return `
+          <div class="celtic-card-slot ${pos.crossing ? "crossing" : ""}" style="left:${pos.left}px; top:${pos.top}px;">
+            ${face}
+            <div class="celtic-label">${position.label}</div>
+          </div>
+        `;
+      }).join("");
+    }
 
-        <section class="day-card">
-            <div class="day-head">
-                <span class="badge">วันที่ 8</span>
-                <div>
-                    <div class="day-title">วันเดินทางกลับ</div>
-                    <div class="day-date">16 เมษายน 2026</div>
-                </div>
-            </div>
-            <ul class="timeline">
-                <li>ช่วงเช้าพักผ่อนตามอัธยาศัย</li>
-                <li>เช็คเอาท์จาก Shanghai Rezen Estelle Hotel ก่อนเวลา 12:00 น.</li>
-            </ul>
-        </section>
-    </main>
+    function buildAiPayload() {
+      const question = questionInput.value.trim();
+      const usedCardIds = new Set([
+        ...revealedCards.map(card => card.id),
+        ...followUpCards.map(item => item.card.id)
+      ]);
 
-    <footer>
-        อัปเดตตามข้อมูลล่าสุดเรียบร้อยแล้ว • ขอให้ทริปสนุกและเดินทางปลอดภัย ✈️
-    </footer>
+      const remainingDeck = deck
+        .filter(card => !usedCardIds.has(card.id))
+        .map(card => ({
+          id: card.id,
+          name: card.name,
+          orientation: card.orientation
+        }));
 
-    <script>
-        const PASSCODE = 'heekuy69';
-        const overlay = document.getElementById('passwordOverlay');
-        const input = document.getElementById('passwordInput');
-        const button = document.getElementById('unlockBtn');
-        const error = document.getElementById('passwordError');
-        const catSticker = document.getElementById('catSticker');
-        let catAnimationFrame = null;
-        let vx = 4;
-        let vy = 3;
-        let posX = 24;
-        let posY = 24;
-
-        function stopCatRun() {
-            if (catAnimationFrame) cancelAnimationFrame(catAnimationFrame);
-            catAnimationFrame = null;
+      return {
+        type: "tarot_reading_request",
+        question,
+        spread: {
+          id: getCurrentSpread().id,
+          name: getCurrentSpread().name,
+          positions: getCurrentSpread().positions
+        },
+        cards: revealedCards.map(card => ({
+          position_key: card.position.key,
+          position_label: card.position.label,
+          position_meaning: card.position.meaning,
+          card_id: card.id,
+          card_name: card.name,
+          orientation: card.orientation
+        })),
+        follow_up_cards: followUpCards.map((item, index) => ({
+          follow_up_index: index + 1,
+          question: item.question,
+          card_id: item.card.id,
+          card_name: item.card.name,
+          orientation: item.card.orientation,
+          position_label: `Follow-up ${index + 1}`,
+          position_meaning: "ไพ่ขยายคำตอบจากคำถามต่อเนื่อง โดยดึงจากสำรับเดิมที่เหลือ"
+        })),
+        remaining_deck_count: remainingDeck.length,
+        remaining_deck_preview_for_debug: remainingDeck.slice(0, 5),
+        instruction_to_ai: {
+          language: "Thai",
+          style: "warm, practical, reflective guidance",
+          rules: [
+            "Do not claim certainty about the future.",
+            "Interpret cards as reflective guidance, not absolute prediction.",
+            "Avoid fear-based or fatalistic language.",
+            "If the question involves health, legal, finance, or dangerous decisions, encourage qualified help.",
+            "For follow-up cards, connect the answer to the original reading and the specific follow-up question."
+          ],
+          output_format: [
+            "1. ภาพรวม",
+            "2. ความหมายของแต่ละใบ",
+            "3. คำตอบสำหรับคำถามต่อเนื่อง ถ้ามี",
+            "4. คำแนะนำ",
+            "5. สิ่งที่ควรระวัง",
+            "6. สรุปสั้น ๆ"
+          ]
         }
+      };
+    }
 
-        function runCatLoop() {
-            stopCatRun();
-            catSticker.classList.remove('corner');
-            catSticker.style.display = 'block';
-            const move = () => {
-                const maxX = window.innerWidth - catSticker.offsetWidth;
-                const maxY = window.innerHeight - catSticker.offsetHeight;
-                posX += vx;
-                posY += vy;
-                if (posX <= 0 || posX >= maxX) vx *= -1;
-                if (posY <= 0 || posY >= maxY) vy *= -1;
-                posX = Math.max(0, Math.min(posX, maxX));
-                posY = Math.max(0, Math.min(posY, maxY));
-                catSticker.style.left = `${posX}px`;
-                catSticker.style.top = `${posY}px`;
-                catSticker.style.right = 'auto';
-                catSticker.style.bottom = 'auto';
-                catAnimationFrame = requestAnimationFrame(move);
-            };
-            catAnimationFrame = requestAnimationFrame(move);
+    async function drawFollowUpCard() {
+      const followQuestion = followUpInput.value.trim();
+      if (!followQuestion) {
+        followUpStatus.textContent = "กรุณาพิมพ์คำถามต่อเนื่องก่อนเลือกไพ่";
+        return;
+      }
+
+      const usedCardIds = new Set([
+        ...revealedCards.map(card => card.id),
+        ...followUpCards.map(item => item.card.id)
+      ]);
+
+      const remainingCards = deck.filter(card => !usedCardIds.has(card.id));
+      if (remainingCards.length === 0) {
+        followUpStatus.textContent = "ไม่มีไพ่เหลือในสำรับแล้ว";
+        followUpBtn.disabled = true;
+        return;
+      }
+
+      pendingFollowUpQuestion = followQuestion;
+      isSelectingFollowUp = true;
+      followUpBtn.disabled = true;
+      followUpInput.disabled = true;
+      followUpStatus.textContent = "เลือกไพ่ 1 ใบจากแถวไพ่ที่เรียงไว้ เพื่อใช้เป็น Follow-up";
+      statusText.textContent = "กำลังเลือก Follow-up: คลิกไพ่ 1 ใบจากสำรับที่เหลือ";
+    }
+
+    async function revealPickedFollowUpCard(cardId) {
+      const usedCardIds = new Set([
+        ...revealedCards.map(card => card.id),
+        ...followUpCards.map(item => item.card.id)
+      ]);
+
+      if (usedCardIds.has(cardId)) return;
+
+      const selectedCard = deck.find(card => card.id === cardId);
+      if (!selectedCard) return;
+
+      const card = {
+        ...selectedCard,
+        position: {
+          key: `follow_up_${followUpCards.length + 1}`,
+          label: `Follow-up ${followUpCards.length + 1}`,
+          meaning: "ไพ่ขยายคำตอบจากคำถามต่อเนื่อง"
         }
+      };
 
-        function showCatInCorner() {
-            stopCatRun();
-            catSticker.style.left = 'auto';
-            catSticker.style.top = 'auto';
-            catSticker.classList.add('corner');
-            catSticker.style.display = 'block';
-        }
+      isSelectingFollowUp = false;
+      followUpStatus.textContent = "กำลังเปิดไพ่ Follow-up...";
+      statusText.textContent = `กำลังเปิด Follow-up ${followUpCards.length + 1}`;
 
-        function unlockSite() {
-            if (input.value === PASSCODE) {
-                overlay.style.display = 'none';
-                error.textContent = '';
-                showCatInCorner();
-            } else {
-                error.textContent = 'รหัสไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง';
-                runCatLoop();
-            }
-        }
+      await animateRevealCard(card, followUpCards.length);
 
-        button.addEventListener('click', unlockSite);
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') unlockSite();
+      followUpCards.push({
+        question: pendingFollowUpQuestion,
+        card
+      });
+
+      pendingFollowUpQuestion = "";
+      followUpInput.value = "";
+      followUpInput.disabled = false;
+      followUpBtn.disabled = false;
+      renderFollowUpList();
+      renderDeck();
+
+      const aiPayload = buildAiPayload();
+      console.log("AI Payload with Follow-up:", aiPayload);
+      jsonOutput.textContent = JSON.stringify(aiPayload, null, 2);
+
+      followUpStatus.textContent = `เปิด Follow-up แล้ว ${followUpCards.length} ใบ เหลือไพ่ ${aiPayload.remaining_deck_count} ใบ`;
+      statusText.textContent = "ถาม Follow-up ต่อได้ หรือเลือกจบรอบนี้";
+    }
+
+    function enableFollowUpMode() {
+      followUpInput.disabled = false;
+      followUpBtn.disabled = false;
+      followUpStatus.textContent = "พิมพ์คำถามต่อเนื่อง กดปุ่ม แล้วหยิบไพ่เองจากสำรับเดิมที่เรียงไว้";
+    }
+
+    function resetDemo() {
+      deck = [];
+      selectedCards = [];
+      revealedCards = [];
+      followUpCards = [];
+      isSelectingFollowUp = false;
+      pendingFollowUpQuestion = "";
+      jsonOutput.textContent = "ยังไม่มีข้อมูล";
+      followUpInput.value = "";
+      followUpInput.disabled = true;
+      followUpBtn.disabled = true;
+      isSelectingFollowUp = false;
+      pendingFollowUpQuestion = "";
+      followUpStatus.textContent = "เปิดไพ่หลัก 3 ใบก่อน แล้วจึงถามต่อเนื่องได้";
+      renderFollowUpList();
+      statusText.textContent = "ยังไม่ได้สร้างสำรับ";
+      deckStack.textContent = "78";
+      tableArea.querySelectorAll(".card").forEach(el => el.remove());
+      renderSpreadResult();
+      renderOpenedCards();
+      shuffleBtn.disabled = true;
+      cutBtn.disabled = true;
+      scatterBtn.disabled = true;
+      shakeBtn.disabled = true;
+      arrangeBtn.disabled = true;
+      revealBtn.disabled = true;
+    }
+
+    createDeckBtn.addEventListener("click", () => {
+      deck = createTarotDeck();
+      selectedCards = [];
+      revealedCards = [];
+      followUpCards = [];
+      isSelectingFollowUp = false;
+      pendingFollowUpQuestion = "";
+      followUpInput.value = "";
+      followUpInput.disabled = true;
+      followUpBtn.disabled = true;
+      isSelectingFollowUp = false;
+      pendingFollowUpQuestion = "";
+      followUpStatus.textContent = "เปิดไพ่หลัก 3 ใบก่อน แล้วจึงถามต่อเนื่องได้";
+      renderFollowUpList();
+      renderSpreadResult();
+      const spread = getCurrentSpread();
+      statusText.textContent = `สร้างสำรับ 78 ใบแล้ว โหมดนี้ต้องเลือก ${spread.cardCount} ใบ`;
+      shuffleBtn.disabled = false;
+      cutBtn.disabled = false;
+      scatterBtn.disabled = false;
+      shakeBtn.disabled = false;
+      arrangeBtn.disabled = false;
+      revealBtn.disabled = true;
+      renderDeck();
+    });
+
+    shuffleBtn.addEventListener("click", () => {
+      deck = shuffleDeck(deck).map((card, index) => ({
+        ...card,
+        x: 38 + Math.random() * 18,
+        y: 36 + Math.random() * 18,
+        width: 92,
+        height: 132,
+        rotation: Math.random() * 14 - 7,
+        zIndex: index + 1
+      }));
+      selectedCards = [];
+      revealBtn.disabled = true;
+      statusText.textContent = "สับไพ่แล้ว";
+      renderDeck();
+    });
+
+    cutBtn.addEventListener("click", () => {
+      deck = cutDeck(deck).map((card, index) => ({
+        ...card,
+        zIndex: index + 1,
+        x: 38 + Math.random() * 18,
+        y: 36 + Math.random() * 18,
+        width: 92,
+        height: 132,
+        rotation: Math.random() * 14 - 7
+      }));
+      selectedCards = [];
+      revealBtn.disabled = true;
+      statusText.textContent = "ตัดสำรับแล้ว";
+      renderDeck();
+    });
+
+    scatterBtn.addEventListener("click", () => {
+      deck = scatterDeck(deck);
+      selectedCards = [];
+      revealBtn.disabled = true;
+      statusText.textContent = "กระจายไพ่แล้ว ตอนนี้ลากไพ่และเลือก 3 ใบได้";
+      renderDeck();
+    });
+
+    arrangeBtn.addEventListener("click", () => {
+      isArranging = true;
+      arrangeBtn.disabled = true;
+      revealBtn.disabled = true;
+      selectedCards = [];
+      statusText.textContent = "กำลังเรียงไพ่ให้หยิบง่าย...";
+
+      // คำนวณตำแหน่งใหม่จากตำแหน่งจริงบนโต๊ะ แต่ยังไม่ render ใหม่
+      // เพื่อไม่ให้การ์ดวาร์ป ต้องขยับ DOM เดิมด้วย transition
+      const arrangedDeck = arrangeDeckForPicking(deck);
+
+      arrangedDeck.forEach((card, index) => {
+        const cardEl = tableArea.querySelector(`.card[data-id="${card.id}"]`);
+        if (!cardEl) return;
+
+        cardEl.classList.remove("selected");
+        cardEl.classList.add("arranging");
+        cardEl.style.setProperty("--arrange-delay", `${Math.min(index * 8, 420)}ms`);
+        cardEl.style.zIndex = String(card.zIndex || index + 1);
+
+        // ใช้ requestAnimationFrame เพื่อให้ browser เห็นตำแหน่งเดิมก่อน
+        // แล้วค่อย animate ไปตำแหน่งใหม่
+        requestAnimationFrame(() => {
+          cardEl.style.left = `${card.x}px`;
+          cardEl.style.top = `${card.y}px`;
+          cardEl.style.transform = `rotate(${card.rotation}deg)`;
+          cardEl.style.setProperty("--card-width", `${card.width || 70}px`);
+          cardEl.style.setProperty("--card-height", `${card.height || 100}px`);
         });
+      });
 
-        window.addEventListener('resize', () => {
-            if (!catSticker.classList.contains('corner') && catSticker.style.display === 'block') {
-                posX = Math.min(posX, window.innerWidth - catSticker.offsetWidth);
-                posY = Math.min(posY, window.innerHeight - catSticker.offsetHeight);
-            }
-        });
-    </script>
+      deck = arrangedDeck;
+
+      setTimeout(() => {
+        isArranging = false;
+        arrangeBtn.disabled = false;
+        statusText.textContent = "เรียงไพ่ให้หยิบง่ายแล้ว เลือก 3 ใบจากแถวไพ่ได้เลย";
+        renderDeck();
+      }, 1150);
+    });
+
+    shakeBtn.addEventListener("click", () => {
+      deckStack.classList.remove("shake");
+      void deckStack.offsetWidth;
+      deckStack.classList.add("shake");
+      deck = shakeDeck(deck);
+      selectedCards = [];
+      revealBtn.disabled = true;
+      statusText.textContent = "เขย่าไพ่แล้ว เลือก 3 ใบเพื่อเปิด";
+      renderDeck();
+    });
+
+    revealBtn.addEventListener("click", revealSelectedCards);
+    followUpBtn.addEventListener("click", drawFollowUpCard);
+    resetBtn.addEventListener("click", resetDemo);
+  </script>
 </body>
-
 </html>
